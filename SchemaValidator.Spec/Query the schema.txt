@@ -1,0 +1,15 @@
+SELECT 
+    so.name as TableName,
+    sc.name as ColumnName,
+    st.name as DataType,
+    sc.Length as Length
+FROM   
+    SysObjects so
+    inner join SysColumns sc
+        on so.id = sc.id
+    inner join SysTypes st
+        on st.xtype = sc.xtype
+where 
+    so.Type = 'U'
+order by 
+    so.Name
