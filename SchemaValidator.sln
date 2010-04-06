@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchemaValidator", "SchemaValidator\SchemaValidator.csproj", "{6DC1405A-1DAE-4CC5-BFF7-56EEAC467000}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchemaValidator.Tests", "SchemaValidator.Tests\SchemaValidator.Tests.csproj", "{659E4B51-2D68-485E-8AB3-97E3432BCD95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{6DC1405A-1DAE-4CC5-BFF7-56EEAC467000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DC1405A-1DAE-4CC5-BFF7-56EEAC467000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DC1405A-1DAE-4CC5-BFF7-56EEAC467000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{659E4B51-2D68-485E-8AB3-97E3432BCD95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{659E4B51-2D68-485E-8AB3-97E3432BCD95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{659E4B51-2D68-485E-8AB3-97E3432BCD95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{659E4B51-2D68-485E-8AB3-97E3432BCD95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
