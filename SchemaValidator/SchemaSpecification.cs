@@ -2,7 +2,7 @@
 
 namespace SchemaValidator
 {
-    public class DBSchema
+    public class SchemaSpecification
     {
 
         // private fields
@@ -10,7 +10,7 @@ namespace SchemaValidator
        
 
         // constructors
-        public DBSchema()
+        public SchemaSpecification()
         {
             _tableList = new List<Table>(); 
         }
