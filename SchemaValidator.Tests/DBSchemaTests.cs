@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using SchemaValidator; 
 
 namespace SchemaValidator.Tests
 {

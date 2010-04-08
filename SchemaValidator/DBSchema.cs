@@ -27,13 +27,13 @@ namespace SchemaValidator
 
         public Table RequireTable(string tableName)
         {
-            Table table = _tableList.Find(x => x.Name == tableName);
-            if (table == null)
-            {
-                Table newTable = new Table(tableName);
-                _tableList.Add(newTable);
-                table = newTable;
-            }
+        	Table table = _tableList.Find( x => x.Name == tableName );
+
+        	if ( table == null ) {
+				table = new Table( tableName );
+				_tableList.Add( table );
+			}
+			
             return table;
         }
 
