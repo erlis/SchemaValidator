@@ -1,33 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
+// ReSharper disable InconsistentNaming
 namespace SchemaValidator.Tests
 {
     [TestFixture]
     public class ColumnTests
     {
 
-        [SetUp]
-        public void SetUp()
-        {
-
-        }
-
         [Test]
         public void WithColumn_should_return_class_Column()
         {
             // Arrange
-            Table _table = new Table("t1");
-            Column _column = _table.WithColumn("c1"); 
+            Column initial = new Column("c1", new Table("irrelevant"));
 
             // Act 
-            Column actual = _column.WithColumn("c2"); 
+            Column actual = initial.WithColumn("c2");
 
             // Assert
-            Assert.That(actual.Name, Is.EqualTo("c2")); 
+            Assert.That(actual.Name, Is.EqualTo("c2"));
         }
+
+
+        [Test]
+        public void Equals_should_be_true_for_two_different_instances_when_all_fields_equals()
+        {
+            // Arrange
+            Column column1 = new Column("c1", new Table("irrelevant"));
+            Column column2 = new Column("c1", new Table("irrelevant"));
+
+            // Assert
+            Assert.That(column1.Equals(column2));
+        }
+
+
+        [Test]
+        public void OfType_should_set_ColumnType_for_the_current_instance()
+        {
+            // Arrange 
+            Column column = new Column("c1", new Table("irrelevant"));
+
+            // Act
+            column.OfType("int");
+
+            // Assert
+            Assert.That(column.ColumnType, Is.EqualTo("int"));
+        }
+
+
+        [Test]
+        public void OfType_should_return_the_self_instance()
+        {
+            // Arrange 
+            Column expected = new Column("c1", new Table("irrelevant"));
+
+            // Act
+            Column actual = expected.OfType("varchar");
+
+            // Assert
+            Assert.That(actual, Is.SameAs(expected));
+        }
+
+
     }
 }
