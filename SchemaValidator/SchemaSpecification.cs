@@ -25,7 +25,7 @@ namespace SchemaValidator
         public Table RequireTable(string tableName)
         {
             // guard clause: Duplicated table not allowed, It could overwrite an specification by mistake
-            if (_tableList.Exists(x => x.Name == tableName))
+            if (_tableList.Exists(x => x.Name.ToLower() == tableName.ToLower()))
                 throw new ApplicationException(string.Format("Table {0} already in specification", tableName));
 
             Table table = new Table(tableName);

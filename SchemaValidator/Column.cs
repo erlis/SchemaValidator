@@ -7,14 +7,27 @@ namespace SchemaValidator
 {
     public class Column
     {
+
+        // private 
+        private readonly Table _parentTable; 
+
+
+        // constructor
+        public Column(string name, Table parentTable)
+        {
+            Name = name;
+            _parentTable = parentTable; 
+        }
+
+
         // properties
         public string Name { get; private set; }
 
 
-        // constructor
-        public Column(string name)
+        // methods
+        public Column WithColumn( string columnName )
         {
-            Name = name; 
+            return _parentTable.WithColumn(columnName);
         }
     }
 }
