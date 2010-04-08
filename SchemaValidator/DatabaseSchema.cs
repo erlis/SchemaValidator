@@ -16,7 +16,7 @@ namespace SchemaValidator
 
         // private fields
         private string _connectionString;
-        private DatabaseType _dbType { get; private set; }
+        private DatabaseType _dbType { get; set; }
 
 
         // constructors

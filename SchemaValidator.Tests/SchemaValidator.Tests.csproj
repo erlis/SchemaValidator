@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="SchemaSpecificationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SchemaValidator\SchemaValidator.csproj">
