@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 // ReSharper disable InconsistentNaming
 namespace SchemaValidator.Tests
@@ -39,7 +40,8 @@ namespace SchemaValidator.Tests
 
 
         [Test]
-        public void RequireTable_should_avoid_duplicated_tablename()
+        [ExpectedException(ExpectedException = typeof(ApplicationException))]
+        public void RequireTable_should_throw_exception_when_duplicated()
         {
             // Act 
             _schemaSpec.RequireTable("Table1");
@@ -49,18 +51,5 @@ namespace SchemaValidator.Tests
             Assert.That(_schemaSpec.TableCount, Is.EqualTo(1)); 
         }
 
-
-		[Test]
-		public void RequireTable_should_return_existing_table_when_duplicated_tablename() {
-			// Arrange
-			Table expected = _schemaSpec.RequireTable( "Table1" );
-			_schemaSpec.RequireTable( "Table2" );
-
-			// Act
-			Table actual = _schemaSpec.RequireTable( "Table1" );
-
-			// Assert
-			Assert.That( actual, Is.SameAs( expected ) );
-		}
     }
 }
