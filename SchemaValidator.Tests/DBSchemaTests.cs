@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 
+// ReSharper disable InconsistentNaming
 namespace SchemaValidator.Tests
 {
     [TestFixture]
@@ -49,5 +50,17 @@ namespace SchemaValidator.Tests
         }
 
 
+		[Test]
+		public void RequireTable_should_return_existing_table_when_duplicated_tablename() {
+			// Arrange
+			Table expected = _dbSchema.RequireTable( "Table1" );
+			_dbSchema.RequireTable( "Table2" );
+
+			// Act
+			Table actual = _dbSchema.RequireTable( "Table1" );
+
+			// Assert
+			Assert.That( actual, Is.SameAs( expected ) );
+		}
     }
 }
