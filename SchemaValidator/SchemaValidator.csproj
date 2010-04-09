@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{6DC1405A-1DAE-4CC5-BFF7-56EEAC467000}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Column.cs" />
     <Compile Include="DatabaseSchema.cs" />
+    <Compile Include="IDatabaseSchema.cs" />
     <Compile Include="SchemaSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Table.cs" />
