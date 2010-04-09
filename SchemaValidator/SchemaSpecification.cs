@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace SchemaValidator
 {
@@ -6,37 +7,32 @@ namespace SchemaValidator
     {
 
         // private fields
-        private List<Table> _tableList; 
-       
+        private List<Table> _tableList;
+
 
         // constructors
         public SchemaSpecification()
         {
-            _tableList = new List<Table>(); 
+            _tableList = new List<Table>();
         }
 
 
         // properties
-        public int TableCount
-        {
-            get {
-                return _tableList.Count; 
-            }
-        }
+        public int TableCount { get { return _tableList.Count; } }
 
 
+        // methods
         public Table RequireTable(string tableName)
         {
-        	Table table = _tableList.Find( x => x.Name == tableName );
+            // guard clause: Duplicated table not allowed, It could overwrite an specification by mistake
+            if (_tableList.Exists(x => x.Name.ToLower() == tableName.ToLower()))
+                throw new ApplicationException(string.Format("Table {0} already in specification", tableName));
 
-        	if ( table == null ) {
-				table = new Table( tableName );
-				_tableList.Add( table );
-			}
-			
+            Table table = new Table(tableName);
+            _tableList.Add(table);
             return table;
         }
 
-        
+
     }
 }
