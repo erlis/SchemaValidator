@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data.SqlClient;
 
 namespace SchemaValidator
 {
@@ -31,7 +28,7 @@ namespace SchemaValidator
         {
             // guard clause: Duplicated column not allowed, It could overwrite an specification by mistake
             if (_columnList.Exists(x => x.Name.ToLower() == columnName.ToLower()))
-                throw new ApplicationException( string.Format( "Column {0} already in the specification of table {0}", columnName, this.Name ) ); 
+                throw new ApplicationException( string.Format( "Column {0} already in the specification of table {1}", columnName, this.Name ) ); 
 
             Column column = new Column(columnName, this);
             _columnList.Add(column); 
