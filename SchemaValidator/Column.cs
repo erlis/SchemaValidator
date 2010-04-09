@@ -4,15 +4,17 @@
     {
 
         // private 
-        private readonly Table _parentTable; 
+        private readonly Table _parentTable;
 
 
-        // constructor
+        // constructors
         public Column(string name, Table parentTable)
         {
             Name = name;
-            _parentTable = parentTable; 
+            _parentTable = parentTable;
         }
+
+        public Column(string name) : this(name, null) { }
 
 
         // properties
@@ -21,11 +23,17 @@
 
 
         // methods
-        public Column WithColumn( string columnName )
+        public Column WithColumn(string columnName)
         {
             return _parentTable.WithColumn(columnName);
         }
 
+
+        public Column OfType(string columnType)
+        {
+            ColumnType = columnType;
+            return this;
+        }
 
         public override bool Equals(object obj)
         {
@@ -35,25 +43,21 @@
             return Equals((Column) obj);
         }
 
-
         public bool Equals(Column other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(other.Name, Name);
+            return Equals(other.Name.ToLower(), Name.ToLower()) && 
+                   Equals(other.ColumnType.ToLower(), ColumnType.ToLower());
         }
-
 
         public override int GetHashCode()
         {
-            return (Name != null ? Name.GetHashCode() : 0);
-        }
-
-
-        public Column OfType(string columnType)
-        {
-            ColumnType = columnType;
-            return this;
+            unchecked
+            {
+                return ((Name != null ? Name.ToLower().GetHashCode() : 0)*397) ^ 
+                        (ColumnType != null ? ColumnType.ToLower().GetHashCode() : 0);
+            }
         }
     }
 }
