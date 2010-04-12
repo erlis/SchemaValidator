@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 
 // ReSharper disable InconsistentNaming
 namespace SchemaValidator.Tests
@@ -6,6 +7,14 @@ namespace SchemaValidator.Tests
     [TestFixture]
     public class ColumnTests
     {
+        [Test]
+        [ExpectedException(ExpectedException = typeof(ArgumentException))]
+        public void Constructor_should_fail_when_columnName_null()
+        {
+            // Assert
+            new Column(null);
+        }
+
         [Test]
         public void Equals_should_be_case_insensitive()
         {
