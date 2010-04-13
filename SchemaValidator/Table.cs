@@ -45,36 +45,11 @@ namespace SchemaValidator
             return column; 
         }
 
-        // equals members
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (Table)) return false;
-            return Equals((Table) obj);
-        }
-
-        public bool Equals(Table other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Equals(other.Name, Name) && ColumnsEquals(other._columnList, _columnList);
-        }
-
-        private bool ColumnsEquals(IEnumerable<Column> columns1, IEnumerable<Column> columns2)
-        {
-            if (columns1 == null  ^  columns2 == null ) return false;
-
-            return true; 
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return ((_columnList != null ? _columnList.GetHashCode() : 0)*397) ^ 
-                        (Name != null ? Name.GetHashCode() : 0);
-            }
-        }
+        public List<string> Difference( Table table ) {
+			// guard clause: Different names are not comparables
+			if ( Name.ToLower() != table.Name.ToLower() )
+				throw new InvalidOperationException( "Tables are not comparables. In order to compare two tables they must have the same table name." );
+        	return new List<string>(); 
+    	}
     }
 }

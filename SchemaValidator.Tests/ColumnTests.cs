@@ -15,6 +15,7 @@ namespace SchemaValidator.Tests
             new Column(null);
         }
 
+
         [Test]
         public void Equals_should_be_case_insensitive()
         {

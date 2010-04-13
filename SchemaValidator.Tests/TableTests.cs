@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 
 // ReSharper disable InconsistentNaming
 namespace SchemaValidator.Tests
@@ -7,17 +8,6 @@ namespace SchemaValidator.Tests
     [TestFixture]
     public class TableTests
     {
-
-        // private 
-        private Table _table;
-
-
-        [SetUp]
-        public void SetUp()
-        {
-            _table = new Table("table1");
-        }
-
 
         [Test]
         [ExpectedException(ExpectedException = typeof(ArgumentException))]
@@ -28,29 +18,44 @@ namespace SchemaValidator.Tests
         }
         
         [Test]
-        public void Equals_should_be_true_for_two_different_instances()
+        public void Difference_should_not_be_null_when_tableName_equals()
         {
             // Arrange
-            Table t1 = new Table( "" );
-            Table t2 = new Table( "" );
+            Table t1 = new Table( "t1" );
+            Table t2 = new Table( "t1" );
+
+			// Act
+        	List<string> result = t1.Difference( t2 ); 
             
             // Assert
-            Assert.That( t1.Equals(t2), Is.True );
+			Assert.That( result, Is.Not.Null );
         }
 
 
         [Test]
-        [Ignore]
-        public void Equals_should_be_true_when_same_columns_specification()
+        public void Difference_should_be_case_insensitive()
         {
-            throw new NotImplementedException();
-        }
+			// Arrange
+			Table t1 = new Table( "T1" );
+			Table t2 = new Table( "t1" );
+
+			// Act
+			List<string> result = t1.Difference( t2 );
+
+			// Assert
+			Assert.That( result, Is.Not.Null );
+		}
 
         [Test]
-        [Ignore]
-        public void Equals_should_be_true_when_same_tableName()
+		[ExpectedException(ExpectedException = typeof(InvalidOperationException))]
+        public void Difference_should_throw_exception_when_different_tableNames()
         {
-            throw new NotImplementedException();
+			// Arrange
+			Table t1 = new Table( "t1" );
+			Table t2 = new Table( "t2" );
+
+			// Act
+        	t1.Difference( t2 );
         }
 
 
@@ -58,18 +63,24 @@ namespace SchemaValidator.Tests
         [ExpectedException(ExpectedException = typeof(ApplicationException))]
         public void WithColumn_should_be_case_insensitive()
         {
+			// Arrange
+			Table _table = new Table( "table1" );
+
             // Act
             _table.WithColumn("c1")
-                .WithColumn("C1");
+                  .WithColumn("C1");
         }
 
         [Test]
         public void WithColumn_should_be_concatenated_fluently()
         {
-            // Act 
+			// Arrange
+			Table _table = new Table( "table1" );
+
+			// Act 
             _table.WithColumn("c1")
-                .WithColumn("c2")
-                .WithColumn("c3");
+                  .WithColumn("c2")
+                  .WithColumn("c3");
 
             // Assert
             Assert.That(_table.ColumnCount, Is.EqualTo(3));
@@ -78,7 +89,10 @@ namespace SchemaValidator.Tests
         [Test]
         public void WithColumn_should_remember_previous_values()
         {
-            // Act
+			// Arrange
+			Table _table = new Table( "table1" );
+
+			// Act
             _table.WithColumn("c1");
             _table.WithColumn("c2");
 
@@ -89,7 +103,10 @@ namespace SchemaValidator.Tests
         [Test]
         public void WithColumn_should_return_same_class_Table()
         {
-            // Act
+			// Arrange
+			Table _table = new Table( "table1" );
+
+			// Act
             Column column = _table.WithColumn("Column1");
 
             // Assert
@@ -101,7 +118,10 @@ namespace SchemaValidator.Tests
         [ExpectedException(ExpectedException = typeof(ApplicationException))]
         public void WithColumn_should_throw_exception_when_duplicated()
         {
-            // Act
+			// Arrange
+			Table _table = new Table( "table1" );
+
+			// Act
             _table.WithColumn("c1");
             _table.WithColumn("c1");
         }
