@@ -7,7 +7,7 @@ namespace SchemaValidator
     {
 
         // privates
-        private List<Column> _columnList; 
+        private readonly List<Column> _columnList; 
 
 
         // constructor 
@@ -19,7 +19,17 @@ namespace SchemaValidator
 
 
         // properties
-        public string Name { get; private set; }
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            private set
+            {
+                if ( value == null ) throw new ArgumentException("Name must be not null");
+                _name = value;
+            }
+        }
+
         public int ColumnCount { get { return _columnList.Count; } }
 
 
@@ -28,12 +38,18 @@ namespace SchemaValidator
         {
             // guard clause: Duplicated column not allowed, It could overwrite an specification by mistake
             if (_columnList.Exists(x => x.Name.ToLower() == columnName.ToLower()))
-                throw new ApplicationException( string.Format( "Column {0} already in the specification of table {1}", columnName, this.Name ) ); 
+                throw new ApplicationException( string.Format( "Column {0} already in the specification of table {1}", columnName, Name ) ); 
 
             Column column = new Column(columnName, this);
             _columnList.Add(column); 
             return column; 
         }
 
+        public List<string> Difference( Table table ) {
+			// guard clause: Different names are not comparables
+			if ( Name.ToLower() != table.Name.ToLower() )
+				throw new InvalidOperationException( "Tables are not comparables. In order to compare two tables they must have the same table name." );
+        	return new List<string>(); 
+    	}
     }
 }

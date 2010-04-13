@@ -1,4 +1,6 @@
-﻿namespace SchemaValidator
+﻿using System;
+
+namespace SchemaValidator
 {
     public class Column
     {
@@ -19,7 +21,17 @@
 
 
         // properties
-        public string Name { get; private set; }
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            private set
+            {
+                if (value == null) throw new ArgumentException("Name must be not null");
+                _name = value;
+            }
+        }
+
         public string ColumnType { get; private set; }
         public int ColumnLength { get; private set; }
         public bool IsNullable { get; set; }
