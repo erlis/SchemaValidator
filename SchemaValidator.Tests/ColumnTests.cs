@@ -1,5 +1,6 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using NUnit.Framework;
 
 // ReSharper disable InconsistentNaming
 namespace SchemaValidator.Tests
@@ -89,7 +90,6 @@ namespace SchemaValidator.Tests
             Assert.That(column1.GetHashCode(), Is.EqualTo(column2.GetHashCode()));
             Assert.That(column1.Equals(column2));
         }
-
 
         [Test]
         public void IsNullable_should_be_false_by_default()

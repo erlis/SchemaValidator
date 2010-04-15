@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using SchemaValidator.Extensions;
 
 namespace SchemaValidator
 {
@@ -7,7 +8,7 @@ namespace SchemaValidator
     {
 
         // private fields
-        private List<Table> _tableList;
+        private readonly List<Table> _tableList;
 
 
         // constructors
@@ -25,7 +26,7 @@ namespace SchemaValidator
         public Table RequireTable(string tableName)
         {
             // guard clause: Duplicated table not allowed, It could overwrite an specification by mistake
-            if (_tableList.Exists(x => x.Name.ToLower() == tableName.ToLower()))
+            if (_tableList.Exists(x => tableName.EqualsIgnoreCase(x.Name)))
                 throw new ApplicationException(string.Format("Table {0} already in specification", tableName));
 
             Table table = new Table(tableName);

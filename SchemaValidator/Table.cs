@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SchemaValidator.Extensions;
 
 namespace SchemaValidator
 {
@@ -7,14 +8,14 @@ namespace SchemaValidator
     {
 
         // privates
-        private readonly List<Column> _columnList; 
+        private readonly List<Column> _columnList;
 
 
         // constructor 
         public Table(string name)
         {
             Name = name;
-            _columnList = new List<Column>(); 
+            _columnList = new List<Column>();
         }
 
 
@@ -25,7 +26,7 @@ namespace SchemaValidator
             get { return _name; }
             private set
             {
-                if ( value == null ) throw new ArgumentException("Name must be not null");
+                if (value == null) throw new ArgumentException("Name must be not null");
                 _name = value;
             }
         }
@@ -34,22 +35,23 @@ namespace SchemaValidator
 
 
         // methods
+        public List<Column> Conflicts(Table table)
+        {
+            // guard clause: Different names are not comparables
+            if (!Name.EqualsIgnoreCase(table.Name))
+                throw new InvalidOperationException("Tables are not comparables. In order to compare two tables they must have the same name.");
+            return new List<Column>();
+        }
+
         public Column WithColumn(string columnName)
         {
             // guard clause: Duplicated column not allowed, It could overwrite an specification by mistake
-            if (_columnList.Exists(x => x.Name.ToLower() == columnName.ToLower()))
-                throw new ApplicationException( string.Format( "Column {0} already in the specification of table {1}", columnName, Name ) ); 
+            if (_columnList.Exists(x => columnName.EqualsIgnoreCase(x.Name)))
+                throw new ApplicationException(string.Format("Column {0} already in the specification of table {1}", columnName, Name));
 
             Column column = new Column(columnName, this);
-            _columnList.Add(column); 
-            return column; 
+            _columnList.Add(column);
+            return column;
         }
-
-        public List<string> Difference( Table table ) {
-			// guard clause: Different names are not comparables
-			if ( Name.ToLower() != table.Name.ToLower() )
-				throw new InvalidOperationException( "Tables are not comparables. In order to compare two tables they must have the same table name." );
-        	return new List<string>(); 
-    	}
     }
 }

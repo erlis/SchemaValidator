@@ -1,0 +1,3 @@
+﻿* Conflicts should detect missing columns
+* Conflicts should ignore extra columns
+* Conflicts should return list of column names

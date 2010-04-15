@@ -8,6 +8,57 @@ namespace SchemaValidator.Tests
     [TestFixture]
     public class TableTests
     {
+        [Test]
+        [ExpectedException(ExpectedException = typeof(InvalidOperationException))]
+        public void Conflict_should_throw_exception_when_different_tableNames()
+        {
+            // Arrange
+            Table t1 = new Table( "t1" );
+            Table t2 = new Table( "t2" );
+
+            // Act
+            t1.Conflicts( t2 );
+        }
+
+        [Test]
+        public void Conflicts_should_allow_same_tableNames()
+        {
+            // Arrange
+            Table t1 = new Table( "t1" );
+            Table t2 = new Table( "t1" );
+
+			// Act
+        	List<Column> result = t1.Conflicts( t2 ); 
+            
+            // Assert
+			Assert.That( result, Is.Not.Null );
+        }
+
+        [Test]
+        public void Conflicts_should_be_case_insensitive()
+        {
+            // Arrange
+            Table t1 = new Table( "T1" );
+            Table t2 = new Table( "t1" );
+
+            // Act
+            List<Column> result = t1.Conflicts( t2 );
+
+            // Assert
+            Assert.That( result, Is.Not.Null );
+        }
+
+
+        [Test]
+        public void Conflicts_should_detect_missing_columns()
+        {
+            // Arrange
+            Table t1 = new Table("t1");
+            Table t2 = new Table("t1");
+
+            throw new NotImplementedException();
+        }
+
 
         [Test]
         [ExpectedException(ExpectedException = typeof(ArgumentException))]
@@ -16,48 +67,6 @@ namespace SchemaValidator.Tests
             // Assert
             new Table(null);
         }
-        
-        [Test]
-        public void Difference_should_not_be_null_when_tableName_equals()
-        {
-            // Arrange
-            Table t1 = new Table( "t1" );
-            Table t2 = new Table( "t1" );
-
-			// Act
-        	List<string> result = t1.Difference( t2 ); 
-            
-            // Assert
-			Assert.That( result, Is.Not.Null );
-        }
-
-
-        [Test]
-        public void Difference_should_be_case_insensitive()
-        {
-			// Arrange
-			Table t1 = new Table( "T1" );
-			Table t2 = new Table( "t1" );
-
-			// Act
-			List<string> result = t1.Difference( t2 );
-
-			// Assert
-			Assert.That( result, Is.Not.Null );
-		}
-
-        [Test]
-		[ExpectedException(ExpectedException = typeof(InvalidOperationException))]
-        public void Difference_should_throw_exception_when_different_tableNames()
-        {
-			// Arrange
-			Table t1 = new Table( "t1" );
-			Table t2 = new Table( "t2" );
-
-			// Act
-        	t1.Difference( t2 );
-        }
-
 
         [Test]
         [ExpectedException(ExpectedException = typeof(ApplicationException))]

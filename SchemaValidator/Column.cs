@@ -1,26 +1,14 @@
 ﻿using System;
+using SchemaValidator.Extensions;
 
 namespace SchemaValidator
 {
     public class Column
     {
-
-        // private 
+        /// private fields
         private readonly Table _parentTable;
 
-
-        // constructors
-        public Column(string name, Table parentTable)
-        {
-            _parentTable = parentTable;
-            IsNullable = false;
-            Name = name;
-        }
-
-        public Column(string name) : this(name, null) { }
-
-
-        // properties
+        /// properties
         private string _name;
         public string Name
         {
@@ -31,33 +19,23 @@ namespace SchemaValidator
                 _name = value;
             }
         }
-
         public string ColumnType { get; private set; }
         public int ColumnLength { get; private set; }
         public bool IsNullable { get; set; }
 
 
-        // methods
-        public Column Nullable()
+        /// constructors
+        public Column(string name, Table parentTable)
         {
-            IsNullable = true;
-            return this;
+            _parentTable = parentTable;
+            IsNullable = false;
+            Name = name;
         }
 
+        public Column(string name) : this(name, null) { }
 
-        public Column OfType(string columnType, int length)
-        {
-            ColumnType = columnType;
-            ColumnLength = length;
-            return this;
-        }
 
-        public Column WithColumn(string columnName)
-        {
-            return _parentTable.WithColumn(columnName);
-        }
-
-        // equals members
+        /// methods
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
@@ -70,8 +48,8 @@ namespace SchemaValidator
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(other.Name.ToLower(), Name.ToLower()) &&
-                   Equals(other.ColumnType.ToLower(), ColumnType.ToLower()) &&
+            return Name.EqualsIgnoreCase(other.Name) &&
+                   ColumnType.EqualsIgnoreCase(other.ColumnType) &&
                    Equals(other.ColumnLength, ColumnLength) &&
                    Equals(other.IsNullable, IsNullable);
         }
@@ -85,6 +63,24 @@ namespace SchemaValidator
                        (ColumnLength * 397) ^
                        ((IsNullable ? 1 : 0) * 397);
             }
+        }
+
+        public Column Nullable()
+        {
+            IsNullable = true;
+            return this;
+        }
+
+        public Column OfType(string columnType, int length)
+        {
+            ColumnType = columnType;
+            ColumnLength = length;
+            return this;
+        }
+
+        public Column WithColumn(string columnName)
+        {
+            return _parentTable.WithColumn(columnName);
         }
     }
 }

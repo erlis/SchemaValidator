@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Column.cs" />
     <Compile Include="DatabaseSchema.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IDatabaseSchema.cs" />
     <Compile Include="SchemaSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
