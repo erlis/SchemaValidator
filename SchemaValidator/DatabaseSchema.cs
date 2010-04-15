@@ -11,7 +11,7 @@ namespace SchemaValidator
 
         // private fields
         private string _connectionString;
-        private List<Table> _tableList;
+        private List<Table> _tableList = new List<Table>();
 
 
         // constructors
@@ -26,20 +26,41 @@ namespace SchemaValidator
 
         
         // methods
-        public int LoadTables()
+        public SchemaSpecification LoadSchemaSpecification()
         {
+            SchemaSpecification _SchSpec = new SchemaSpecification();
             System.Data.DataSet _records;
 
-            
-            return 0;
+            // load database info
+            _records = this.LoadDBInfo();
+
+            // create schema specification
+            _SchSpec = CreateSchemaSpecification(_records);
+
+            return _SchSpec;
         }
 
-        public int LoadTableFields(Table table)
+        private SchemaSpecification CreateSchemaSpecification(System.Data.DataSet ds)
+        {
+            SchemaSpecification _schspec = new SchemaSpecification();
+            System.Data.DataTable tables = ds.Tables["dbtables"];
+
+            var DistintTableQuery = (from System.Data.DataRow dRow in tables.Rows
+                                     select new { tablename = dRow["tablename"] }).Distinct();
+
+
+            foreach (var r in DistintTableQuery)
+            _schspec.RequireTable(r.tablename.ToString());
+
+            return _schspec;
+        }
+
+        private int LoadTableFields(Table table)
         {
             return 0;
         }
 
-        private System.Data.DataSet LoadDBTables()
+        private System.Data.DataSet LoadDBInfo()
         {
             System.Data.DataSet _records = new System.Data.DataSet();
             System.Data.SqlClient.SqlConnection _conn = null;
@@ -57,13 +78,31 @@ namespace SchemaValidator
                     // execute sql to get the tables
                     using (_cmd = new System.Data.SqlClient.SqlCommand())
                     {
-                        _cmd.CommandText = "";
+                        //SELECT     
+                        //                        tables.name AS tablename, 
+                        //                        columns.name AS columnname, 
+                        //                        types.name AS typename, 
+                        //                        columns.is_nullable, 
+                        //                        columns.max_length, 
+                        //                        columns.precision, 
+                        //                        columns.scale
+                        //FROM         
+                        //                        sys.tables AS tables INNER JOIN sys.columns AS columns ON tables.object_id = columns.object_id 
+                        //                                                      INNER JOIN sys.types AS types ON columns.system_type_id = types.system_type_id
+                        //ORDER BY 
+                        //                        tablename, 
+                        //                        columnname
+                        _cmd.CommandText = "SELECT tables.name AS tablename, columns.name AS columnname, types.name AS typename, columns.is_nullable, columns.max_length, " + 
+                                                                        "columns.precision, columns.scale FROM sys.tables AS tables INNER JOIN sys.columns AS columns ON tables.object_id = columns.object_id INNER JOIN " +
+                                                                        "sys.types AS types ON columns.system_type_id = types.system_type_id ORDER BY tablename, columnname";
+                        _cmd.CommandType = System.Data.CommandType.Text;
                         _cmd.Connection = _conn;
 
+                        
                         using (_adapter = new System.Data.SqlClient.SqlDataAdapter())
                         {
                             _adapter.SelectCommand = _cmd;
-                            _adapter.Fill(_records, "");
+                            _adapter.Fill(_records, "dbtables");
                         }
                     }
 

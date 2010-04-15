@@ -6,7 +6,6 @@ namespace SchemaValidator
 {
     interface IDatabaseSchema
     {
-        int LoadTables();
-        int LoadTableFields(Table table);
+        SchemaSpecification LoadSchemaSpecification();
     }
 }
