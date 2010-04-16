@@ -54,6 +54,7 @@
     <Compile Include="SchemaSpecificationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TableTests.cs" />
+    <Compile Include="ValueObjects\CompareResultTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SchemaValidator\SchemaValidator.csproj">
@@ -64,9 +65,7 @@
   <ItemGroup>
     <Content Include="ColumnTests-Todo.txt" />
     <Content Include="TableTests-Todo.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ValueObjects\" />
+    <Content Include="ValueObjects\CompareResult-Todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
