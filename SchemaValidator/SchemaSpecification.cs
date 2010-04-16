@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using SchemaValidator.Extensions;
+using SchemaValidator.ValueObjects;
 
 namespace SchemaValidator
 {

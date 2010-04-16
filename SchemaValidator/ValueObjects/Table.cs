@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using SchemaValidator.Extensions;
-using SchemaValidator.ValueObjects;
 
-namespace SchemaValidator
+namespace SchemaValidator.ValueObjects
 {
     public class Table
     {
