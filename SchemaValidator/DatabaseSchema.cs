@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Data.Linq;
 
 namespace SchemaValidator
 {
@@ -29,7 +32,7 @@ namespace SchemaValidator
         public SchemaSpecification LoadSchemaSpecification()
         {
             SchemaSpecification _SchSpec = new SchemaSpecification();
-            System.Data.DataSet _records;
+            DataSet _records;
 
             // load database info
             _records = this.LoadDBInfo();
@@ -40,66 +43,85 @@ namespace SchemaValidator
             return _SchSpec;
         }
 
-        private SchemaSpecification CreateSchemaSpecification(System.Data.DataSet ds)
+        private SchemaSpecification CreateSchemaSpecification(DataSet ds)
         {
             SchemaSpecification _schspec = new SchemaSpecification();
-            System.Data.DataTable tables = ds.Tables["dbtables"];
+            DataTable tables = ds.Tables["dbtables"];
+            Table t;
+            Column cl;
 
-            var DistintTableQuery = (from System.Data.DataRow dRow in tables.Rows
-                                     select new { tablename = dRow["tablename"] }).Distinct();
+            // query tables
+            var DistintTableQuery = (from table in tables.AsEnumerable()
+                                     select new { TableName = table.Field<string>("TableName") }).Distinct();
+            
+            // add tales and their fields
+            foreach (var tn in DistintTableQuery)
+            {
+                // add table
+                t = _schspec.RequireTable(tn.TableName);
 
+                // query columns
+                var FieldsQuery = (from column in tables.AsEnumerable()
+                                               where column.Field<string>("TableName") == tn.TableName
+                                               select new {   
+                                                                    ColumnName = column.Field<string>("ColumnName")
+                                                                    , DataType = column.Field<string>("DataType")
+                                                                    , Length = column.Field<Int16>("Length")
+                                                                    , IsNullable = column.Field<int>("IsNullable")
+                                               }).Distinct();
 
-            foreach (var r in DistintTableQuery)
-            _schspec.RequireTable(r.tablename.ToString());
+                // add columns
+                foreach (var fn in FieldsQuery)
+                {
+                    cl = new Column(fn.ColumnName, t);
+                    cl.OfType(fn.DataType, fn.Length);
+                    if (Convert.ToBoolean(fn.IsNullable)) cl.Nullable();
+                }
+            }
 
             return _schspec;
         }
 
-        private int LoadTableFields(Table table)
+        private DataSet LoadDBInfo()
         {
-            return 0;
-        }
-
-        private System.Data.DataSet LoadDBInfo()
-        {
-            System.Data.DataSet _records = new System.Data.DataSet();
-            System.Data.SqlClient.SqlConnection _conn = null;
-            System.Data.SqlClient.SqlCommand _cmd;
-            System.Data.SqlClient.SqlDataAdapter _adapter;
+            DataSet _records = new DataSet();
+            SqlConnection _conn = null;
+            SqlCommand _cmd;
+            SqlDataAdapter _adapter;
 
             try
             {
                 // create connection
-                using (_conn = new System.Data.SqlClient.SqlConnection(this._connectionString))
+                using (_conn = new SqlConnection(this._connectionString))
                 {
                     // open connection
                     _conn.Open();
 
                     // execute sql to get the tables
-                    using (_cmd = new System.Data.SqlClient.SqlCommand())
+                    using (_cmd = new SqlCommand())
                     {
-                        //SELECT     
-                        //                        tables.name AS tablename, 
-                        //                        columns.name AS columnname, 
-                        //                        types.name AS typename, 
-                        //                        columns.is_nullable, 
-                        //                        columns.max_length, 
-                        //                        columns.precision, 
-                        //                        columns.scale
-                        //FROM         
-                        //                        sys.tables AS tables INNER JOIN sys.columns AS columns ON tables.object_id = columns.object_id 
-                        //                                                      INNER JOIN sys.types AS types ON columns.system_type_id = types.system_type_id
-                        //ORDER BY 
-                        //                        tablename, 
-                        //                        columnname
-                        _cmd.CommandText = "SELECT tables.name AS tablename, columns.name AS columnname, types.name AS typename, columns.is_nullable, columns.max_length, " + 
-                                                                        "columns.precision, columns.scale FROM sys.tables AS tables INNER JOIN sys.columns AS columns ON tables.object_id = columns.object_id INNER JOIN " +
-                                                                        "sys.types AS types ON columns.system_type_id = types.system_type_id ORDER BY tablename, columnname";
-                        _cmd.CommandType = System.Data.CommandType.Text;
+                        _cmd.CommandText = "SELECT " +
+                                                            "    so.name AS TableName, " +
+                                                            "    sc.name AS ColumnName, " +
+                                                            "    st.name AS DataType, " +
+                                                            "    sc.Length AS Length, " +
+                                                            "    sc.isnullable AS IsNullable " +
+                                                            "FROM    " +
+                                                            "    SysObjects so " +
+                                                            "       INNER JOIN SysColumns sc " +
+                                                            "           on so.id = sc.id " +
+                                                            "       INNER JOIN SysTypes st " +
+                                                            "           on st.xtype = sc.xtype " +
+                                                            "WHERE  " +
+                                                            "    so.Type = 'U' " +
+                                                            "ORDER BY  " +
+                                                            "    so.Name";
+
+                        _cmd.CommandType = CommandType.Text;
                         _cmd.Connection = _conn;
 
                         
-                        using (_adapter = new System.Data.SqlClient.SqlDataAdapter())
+                        using (_adapter = new SqlDataAdapter())
                         {
                             _adapter.SelectCommand = _cmd;
                             _adapter.Fill(_records, "dbtables");
@@ -114,7 +136,7 @@ namespace SchemaValidator
             }
             finally
             {
-                if (_conn.State == System.Data.ConnectionState.Open) _conn.Close();
+                if (_conn.State == ConnectionState.Open) _conn.Close();
             }
 
             return _records;
