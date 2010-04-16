@@ -1,25 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using SchemaValidator.Extensions;
+using SchemaValidator.ValueObjects;
 
 namespace SchemaValidator
 {
     public class Table
     {
 
-        // privates
+        /// privates
         private readonly List<Column> _columnList;
 
 
-        // constructor 
-        public Table(string name)
-        {
-            Name = name;
-            _columnList = new List<Column>();
-        }
-
-
-        // properties
+        /// properties
         private string _name;
         public string Name
         {
@@ -33,14 +26,29 @@ namespace SchemaValidator
 
         public int ColumnCount { get { return _columnList.Count; } }
 
+        /// constructor 
+        public Table(string name)
+        {
+            Name = name;
+            _columnList = new List<Column>();
+        }
 
-        // methods
-        public List<Column> Conflicts(Table table)
+
+        /// methods
+        public Conflict Compare(Table otherTable)
         {
             // guard clause: Different names are not comparables
-            if (!Name.EqualsIgnoreCase(table.Name))
+            if (!Name.EqualsIgnoreCase(otherTable.Name))
                 throw new InvalidOperationException("Tables are not comparables. In order to compare two tables they must have the same name.");
-            return new List<Column>();
+
+            Conflict result = new Conflict();
+            foreach (Column eachColumn in _columnList)
+            {
+                Column otherColumn = otherTable.FindColumnByName(eachColumn.Name);
+                if ( otherColumn == null ) result.AddMissingColumn(eachColumn); 
+            }
+
+            return result;
         }
 
         public Column WithColumn(string columnName)
@@ -52,6 +60,12 @@ namespace SchemaValidator
             Column column = new Column(columnName, this);
             _columnList.Add(column);
             return column;
+        }
+
+        private Column FindColumnByName(string columnName)
+        {
+            Column result = _columnList.Find(x => x.Name.EqualsIgnoreCase(columnName));
+            return result;
         }
     }
 }
