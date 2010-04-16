@@ -65,7 +65,7 @@ namespace SchemaValidator.Tests
         [Test]
         [ExpectedException(ExpectedException = typeof(ApplicationException))]
         [Category("DB")]
-        public void RequireTable_should_throw_exception_when_duplicated_table1()
+        public void WithColumn_should_throw_exception_when_duplicated_column()
         {
             // Arrange
             DatabaseSchema db1 = new DatabaseSchema(@"Data Source=.\SQLEXPRESS;AttachDbFilename=""C:\SQL Server 2000 Sample Databases\NORTHWND.MDF"";Integrated Security=True;Connect Timeout=30;User Instance=True");
@@ -73,9 +73,8 @@ namespace SchemaValidator.Tests
             // create schema specification 
             SchemaSpecification scdb = db1.LoadSchemaSpecification();
 
-            // duplicated table
+            // duplicated column
             scdb.RequireTable("region").WithColumn("RegionDescription");
         }
-
     }
 }
