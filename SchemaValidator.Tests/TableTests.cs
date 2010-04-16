@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using SchemaValidator.ValueObjects;
 
 // ReSharper disable InconsistentNaming
 namespace SchemaValidator.Tests
@@ -10,39 +11,39 @@ namespace SchemaValidator.Tests
     {
         [Test]
         [ExpectedException(ExpectedException = typeof(InvalidOperationException))]
-        public void Conflict_should_throw_exception_when_different_tableNames()
+        public void Compare_should_throw_exception_when_different_tableNames()
         {
             // Arrange
             Table t1 = new Table( "t1" );
             Table t2 = new Table( "t2" );
 
             // Act
-            t1.Conflicts( t2 );
+            t1.Compare( t2 );
         }
 
         [Test]
-        public void Conflicts_should_allow_same_tableNames()
+        public void Compare_should_allow_same_tableNames()
         {
             // Arrange
             Table t1 = new Table( "t1" );
             Table t2 = new Table( "t1" );
 
 			// Act
-        	List<Column> result = t1.Conflicts( t2 ); 
+        	Conflict result = t1.Compare( t2 ); 
             
             // Assert
 			Assert.That( result, Is.Not.Null );
         }
 
         [Test]
-        public void Conflicts_should_be_case_insensitive()
+        public void Compare_should_be_case_insensitive()
         {
             // Arrange
             Table t1 = new Table( "T1" );
             Table t2 = new Table( "t1" );
 
             // Act
-            List<Column> result = t1.Conflicts( t2 );
+            Conflict result = t1.Compare( t2 );
 
             // Assert
             Assert.That( result, Is.Not.Null );
@@ -50,13 +51,19 @@ namespace SchemaValidator.Tests
 
 
         [Test]
-        public void Conflicts_should_detect_missing_columns()
+        public void Compare_should_detect_missing_columns()
         {
             // Arrange
             Table t1 = new Table("t1");
             Table t2 = new Table("t1");
+            t1.WithColumn("c1");
 
-            throw new NotImplementedException();
+            // Act 
+            Conflict result = t1.Compare(t2); 
+
+            // Assert
+            Assert.That( result.MissingColumns.Count, Is.EqualTo(1));
+            Assert.That( result.MissingColumns[0].Name, Is.EqualTo("c1"));
         }
 
 

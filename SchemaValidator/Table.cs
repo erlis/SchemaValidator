@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SchemaValidator.Extensions;
+using SchemaValidator.ValueObjects;
 
 namespace SchemaValidator
 {
@@ -35,12 +36,12 @@ namespace SchemaValidator
 
 
         // methods
-        public List<Column> Conflicts(Table table)
+        public Conflict Compare(Table table)
         {
             // guard clause: Different names are not comparables
             if (!Name.EqualsIgnoreCase(table.Name))
                 throw new InvalidOperationException("Tables are not comparables. In order to compare two tables they must have the same name.");
-            return new List<Column>();
+            return new Conflict();
         }
 
         public Column WithColumn(string columnName)
