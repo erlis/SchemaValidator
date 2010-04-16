@@ -2,7 +2,8 @@ SELECT
     so.name as TableName,
     sc.name as ColumnName,
     st.name as DataType,
-    sc.Length as Length
+    sc.Length as Length,
+    sc.isnullable AS IsNullable
 FROM   
     SysObjects so
     inner join SysColumns sc
