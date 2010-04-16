@@ -20,6 +20,8 @@ namespace SchemaValidator
         // constructors
         public DatabaseSchema(string connectionString)
         {
+            if (connectionString == null) throw new ArgumentException("Connection String must be not null");
+            if (connectionString == string.Empty) throw new ArgumentException("Connection String must be not empty");
             _connectionString = connectionString;
         }
 
