@@ -4,11 +4,11 @@ using System.Collections.ObjectModel;
 
 namespace SchemaValidator.ValueObjects
 {
-    public class CompareResult
+    public class CompareResult<T>
     {
         /// properties
-        private List<Column> _conflictColumns;
-        public ReadOnlyCollection<Column> ConflictColumns
+        private List<T> _conflictColumns;
+        public ReadOnlyCollection<T> ConflictColumns
         {
             get
             {
@@ -20,14 +20,14 @@ namespace SchemaValidator.ValueObjects
         {
             get
             {
-                if ( _conflictColumns.Count > 0) return true; 
+                if (_conflictColumns.Count > 0) return true;
                 if (_missingColumns.Count > 0) return true;
                 return false;
             }
         }
 
-        private List<Column> _missingColumns;
-        public ReadOnlyCollection<Column> MissingColumns
+        private List<T> _missingColumns;
+        public ReadOnlyCollection<T> MissingColumns
         {
             get
             {
@@ -38,18 +38,17 @@ namespace SchemaValidator.ValueObjects
         /// constructor
         public CompareResult()
         {
-            _conflictColumns = new List<Column>();
-            _missingColumns = new List<Column>();
+            _conflictColumns = new List<T>();
+            _missingColumns = new List<T>();
         }
 
-
-        public void AddConflictColumn(Column column)
+        /// methods
+        public void AddConflictColumn(T column)
         {
             _conflictColumns.Add(column);
         }
 
-        /// methods
-        public void AddMissingColumn(Column column)
+        public void AddMissingColumn(T column)
         {
             _missingColumns.Add(column);
         }

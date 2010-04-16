@@ -8,22 +8,21 @@ namespace SchemaValidator
     public class SchemaSpecification
     {
 
-        // private fields
+        /// private fields
         private readonly List<Table> _tableList;
 
+        /// properties
+        public int TableCount { get { return _tableList.Count; } }
 
-        // constructors
+
+        /// constructors
         public SchemaSpecification()
         {
             _tableList = new List<Table>();
         }
 
 
-        // properties
-        public int TableCount { get { return _tableList.Count; } }
-
-
-        // methods
+        /// methods
         public Table RequireTable(string tableName)
         {
             // guard clause: Duplicated table not allowed, It could overwrite an specification by mistake

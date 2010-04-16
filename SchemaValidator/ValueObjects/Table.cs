@@ -34,13 +34,13 @@ namespace SchemaValidator.ValueObjects
 
 
         /// methods
-        public CompareResult Compare(Table otherTable)
+        public CompareResult<Column> Compare(Table otherTable)
         {
             // guard clause: Different names are not comparables
             if (!Name.EqualsIgnoreCase(otherTable.Name))
                 throw new InvalidOperationException("Tables are not comparables. In order to compare two tables they must have the same name.");
 
-            CompareResult result = new CompareResult();
+            CompareResult<Column> result = new CompareResult<Column>();
             foreach (Column eachColumn in _columnList)
             {
                 Column otherColumn = otherTable.FindColumnByName(eachColumn.Name);
