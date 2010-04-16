@@ -18,10 +18,10 @@ namespace SchemaValidator.Tests
 
 
         [Test]
-        public void RequireTable_should_return_clase_Table()
+        public void AddTable_should_return_clase_Table()
         {
             // Act
-            Table result = _schemaSpec.RequireTable("TableName");
+            Table result = _schemaSpec.AddTable("TableName");
 
             // Assert
             Assert.That(result.Name, Is.EqualTo("TableName"));
@@ -29,11 +29,11 @@ namespace SchemaValidator.Tests
 
 
         [Test]
-        public void RequireTable_should_remember_previous_values()
+        public void AddTable_should_remember_previous_values()
         {
             // Act
-            _schemaSpec.RequireTable("Table1");
-            _schemaSpec.RequireTable("Table2"); 
+            _schemaSpec.AddTable("Table1");
+            _schemaSpec.AddTable("Table2"); 
 
             // Assert
             Assert.That(_schemaSpec.TableCount, Is.EqualTo(2)); 
@@ -42,21 +42,21 @@ namespace SchemaValidator.Tests
 
         [Test]
         [ExpectedException(ExpectedException = typeof(ApplicationException))]
-        public void RequireTable_should_throw_exception_when_duplicated()
+        public void AddTable_should_throw_exception_when_duplicated()
         {
             // Act 
-            _schemaSpec.RequireTable("Table1");
-            _schemaSpec.RequireTable("Table1"); 
+            _schemaSpec.AddTable("Table1");
+            _schemaSpec.AddTable("Table1"); 
         }
 
 
         [Test]
         [ExpectedException(ExpectedException = typeof(ApplicationException))]
-        public void RequireTable_should_be_case_insensitive()
+        public void AddTable_should_be_case_insensitive()
         {
             // Act
-            _schemaSpec.RequireTable("TabLe1");
-            _schemaSpec.RequireTable("taBle1"); 
+            _schemaSpec.AddTable("TabLe1");
+            _schemaSpec.AddTable("taBle1"); 
         }
 
     }

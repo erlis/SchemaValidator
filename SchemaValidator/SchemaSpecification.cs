@@ -23,7 +23,7 @@ namespace SchemaValidator
 
 
         /// methods
-        public Table RequireTable(string tableName)
+        public Table AddTable(string tableName)
         {
             // guard clause: Duplicated table not allowed, It could overwrite an specification by mistake
             if (_tableList.Exists(x => tableName.EqualsIgnoreCase(x.Name)))

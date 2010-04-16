@@ -61,7 +61,7 @@ namespace SchemaValidator
             foreach (var tn in DistintTableQuery)
             {
                 // add table
-                t = _schspec.RequireTable(tn.TableName);
+                t = _schspec.AddTable(tn.TableName);
 
                 // query columns
                 var FieldsQuery = (from column in tables.AsEnumerable()

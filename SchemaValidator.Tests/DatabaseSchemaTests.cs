@@ -74,7 +74,7 @@ namespace SchemaValidator.Tests
             SchemaSpecification scdb = db.LoadSchemaSpecification();
 
             // duplicated table
-            scdb.RequireTable("region");
+            scdb.AddTable("region");
         }
 
     }
