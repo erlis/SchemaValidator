@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ColumnTests.cs" />
+    <Compile Include="ValueObjects\ColumnTests.cs" />
     <Compile Include="DatabaseSchemaTests.cs" />
     <Compile Include="SchemaSpecificationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,7 +63,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ColumnTests-Todo.txt" />
+    <Content Include="ValueObjects\ColumnTests-Todo.txt" />
     <Content Include="TableTests-Todo.txt" />
     <Content Include="ValueObjects\CompareResult-Todo.txt" />
   </ItemGroup>

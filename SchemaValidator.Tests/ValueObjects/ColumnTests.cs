@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using NUnit.Framework;
+using SchemaValidator.ValueObjects;
 
 // ReSharper disable InconsistentNaming
-namespace SchemaValidator.Tests
+namespace SchemaValidator.Tests.ValueObjects
 {
     [TestFixture]
     public class ColumnTests

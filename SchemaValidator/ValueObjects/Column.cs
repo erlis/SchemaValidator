@@ -1,7 +1,7 @@
 ﻿using System;
 using SchemaValidator.Extensions;
 
-namespace SchemaValidator
+namespace SchemaValidator.ValueObjects
 {
     public class Column
     {
