@@ -42,19 +42,19 @@ namespace SchemaValidator.Tests
         {
             // Arrange
             Table t1 = new Table("t1");
-            t1.WithColumn("c1").OfType("int", 4);
+            Column expected = t1.WithColumn("c1").OfType("int", 4);
             t1.WithColumn("irrelevant").OfType("varchar", 3);
 
-            Table t2 = new Table("t2");
+            Table t2 = new Table("t1");
             t2.WithColumn("c1").OfType("varchar", 4);
-            t2.WithColumn("irrelevant").OfType("varchar", 3); 
+            t2.WithColumn("irrelevant").OfType("varchar", 3);
 
             // Act 
-            CompareResult compareResult = t1.Compare(t2); 
+            CompareResult compareResult = t1.Compare(t2);
 
             // Assert
             Assert.That(compareResult.ConflictColumns.Count, Is.EqualTo(1));
-            Assert.That(compareResult.ConflictColumns[0].Name, Is.EqualTo("c1"));
+            Assert.That(compareResult.ConflictColumns[0], Is.SameAs(expected));
         }
 
         [Test]

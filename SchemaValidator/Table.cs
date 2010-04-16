@@ -45,7 +45,13 @@ namespace SchemaValidator
             foreach (Column eachColumn in _columnList)
             {
                 Column otherColumn = otherTable.FindColumnByName(eachColumn.Name);
-                if ( otherColumn == null ) result.AddMissingColumn(eachColumn); 
+                if (otherColumn == null)
+                    result.AddMissingColumn(eachColumn);
+                else
+                    if (!eachColumn.Equals(otherColumn))
+                    {
+                        result.AddConflictColumn(eachColumn);
+                    }
             }
 
             return result;

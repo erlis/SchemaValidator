@@ -12,7 +12,7 @@ namespace SchemaValidator.ValueObjects
         {
             get
             {
-                return _conflictColumns.AsReadOnly(); 
+                return _conflictColumns.AsReadOnly();
             }
         }
 
@@ -20,11 +20,12 @@ namespace SchemaValidator.ValueObjects
         {
             get
             {
-                if ( _missingColumns.Count > 0 ) return true; 
+                if ( _conflictColumns.Count > 0) return true; 
+                if (_missingColumns.Count > 0) return true;
                 return false;
             }
         }
-        
+
         private List<Column> _missingColumns;
         public ReadOnlyCollection<Column> MissingColumns
         {
@@ -37,9 +38,15 @@ namespace SchemaValidator.ValueObjects
         /// constructor
         public CompareResult()
         {
+            _conflictColumns = new List<Column>();
             _missingColumns = new List<Column>();
         }
 
+
+        public void AddConflictColumn(Column column)
+        {
+            _conflictColumns.Add(column);
+        }
 
         /// methods
         public void AddMissingColumn(Column column)

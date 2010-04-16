@@ -22,7 +22,7 @@ namespace SchemaValidator.Tests.ValueObjects
         {
             // Arrange
             CompareResult compareResult = new CompareResult();
-            compareResult.AddMissingColumn(new Column("irrelevant"));
+            compareResult.AddConflictColumn(new Column("irrelevant"));
 
             // Assert
             Assert.That(compareResult.HaveValues, Is.True);
