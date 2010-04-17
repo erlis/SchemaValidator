@@ -63,9 +63,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SchemaSpecificationTests-Todo.txt" />
     <Content Include="ValueObjects\ColumnTests-Todo.txt" />
     <Content Include="ValueObjects\TableTests-Todo.txt" />
-    <Content Include="ValueObjects\CompareResult-Todo.txt" />
+    <Content Include="ValueObjects\CompareResultTests-Todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

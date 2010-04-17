@@ -49,11 +49,11 @@ namespace SchemaValidator.Tests.ValueObjects
             t2.WithColumn("irrelevant").OfType("varchar", 3);
 
             // Act 
-            CompareResult<Column> compareResult = t1.Compare(t2);
+            CompareResult<Column> result = t1.Compare(t2);
 
             // Assert
-            Assert.That(compareResult.ConflictColumns.Count, Is.EqualTo(1));
-            Assert.That(compareResult.ConflictColumns[0], Is.SameAs(expected));
+            Assert.That(result.ConflictColumns.Count, Is.EqualTo(1));
+            Assert.That(result.ConflictColumns[0], Is.SameAs(expected));
         }
 
         [Test]

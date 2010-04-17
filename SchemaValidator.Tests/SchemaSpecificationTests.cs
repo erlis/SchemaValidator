@@ -59,5 +59,40 @@ namespace SchemaValidator.Tests
             _schemaSpec.AddTable("taBle1"); 
         }
 
+		[Test]
+		public void Compare_should_detect_missing_tables() {
+			// Arrange
+			SchemaSpecification spec1 = new SchemaSpecification();
+			spec1.AddTable( "t1" );
+			Table expected = spec1.AddTable( "t2" );
+
+			SchemaSpecification spec2 = new SchemaSpecification();
+			spec2.AddTable( "t1" );
+
+			// Act
+			CompareResult<Table> result = spec1.Compare( spec2 );
+
+			// Assert
+			Assert.That( result.MissingColumns.Count, Is.EqualTo( 1 ) );
+			Assert.That( result.MissingColumns[0], Is.SameAs( expected ) );
+		}
+
+		[Test]
+		public void Compare_should_ignore_extra_tables_in_the_other_specification() {
+			// Arrange
+			SchemaSpecification spec1 = new SchemaSpecification();
+			spec1.AddTable( "t1" );
+			
+			SchemaSpecification spec2 = new SchemaSpecification();
+			spec2.AddTable( "t1" );
+			spec2.AddTable( "t2" );
+
+			// Act
+			CompareResult<Table> result = spec1.Compare( spec2 );
+
+			// Assert
+			Assert.That( result.HaveValues, Is.False );
+		}
+
     }
 }
