@@ -22,7 +22,7 @@ namespace SchemaValidator.Tests.ValueObjects
         {
             // Arrange
             CompareResult<string> compareResult = new CompareResult<string>();
-            compareResult.AddConflict("");
+            compareResult.AddConflict(new Pair<string>("", "") );
 
             // Assert
             Assert.That(compareResult.HaveValues, Is.True);

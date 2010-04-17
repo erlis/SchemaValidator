@@ -1,11 +1,11 @@
 ﻿namespace SchemaValidator.ValueObjects {
-	public class Pair<F,S> {
+	public class Pair<T> {
 
-		public F First { get; private set; }
-		public S Second { get; private set; }
+		public T First { get; private set; }
+		public T Second { get; private set; }
 	
 
-		public Pair( F first, S second) {
+		public Pair( T first, T second) {
 			First = first;
 			Second = second; 
 		}

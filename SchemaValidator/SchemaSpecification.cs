@@ -44,7 +44,7 @@ namespace SchemaValidator
 				else {
 					CompareResult<Column> compareResult = eachTable.Compare( otherTable );
 					if (compareResult.HaveValues)
-						result.AddConflict( eachTable );
+						result.AddConflict( new Pair<Table>(eachTable, otherTable) );
 				}
     		}
     		return result; 

@@ -1,4 +1,3 @@
 ﻿X Compare should ignore extra tables in the other specification
 X Compare should detect missing tables
 X Compare should detect different tables
-- Compare should return Table conflicts with their inner column conflicts

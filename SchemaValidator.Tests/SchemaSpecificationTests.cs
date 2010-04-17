@@ -75,7 +75,7 @@ namespace SchemaValidator.Tests
 
 			// Assert
 			Assert.That( result.Conflict.Count, Is.EqualTo( 1 ) );
-			Assert.That( result.Conflict[0], Is.SameAs( expected ) );
+			Assert.That( result.Conflict[0].First, Is.SameAs( expected ) );
 		}
 
 		[Test]
