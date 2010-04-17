@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace SchemaValidator.ValueObjects
@@ -7,12 +6,12 @@ namespace SchemaValidator.ValueObjects
     public class CompareResult<T>
     {
         /// properties
-        private List<T> _conflictColumns;
-        public ReadOnlyCollection<T> ConflictColumns
+        private readonly List<T> _conflictList;
+        public ReadOnlyCollection<T> Conflict
         {
             get
             {
-                return _conflictColumns.AsReadOnly();
+                return _conflictList.AsReadOnly();
             }
         }
 
@@ -20,37 +19,37 @@ namespace SchemaValidator.ValueObjects
         {
             get
             {
-                if (_conflictColumns.Count > 0) return true;
-                if (_missingColumns.Count > 0) return true;
+                if (_conflictList.Count > 0) return true;
+                if (_missingList.Count > 0) return true;
                 return false;
             }
         }
 
-        private List<T> _missingColumns;
-        public ReadOnlyCollection<T> MissingColumns
+        private readonly List<T> _missingList;
+        public ReadOnlyCollection<T> Missing
         {
             get
             {
-                return _missingColumns.AsReadOnly();
+                return _missingList.AsReadOnly();
             }
         }
 
         /// constructor
         public CompareResult()
         {
-            _conflictColumns = new List<T>();
-            _missingColumns = new List<T>();
+            _conflictList = new List<T>();
+            _missingList = new List<T>();
         }
 
         /// methods
-        public void AddConflictColumn(T column)
+        public void AddConflict(T column)
         {
-            _conflictColumns.Add(column);
+            _conflictList.Add(column);
         }
 
-        public void AddMissingColumn(T column)
+        public void AddMissing(T column)
         {
-            _missingColumns.Add(column);
+            _missingList.Add(column);
         }
     }
 }

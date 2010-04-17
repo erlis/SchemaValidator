@@ -73,8 +73,8 @@ namespace SchemaValidator.Tests
 			CompareResult<Table> result = spec1.Compare( spec2 );
 
 			// Assert
-			Assert.That( result.MissingColumns.Count, Is.EqualTo( 1 ) );
-			Assert.That( result.MissingColumns[0], Is.SameAs( expected ) );
+			Assert.That( result.Missing.Count, Is.EqualTo( 1 ) );
+			Assert.That( result.Missing[0], Is.SameAs( expected ) );
 		}
 
 		[Test]

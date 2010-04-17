@@ -52,8 +52,8 @@ namespace SchemaValidator.Tests.ValueObjects
             CompareResult<Column> result = t1.Compare(t2);
 
             // Assert
-            Assert.That(result.ConflictColumns.Count, Is.EqualTo(1));
-            Assert.That(result.ConflictColumns[0], Is.SameAs(expected));
+            Assert.That(result.Conflict.Count, Is.EqualTo(1));
+            Assert.That(result.Conflict[0], Is.SameAs(expected));
         }
 
         [Test]
@@ -69,8 +69,8 @@ namespace SchemaValidator.Tests.ValueObjects
             CompareResult<Column> result = t1.Compare(t2);
 
             // Assert
-            Assert.That(result.MissingColumns.Count, Is.EqualTo(1));
-            Assert.That(result.MissingColumns[0].Name, Is.EqualTo("c1"));
+            Assert.That(result.Missing.Count, Is.EqualTo(1));
+            Assert.That(result.Missing[0].Name, Is.EqualTo("c1"));
         }
 
         [Test]

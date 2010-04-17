@@ -22,7 +22,7 @@ namespace SchemaValidator.Tests.ValueObjects
         {
             // Arrange
             CompareResult<string> compareResult = new CompareResult<string>();
-            compareResult.AddConflictColumn("");
+            compareResult.AddConflict("");
 
             // Assert
             Assert.That(compareResult.HaveValues, Is.True);
@@ -33,7 +33,7 @@ namespace SchemaValidator.Tests.ValueObjects
         {
             // Arrange
             CompareResult<string> compareResult = new CompareResult<string>();
-            compareResult.AddMissingColumn("");
+            compareResult.AddMissing("");
 
             // Assert
             Assert.That(compareResult.HaveValues, Is.True);

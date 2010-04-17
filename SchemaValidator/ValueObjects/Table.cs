@@ -45,11 +45,11 @@ namespace SchemaValidator.ValueObjects
             {
                 Column otherColumn = otherTable.FindColumnByName(eachColumn.Name);
                 if (otherColumn == null)
-                    result.AddMissingColumn(eachColumn);
+                    result.AddMissing(eachColumn);
                 else
                     if (!eachColumn.Equals(otherColumn))
                     {
-                        result.AddConflictColumn(eachColumn);
+                        result.AddConflict(eachColumn);
                     }
             }
 
