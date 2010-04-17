@@ -54,6 +54,7 @@
     <Compile Include="IDatabaseSchema.cs" />
     <Compile Include="SchemaSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueObjects\Pair.cs" />
     <Compile Include="ValueObjects\Table.cs" />
     <Compile Include="ValueObjects\CompareResult.cs" />
   </ItemGroup>

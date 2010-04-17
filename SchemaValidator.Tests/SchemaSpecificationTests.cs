@@ -6,7 +6,7 @@ using SchemaValidator.ValueObjects;
 namespace SchemaValidator.Tests
 {
     [TestFixture]
-    class SchemaSpecificationTests
+    public class SchemaSpecificationTests
     {
         private SchemaSpecification _schemaSpec; 
 
@@ -15,7 +15,7 @@ namespace SchemaValidator.Tests
         {
             _schemaSpec = new SchemaSpecification();
         }
-
+		
 
         [Test]
         public void AddTable_should_return_clase_Table()
@@ -58,6 +58,25 @@ namespace SchemaValidator.Tests
             _schemaSpec.AddTable("TabLe1");
             _schemaSpec.AddTable("taBle1"); 
         }
+
+		[Test]
+		public void Compare_should_detect_different_tables() {
+			// Arrange
+			SchemaSpecification spec1 = new SchemaSpecification();
+			spec1.AddTable( "t1" );
+			Table expected = spec1.AddTable( "t2" ).WithColumn( "c1" ).GetTable();
+
+			SchemaSpecification spec2 = new SchemaSpecification();
+			spec2.AddTable( "t1" );
+			spec2.AddTable( "t2" );
+
+			// Act
+			CompareResult<Table> result = spec1.Compare( spec2 );
+
+			// Assert
+			Assert.That( result.Conflict.Count, Is.EqualTo( 1 ) );
+			Assert.That( result.Conflict[0], Is.SameAs( expected ) );
+		}
 
 		[Test]
 		public void Compare_should_detect_missing_tables() {

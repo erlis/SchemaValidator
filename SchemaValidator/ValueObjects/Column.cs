@@ -65,6 +65,10 @@ namespace SchemaValidator.ValueObjects
             }
         }
 
+		public Table GetTable() {
+			return _parentTable; 
+		}
+
         public Column Nullable()
         {
             IsNullable = true;

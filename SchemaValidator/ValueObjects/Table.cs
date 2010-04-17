@@ -52,7 +52,6 @@ namespace SchemaValidator.ValueObjects
                         result.AddConflict(eachColumn);
                     }
             }
-
             return result;
         }
 
