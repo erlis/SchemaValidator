@@ -41,20 +41,21 @@ namespace SchemaValidator.Tests.ValueObjects
         {
             // Arrange
             Table t1 = new Table("t1");
-            Column expected = t1.WithColumn("c1").OfType("int", 4);
+            Column expectedFirst = t1.WithColumn("c1").OfType("int", 4);
             t1.WithColumn("irrelevant").OfType("varchar", 3);
 
             Table t2 = new Table("t1");
-            t2.WithColumn("c1").OfType("varchar", 4);
+            Column expectedSecond = t2.WithColumn("c1").OfType("varchar", 4);
             t2.WithColumn("irrelevant").OfType("varchar", 3);
 
             // Act 
             CompareResult<Column> result = t1.Compare(t2);
 
             // Assert
-            Assert.That(result.Conflict.Count, Is.EqualTo(1));
-            Assert.That(result.Conflict[0].First, Is.SameAs(expected));
-        }
+            Assert.That(result.ConflictList.Count, Is.EqualTo(1));
+            Assert.That(result.ConflictList[0].First, Is.SameAs(expectedFirst));
+			Assert.That( result.ConflictList[ 0 ].Second, Is.SameAs( expectedSecond ) );
+		}
 
         [Test]
         public void Compare_should_detect_missing_columns()
@@ -69,8 +70,8 @@ namespace SchemaValidator.Tests.ValueObjects
             CompareResult<Column> result = t1.Compare(t2);
 
             // Assert
-            Assert.That(result.Missing.Count, Is.EqualTo(1));
-            Assert.That(result.Missing[0].Name, Is.EqualTo("c1"));
+            Assert.That(result.MissingList.Count, Is.EqualTo(1));
+            Assert.That(result.MissingList[0].Name, Is.EqualTo("c1"));
         }
 
         [Test]

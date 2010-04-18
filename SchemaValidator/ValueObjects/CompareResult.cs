@@ -7,7 +7,7 @@ namespace SchemaValidator.ValueObjects
     {
         /// properties
         private readonly List<Pair<T>> _conflictList;
-        public ReadOnlyCollection<Pair<T>> Conflict
+        public ReadOnlyCollection<Pair<T>> ConflictList
         {
             get
             {
@@ -26,7 +26,7 @@ namespace SchemaValidator.ValueObjects
         }
 
         private readonly List<T> _missingList;
-        public ReadOnlyCollection<T> Missing
+        public ReadOnlyCollection<T> MissingList
         {
             get
             {

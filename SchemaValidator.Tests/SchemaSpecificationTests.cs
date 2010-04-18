@@ -64,18 +64,19 @@ namespace SchemaValidator.Tests
 			// Arrange
 			SchemaSpecification spec1 = new SchemaSpecification();
 			spec1.AddTable( "t1" );
-			Table expected = spec1.AddTable( "t2" ).WithColumn( "c1" ).GetTable();
+			Table expectedFirst = spec1.AddTable( "t2" ).WithColumn( "c1" ).GetTable();
 
 			SchemaSpecification spec2 = new SchemaSpecification();
 			spec2.AddTable( "t1" );
-			spec2.AddTable( "t2" );
+			Table expectedSecond = spec2.AddTable( "t2" );
 
 			// Act
 			CompareResult<Table> result = spec1.Compare( spec2 );
 
 			// Assert
-			Assert.That( result.Conflict.Count, Is.EqualTo( 1 ) );
-			Assert.That( result.Conflict[0].First, Is.SameAs( expected ) );
+			Assert.That( result.ConflictList.Count, Is.EqualTo( 1 ) );
+			Assert.That( result.ConflictList[ 0 ].First, Is.SameAs( expectedFirst ) );
+			Assert.That( result.ConflictList[ 0 ].Second, Is.SameAs( expectedSecond ) );
 		}
 
 		[Test]
@@ -92,8 +93,8 @@ namespace SchemaValidator.Tests
 			CompareResult<Table> result = spec1.Compare( spec2 );
 
 			// Assert
-			Assert.That( result.Missing.Count, Is.EqualTo( 1 ) );
-			Assert.That( result.Missing[0], Is.SameAs( expected ) );
+			Assert.That( result.MissingList.Count, Is.EqualTo( 1 ) );
+			Assert.That( result.MissingList[0], Is.SameAs( expected ) );
 		}
 
 		[Test]
@@ -111,6 +112,36 @@ namespace SchemaValidator.Tests
 
 			// Assert
 			Assert.That( result.HaveValues, Is.False );
+		}
+
+		[Test]
+		public void Compare_should_return_table_conflicts_with_their_columns_conflicts() {
+//			// Arrange
+//			SchemaSpecification spec1 = new SchemaSpecification();
+//			SchemaSpecification spec2 = new SchemaSpecification();
+//
+//			spec1.AddTable( "t1" ).WithColumn( "t1_c1" ).OfType( "int", 4 );
+//			spec1.AddTable( "t2" ).WithColumn( "T2_c1" ).GetTable();
+//
+//			spec2.AddTable( "t1" ).WithColumn( "t1_c1" ).OfType( "varchar", 4 );
+//			spec2.AddTable( "t2" );
+//
+//			// Act
+//			CompareResult<Table> result = spec1.Compare( spec2 );
+//
+//			// Assert
+//			Assert.That( result.ConflictList.Count, Is.EqualTo( 2 ) );
+//
+//			var t1ColumnConflictList = result.ConflictList[ 0 ].Detail.ConflictList; 
+//			Assert.That( t1ColumnConflictList.Count, Is.EqualTo( 1 ) );
+//			Assert.That( t1ColumnConflictList[0].First, Is.TypeOf(Column)  );
+//			Assert.That( t1ColumnConflictList[0].First.ColumnType, Is.EqualTo( "int" )  );
+//			Assert.That( t1ColumnConflictList[ 0 ].Second.ColumnType, Is.EqualTo( "varchar" ) );
+//
+//			var t2ColumnMissingList = result.ConflictList[ 0 ].Detail.MissingList;
+//			Assert.That( t2ColumnMissingList.Count, Is.EqualTo( 1 ) );
+//			Assert.That( t2ColumnMissingList[0], Is.TypeOf( Column ) );
+//			Assert.That( t2ColumnMissingList[0].Name, Is.EqualTo( "T2_c1" ) );
 		}
 
     }

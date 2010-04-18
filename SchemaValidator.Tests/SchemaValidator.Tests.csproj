@@ -53,6 +53,7 @@
     <Compile Include="DatabaseSchemaTests.cs" />
     <Compile Include="SchemaSpecificationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueObjects\ConflictTests.cs" />
     <Compile Include="ValueObjects\TableTests.cs" />
     <Compile Include="ValueObjects\CompareResultTests.cs" />
   </ItemGroup>
