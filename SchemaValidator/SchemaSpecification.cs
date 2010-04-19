@@ -2,6 +2,7 @@
 using System;
 using SchemaValidator.Extensions;
 using SchemaValidator.ValueObjects;
+using SchemaValidator.ValueObjects.DBElements;
 
 namespace SchemaValidator
 {
@@ -35,19 +36,25 @@ namespace SchemaValidator
         }
 
 
-    	public CompareResult<Table> Compare( SchemaSpecification otherSpec ) {
-    		CompareResult<Table> result = new CompareResult<Table>();
-    		foreach ( var eachTable in _tableList ) {
-    			Table otherTable = otherSpec._tableList.Find( x => x.Name.EqualsIgnoreCase( eachTable.Name ) );
-				if ( otherTable == null )
-					result.AddMissing( eachTable );
-				else {
-					CompareResult<Column> compareResult = eachTable.Compare( otherTable );
-					if (compareResult.HaveValues)
-						result.AddConflict( new Pair<Table>(eachTable, otherTable) );
-				}
-    		}
-    		return result; 
-    	}
+        public CompareResult Compare(SchemaSpecification otherSpec)
+        {
+            CompareResult result = new CompareResult();
+            foreach (var eachTable in _tableList)
+            {
+                Table otherTable = otherSpec._tableList.Find(x => x.Name.EqualsIgnoreCase(eachTable.Name));
+                if (otherTable == null)
+                    result.AddMissing(eachTable);
+                else
+                {
+                    CompareResult compareResult = eachTable.Compare(otherTable);
+                    if (compareResult.HaveValues)
+                    {
+                        var conflict = new Conflict(new Pair(eachTable, otherTable), compareResult);
+                        result.AddConflict(conflict);
+                    }
+                }
+            }
+            return result;
+        }
     }
 }

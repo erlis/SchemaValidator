@@ -1,3 +1,0 @@
-﻿X HaveValues should be false when no value added
-X HaveValues should be true when any Missing column added
-X HaveValues should be true when any Confclit column added

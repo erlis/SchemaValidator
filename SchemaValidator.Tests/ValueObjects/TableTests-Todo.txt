@@ -1,4 +1,0 @@
-﻿X Compare should detect missing columns
-X Compare should ignore extra columns in the other table
-X Compare should detect different columns
-- Compare should return all table conflicts with their column conflicts

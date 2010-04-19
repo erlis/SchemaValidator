@@ -48,14 +48,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ValueObjects\Column.cs" />
+    <Compile Include="ValueObjects\DBElements\Column.cs" />
     <Compile Include="DatabaseSchema.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IDatabaseSchema.cs" />
     <Compile Include="SchemaSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueObjects\Conflict.cs" />
     <Compile Include="ValueObjects\Pair.cs" />
-    <Compile Include="ValueObjects\Table.cs" />
+    <Compile Include="ValueObjects\DBElements\IDBElement.cs" />
+    <Compile Include="ValueObjects\DBElements\Table.cs" />
     <Compile Include="ValueObjects\CompareResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
