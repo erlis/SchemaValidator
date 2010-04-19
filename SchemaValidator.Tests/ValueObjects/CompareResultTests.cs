@@ -42,14 +42,17 @@ namespace SchemaValidator.Tests.ValueObjects
         }
 
         [Test]
-        public void ToString_should_return_string_representation_for_missing()
+        public void ToString_should_return_string_representation_for_missing_tables()
         {
             // Arrange
-            Table table = new Table("TableName").WithColumn("Id").OfType("int", 4)
-                                                .WithColumn("Desc").OfType("varchar", 100).Nullable()
-                                                .GetTable();
-            CompareResult compareResult = new CompareResult();
-            compareResult.AddMissing(table);
+            SchemaSpecification spec1 = new SchemaSpecification();
+            spec1.AddTable("TableName").WithColumn("Id").OfType("int", 4)
+                                       .WithColumn("Desc").OfType("varchar", 100).Nullable()
+                                       .GetTable();
+            SchemaSpecification spec2 = new SchemaSpecification();
+
+            CompareResult compareResult = spec1.Compare(spec2); 
+
             string expected = "Missing Table(s)\n" +
                               "----------------\n" +
                               "[TableName]\n" +
@@ -67,12 +70,12 @@ namespace SchemaValidator.Tests.ValueObjects
         public void ToString_should_return_string_representation_for_missing_columns()
         {
             // Arrange
-            Column column1 = new Column("Id").OfType("int", 4);
-            Column column2 = new Column("Desc").OfType("varchar", 100).Nullable();
+            Table t1 = new Table("t1").WithColumn("Id").OfType("int", 4)
+                                      .WithColumn("Desc").OfType("varchar", 100).Nullable()
+                                      .GetTable();
+            Table t2 = new Table("t1");
 
-            CompareResult compareResult = new CompareResult();
-            compareResult.AddMissing(column1);
-            compareResult.AddMissing(column2);
+            CompareResult compareResult = t1.Compare(t2); 
 
             string expected = "Missing Column(s)\n" +
                               "----------------\n" +
@@ -87,17 +90,56 @@ namespace SchemaValidator.Tests.ValueObjects
         }
 
         [Test]
-        [Ignore]
-        public void ToString_should_return_string_representation_for_conflicts()
+        public void ToString_should_return_string_representation_for_conflict_columns()
         {
-            
+            // Arrange
+            Table t1 = new Table("t1").WithColumn("column1").OfType("int", 4).GetTable();
+            Table t2 = new Table("t1").WithColumn("column1").OfType("varchar", 4).GetTable();
+
+            CompareResult compareResult = t1.Compare(t2); 
+
+            string expected = "Conflict Column(s)\n" +
+                              "----------------\n" +
+                              "Expected: column1 : int(4)\n" +
+                              "But was:  column1 : varchar(4)\n\n";
+
+            // Act 
+            string result = compareResult.ToString();
+
+            // Assert
+            Assert.That(result, Is.EqualTo(expected));
         }
 
         [Test]
-        [Ignore]
-        public void ToString_should_return_string_representation_for_nested_details()
+        public void ToString_should_return_string_representation_for_conflict_tables()
         {
-            
+            // Arrange
+            SchemaSpecification spec1 = new SchemaSpecification();
+            spec1.AddTable("t1").WithColumn("column1").OfType("int", 4)
+                                .WithColumn("irrelevant").OfType("varchar", 1 ).Nullable()
+                                .GetTable();
+
+            SchemaSpecification spec2 = new SchemaSpecification();
+            spec2.AddTable("t1").WithColumn("column1").OfType("varchar", 4)
+                                .WithColumn("irrelevant").OfType("varchar", 1 ).Nullable()
+                                .GetTable();
+
+            CompareResult compareResult = spec1.Compare(spec2); 
+
+            string expected = "Conflict Table(s)\n" +
+                              "----------------\n" +
+                              "[t1]\n" +    
+                              "   Conflict Column(s)\n" +
+                              "   ----------------\n" +
+                              "   Expected: column1 : int(4)\n" +
+                              "   But was:  column1 : varchar(4)\n\n";
+
+            // Act 
+            string result = compareResult.ToString();
+
+            // Assert
+            Assert.That(result, Is.EqualTo(expected));
         }
+
     }
 }
