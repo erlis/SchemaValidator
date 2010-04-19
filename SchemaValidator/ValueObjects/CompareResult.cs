@@ -43,7 +43,7 @@ namespace SchemaValidator.ValueObjects
         }
 
         /// methods
-        public void AddConflict( Conflict conflict )
+        public void AddConflict(Conflict conflict)
         {
             _conflictList.Add(conflict);
         }

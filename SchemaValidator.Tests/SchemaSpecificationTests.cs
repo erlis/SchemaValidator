@@ -146,6 +146,7 @@ namespace SchemaValidator.Tests
             Assert.That(((Column)t1ColumnConflictList[0].First).ColumnType, Is.EqualTo("int"));
             Assert.That(((Column)t1ColumnConflictList[0].Second).ColumnType, Is.EqualTo("varchar"));
 
+            // Asserting missing column 
             Conflict secondConflict = result.ConflictList[1];
             Assert.That(secondConflict.Detail, Is.Not.Null);
             var t2ColumnMissingList = secondConflict.Detail.MissingList;
