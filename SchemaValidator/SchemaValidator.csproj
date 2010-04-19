@@ -48,6 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SpecificationException.cs" />
+    <Compile Include="Specification\DBSpecification.cs" />
+    <Compile Include="Specification\ManualSpecification.cs" />
     <Compile Include="ValueObjects\DBElements\Column.cs" />
     <Compile Include="DatabaseSchema.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />

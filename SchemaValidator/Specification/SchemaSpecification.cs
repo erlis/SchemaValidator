@@ -24,7 +24,7 @@ namespace SchemaValidator.Specification
 
 
         /// methods
-        public Table AddTable(string tableName)
+        public virtual Table AddTable(string tableName)
         {
             // guard clause: Duplicated table not allowed, It could overwrite an specification by mistake
             if (_tableList.Exists(x => tableName.EqualsIgnoreCase(x.Name)))
