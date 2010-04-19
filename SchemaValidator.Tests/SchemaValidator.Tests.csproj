@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ValueObjects\PairTests.cs" />
     <Compile Include="ValueObjects\SpecComparable\ColumnTests.cs" />
     <Compile Include="DatabaseSchemaTests.cs" />
     <Compile Include="SchemaSpecificationTests.cs" />
@@ -62,12 +63,6 @@
       <Project>{6DC1405A-1DAE-4CC5-BFF7-56EEAC467000}</Project>
       <Name>SchemaValidator</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="SchemaSpecificationTests-Todo.txt" />
-    <Content Include="ValueObjects\SpecComparable\ColumnTests-Todo.txt" />
-    <Content Include="ValueObjects\SpecComparable\TableTests-Todo.txt" />
-    <Content Include="ValueObjects\CompareResultTests-Todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

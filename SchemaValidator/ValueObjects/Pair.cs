@@ -1,4 +1,5 @@
-﻿using SchemaValidator.ValueObjects.SpecComparable;
+﻿using System;
+using SchemaValidator.ValueObjects.SpecComparable;
 namespace SchemaValidator.ValueObjects {
 	public class Pair {
 
@@ -8,6 +9,9 @@ namespace SchemaValidator.ValueObjects {
 
         public Pair(ISpecComparable first, ISpecComparable second)
         {
+            // guard clause: first and second must be of the same type
+            if (first.GetType() != second.GetType() ) throw new ArgumentException( "First and Second must be of the same type");
+
 			First = first;
 			Second = second; 
 		}
