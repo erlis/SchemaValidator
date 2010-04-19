@@ -6,8 +6,8 @@ namespace SchemaValidator.ValueObjects
     public class CompareResult<T>
     {
         /// properties
-        private readonly List<Pair<T>> _conflictList;
-        public ReadOnlyCollection<Pair<T>> ConflictList
+        private readonly List<Pair> _conflictList;
+        public ReadOnlyCollection<Pair> ConflictList
         {
             get
             {
@@ -37,12 +37,12 @@ namespace SchemaValidator.ValueObjects
         /// constructor
         public CompareResult()
         {
-            _conflictList = new List<Pair<T>>();
+            _conflictList = new List<Pair>();
             _missingList = new List<T>();
         }
 
         /// methods
-        public void AddConflict( Pair<T> pair )
+        public void AddConflict( Pair pair )
         {
             _conflictList.Add(pair);
         }

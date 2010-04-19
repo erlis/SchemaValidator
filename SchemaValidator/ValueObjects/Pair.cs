@@ -1,11 +1,13 @@
-﻿namespace SchemaValidator.ValueObjects {
-	public class Pair<T> {
+﻿using SchemaValidator.ValueObjects.SpecComparable;
+namespace SchemaValidator.ValueObjects {
+	public class Pair {
 
-		public T First { get; private set; }
-		public T Second { get; private set; }
-	
+		public ISpecComparable First { get; private set; }
+		public ISpecComparable Second { get; private set; }
 
-		public Pair( T first, T second) {
+
+        public Pair(ISpecComparable first, ISpecComparable second)
+        {
 			First = first;
 			Second = second; 
 		}

@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using SchemaValidator.ValueObjects;
+using SchemaValidator.ValueObjects.SpecComparable;
 
 // ReSharper disable InconsistentNaming
 namespace SchemaValidator.Tests
@@ -115,8 +116,9 @@ namespace SchemaValidator.Tests
 		}
 
 		[Test]
+        [Ignore]
 		public void Compare_should_return_table_conflicts_with_their_columns_conflicts() {
-//			// Arrange
+			// Arrange
 //			SchemaSpecification spec1 = new SchemaSpecification();
 //			SchemaSpecification spec2 = new SchemaSpecification();
 //
@@ -126,10 +128,10 @@ namespace SchemaValidator.Tests
 //			spec2.AddTable( "t1" ).WithColumn( "t1_c1" ).OfType( "varchar", 4 );
 //			spec2.AddTable( "t2" );
 //
-//			// Act
+			// Act
 //			CompareResult<Table> result = spec1.Compare( spec2 );
 //
-//			// Assert
+			// Assert
 //			Assert.That( result.ConflictList.Count, Is.EqualTo( 2 ) );
 //
 //			var t1ColumnConflictList = result.ConflictList[ 0 ].Detail.ConflictList; 

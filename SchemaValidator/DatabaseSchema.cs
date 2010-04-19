@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Data.Linq;
 using SchemaValidator.ValueObjects;
+using SchemaValidator.ValueObjects.SpecComparable;
 
 namespace SchemaValidator
 {

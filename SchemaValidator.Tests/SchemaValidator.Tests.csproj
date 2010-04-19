@@ -49,12 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ValueObjects\ColumnTests.cs" />
+    <Compile Include="ValueObjects\SpecComparable\ColumnTests.cs" />
     <Compile Include="DatabaseSchemaTests.cs" />
     <Compile Include="SchemaSpecificationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueObjects\ConflictTests.cs" />
-    <Compile Include="ValueObjects\TableTests.cs" />
+    <Compile Include="ValueObjects\SpecComparable\TableTests.cs" />
     <Compile Include="ValueObjects\CompareResultTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -65,8 +65,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="SchemaSpecificationTests-Todo.txt" />
-    <Content Include="ValueObjects\ColumnTests-Todo.txt" />
-    <Content Include="ValueObjects\TableTests-Todo.txt" />
+    <Content Include="ValueObjects\SpecComparable\ColumnTests-Todo.txt" />
+    <Content Include="ValueObjects\SpecComparable\TableTests-Todo.txt" />
     <Content Include="ValueObjects\CompareResultTests-Todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

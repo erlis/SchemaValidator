@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SchemaValidator.ValueObjects;
+using SchemaValidator.ValueObjects.SpecComparable;
 
 // ReSharper disable InconsistentNaming
 namespace SchemaValidator.Tests.ValueObjects
@@ -22,7 +23,7 @@ namespace SchemaValidator.Tests.ValueObjects
         {
             // Arrange
             CompareResult<string> compareResult = new CompareResult<string>();
-            compareResult.AddConflict(new Pair<string>("", "") );
+            compareResult.AddConflict(new Pair(new Table("irrelevant"), new Table ("irrelevant too")) );
 
             // Assert
             Assert.That(compareResult.HaveValues, Is.True);

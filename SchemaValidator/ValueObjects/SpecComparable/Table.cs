@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using SchemaValidator.Extensions;
 
-namespace SchemaValidator.ValueObjects
+namespace SchemaValidator.ValueObjects.SpecComparable
 {
-    public class Table
+    public class Table : ISpecComparable
     {
 
         /// privates
@@ -49,7 +49,7 @@ namespace SchemaValidator.ValueObjects
                 else
                     if (!eachColumn.Equals(otherColumn))
                     {
-                        result.AddConflict(new Pair<Column>(eachColumn, otherColumn) );
+                        result.AddConflict(new Pair(eachColumn, otherColumn) );
                     }
             }
             return result;

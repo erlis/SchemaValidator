@@ -2,6 +2,7 @@
 using System;
 using SchemaValidator.Extensions;
 using SchemaValidator.ValueObjects;
+using SchemaValidator.ValueObjects.SpecComparable;
 
 namespace SchemaValidator
 {
@@ -44,7 +45,7 @@ namespace SchemaValidator
 				else {
 					CompareResult<Column> compareResult = eachTable.Compare( otherTable );
 					if (compareResult.HaveValues)
-						result.AddConflict( new Pair<Table>(eachTable, otherTable) );
+						result.AddConflict( new Pair(eachTable, otherTable) );
 				}
     		}
     		return result; 
