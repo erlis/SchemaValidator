@@ -114,54 +114,74 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         }
 
         [Test]
+        public void ToString_should_return_string_representation()
+        {
+            // Arrange
+            Table table = new Table("Person").WithColumn("Id").OfType("int", 4)
+                                             .WithColumn("Name").OfType("varchar", 255).Nullable()
+                                             .WithColumn("Salary").OfType("double", 2)
+                                             .GetTable();
+            string expected = " [Person]\n" +
+                              "   Id : int(4)\n" +
+                              "   Name : varchar(255) NULLABLE\n" +
+                              "   Salary : double(2)\n";
+
+            // Act
+            string result = table.ToString(); 
+
+            // Assert
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
         [ExpectedException(ExpectedException = typeof(ApplicationException))]
         public void WithColumn_should_be_case_insensitive()
         {
             // Arrange
-            Table _table = new Table("table1");
+            Table table = new Table("table1");
 
             // Act
-            _table.WithColumn("c1")
-                  .WithColumn("C1");
+            table.WithColumn("c1")
+                 .WithColumn("C1");
         }
 
         [Test]
         public void WithColumn_should_be_concatenated_fluently()
         {
             // Arrange
-            Table _table = new Table("table1");
+            Table table = new Table("table1");
 
             // Act 
-            _table.WithColumn("c1")
-                  .WithColumn("c2")
-                  .WithColumn("c3");
+            table.WithColumn("c1")
+                 .WithColumn("c2")
+                 .WithColumn("c3");
 
             // Assert
-            Assert.That(_table.ColumnCount, Is.EqualTo(3));
+            Assert.That(table.ColumnCount, Is.EqualTo(3));
         }
 
         [Test]
         public void WithColumn_should_remember_previous_values()
         {
             // Arrange
-            Table _table = new Table("table1");
+            Table table = new Table("table1");
 
             // Act
-            _table.WithColumn("c1");
-            _table.WithColumn("c2");
+            table.WithColumn("c1")
+                 .WithColumn("c2");
 
             // Assert
-            Assert.That(_table.ColumnCount, Is.EqualTo(2));
+            Assert.That(table.ColumnCount, Is.EqualTo(2));
         }
 
         [Test]
         public void WithColumn_should_return_same_class_Table()
         {
             // Arrange
-            Table _table = new Table("table1");
+            Table table = new Table("table1");
 
             // Act
-            Column column = _table.WithColumn("Column1");
+            Column column = table.WithColumn("Column1");
 
             // Assert
             Assert.That(column.Name, Is.EqualTo("Column1"));
@@ -173,11 +193,11 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void WithColumn_should_throw_exception_when_duplicated()
         {
             // Arrange
-            Table _table = new Table("table1");
+            Table table = new Table("table1");
 
             // Act
-            _table.WithColumn("c1");
-            _table.WithColumn("c1");
+            table.WithColumn("c1")
+                 .WithColumn("c1");
         }
     }
 }

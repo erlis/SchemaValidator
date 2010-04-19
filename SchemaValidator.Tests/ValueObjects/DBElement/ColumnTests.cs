@@ -167,6 +167,34 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
             Assert.That(column.ColumnType, Is.EqualTo("int"));
         }
 
+        [Test]
+        public void ToString_should_return_string_representation_when_nulleable()
+        {
+            // Arrange
+            Column column = new Column("c1").OfType("int", 4).Nullable();
+            string expected = "c1 : int(4) NULLABLE";
+
+            // Act
+            string result = column.ToString(); 
+
+            // Assert
+            Assert.That( result, Is.EqualTo(expected));
+        }
+
+
+        [Test]
+        public void ToString_should_return_string_representation_when_not_nulleable()
+        {
+            // Arrange
+            Column column = new Column("c1").OfType("int", 4);
+            string expected = "c1 : int(4)";
+
+            // Act
+            string result = column.ToString();
+
+            // Assert
+            Assert.That(result, Is.EqualTo(expected));
+        }
 
         [Test]
         public void WithColumn_should_return_class_Column()

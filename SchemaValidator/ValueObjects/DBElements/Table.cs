@@ -55,6 +55,19 @@ namespace SchemaValidator.ValueObjects.DBElements
             return result;
         }
 
+        private Column FindColumnByName(string columnName)
+        {
+            Column result = _columnList.Find(x => x.Name.EqualsIgnoreCase(columnName));
+            return result;
+        }
+
+        public override string ToString()
+        {
+            string result = string.Format("[{0}]\n", Name);
+            _columnList.ForEach( x => result += "   " + x.ToString() + "\n" );
+            return result; 
+        }
+
         public Column WithColumn(string columnName)
         {
             // guard clause: Duplicated column not allowed, It could overwrite an specification by mistake
@@ -64,12 +77,6 @@ namespace SchemaValidator.ValueObjects.DBElements
             Column column = new Column(columnName, this);
             _columnList.Add(column);
             return column;
-        }
-
-        private Column FindColumnByName(string columnName)
-        {
-            Column result = _columnList.Find(x => x.Name.EqualsIgnoreCase(columnName));
-            return result;
         }
     }
 }

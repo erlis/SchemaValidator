@@ -52,5 +52,20 @@ namespace SchemaValidator.ValueObjects
         {
             _missingList.Add(element);
         }
+
+        public override string ToString()
+        {
+            if (!HaveValues) return "";
+            string result = "";
+
+            if ( _missingList.Count > 0 )
+            {
+                result = string.Format("Missing {0}(s)\n", _missingList[0].GetType().Name) +
+                         "----------------\n";
+                _missingList.ForEach( x => result += x.ToString() + "\n");
+
+            }
+            return result; 
+        }
     }
 }
