@@ -121,7 +121,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
                                              .WithColumn("Name").OfType("varchar", 255).Nullable()
                                              .WithColumn("Salary").OfType("double", 2)
                                              .GetTable();
-            string expected = " [Person]\n" +
+            string expected = "[Person]\n" +
                               "   Id : int(4)\n" +
                               "   Name : varchar(255) NULLABLE\n" +
                               "   Salary : double(2)\n";
