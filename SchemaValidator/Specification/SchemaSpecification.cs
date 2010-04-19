@@ -24,14 +24,19 @@ namespace SchemaValidator.Specification
 
 
         /// methods
-        public virtual Table AddTable(string tableName)
+        protected void AddTable(Table table)
         {
             // guard clause: Duplicated table not allowed, It could overwrite an specification by mistake
-            if (_tableList.Exists(x => tableName.EqualsIgnoreCase(x.Name)))
-                throw new ApplicationException(string.Format("Table {0} already in specification", tableName));
+            if (_tableList.Exists(x => table.Name.EqualsIgnoreCase(x.Name)))
+                throw new ApplicationException(string.Format("Table {0} already in specification", table.Name));
 
+            _tableList.Add( table );
+        }
+
+        public virtual Table AddTable(string tableName)
+        {
             Table table = new Table(tableName);
-            _tableList.Add(table);
+            AddTable(table);
             return table;
         }
 

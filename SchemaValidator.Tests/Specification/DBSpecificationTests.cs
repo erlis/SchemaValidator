@@ -1,6 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 using System;
 using SchemaValidator.Specification;
+using SchemaValidator.ValueObjects.DBElements;
 
 // ReSharper disable InconsistentNaming
 namespace SchemaValidator.Tests.Specification
@@ -9,23 +11,11 @@ namespace SchemaValidator.Tests.Specification
     public class DBSpecificationTests
     {
         [Test]
-        [Ignore]
-        public void Constructor_should_expect_connectionString()
-        {
-            // Act
-            DBSpecification dbSpecification = new DBSpecification(/*Connection String*/);
-            int expected = 10; /* = number of tables */
-
-            // Assert
-            Assert.That(dbSpecification.TableCount, Is.EqualTo(expected));
-        }
-
-        [Test]
-        [Ignore]
+        [ExpectedException(ExpectedException = typeof(InvalidOperationException))]
         public void AddTable_should_throw_exception()
         {
             // Arrange
-            SchemaSpecification spec = new DBSpecification();
+            SchemaSpecification spec = new DBSpecification(new List<Table>());
 
             // Act
             spec.AddTable("a table");
