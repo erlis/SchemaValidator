@@ -4,7 +4,7 @@ using SchemaValidator.ValueObjects;
 using SchemaValidator.ValueObjects.SpecComparable;
 
 // ReSharper disable InconsistentNaming
-namespace SchemaValidator.Tests.ValueObjects
+namespace SchemaValidator.Tests.ValueObjects.SpecComparable
 {
     [TestFixture]
     public class TableTests
