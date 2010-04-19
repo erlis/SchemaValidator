@@ -37,5 +37,19 @@ namespace SchemaValidator.Tests.ValueObjects
             Assert.That(conflict.Second, Is.EqualTo(pair.Second));
         }
 
+        [Test]
+        public void Constructor_should_receive_a_CompareResult()
+        {
+            // Arrange
+            Pair pair = new Pair(new Column("irrelevant"), new Column("irrelevant"));
+            CompareResult compareResult = new CompareResult ();
+
+            // Act
+            Conflict conflict = new Conflict( pair, compareResult);
+
+            // Assert
+            Assert.That( conflict.Detail, Is.SameAs(compareResult));
+        }
+
     }
 }

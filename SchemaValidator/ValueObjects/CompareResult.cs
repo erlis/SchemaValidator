@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using SchemaValidator.ValueObjects.SpecComparable;
 
 namespace SchemaValidator.ValueObjects
 {
-    public class CompareResult<T>
+    public class CompareResult
     {
         /// properties
         private readonly List<Pair> _conflictList;
@@ -25,8 +26,8 @@ namespace SchemaValidator.ValueObjects
             }
         }
 
-        private readonly List<T> _missingList;
-        public ReadOnlyCollection<T> MissingList
+        private readonly List<ISpecComparable> _missingList;
+        public ReadOnlyCollection<ISpecComparable> MissingList
         {
             get
             {
@@ -38,7 +39,7 @@ namespace SchemaValidator.ValueObjects
         public CompareResult()
         {
             _conflictList = new List<Pair>();
-            _missingList = new List<T>();
+            _missingList = new List<ISpecComparable>();
         }
 
         /// methods
@@ -47,7 +48,7 @@ namespace SchemaValidator.ValueObjects
             _conflictList.Add(pair);
         }
 
-        public void AddMissing(T element)
+        public void AddMissing(ISpecComparable element)
         {
             _missingList.Add(element);
         }

@@ -9,14 +9,17 @@ namespace SchemaValidator.ValueObjects
         private readonly Pair _pair;
 
         /// properties
-        public object First { get { return _pair.First; } }
-        public object Second { get { return _pair.Second; } }
+        public ISpecComparable First { get { return _pair.First; } }
+        public ISpecComparable Second { get { return _pair.Second; } }
+        public CompareResult Detail { get; private set; }
 
 
         /// constructor
-        public Conflict(Pair pair)
+        public Conflict(Pair pair, CompareResult detail)
         {
-            _pair = pair; 
+            _pair = pair;
+            Detail = detail;
         }
+        public Conflict(Pair pair) : this(pair, null) { }
     }
 }

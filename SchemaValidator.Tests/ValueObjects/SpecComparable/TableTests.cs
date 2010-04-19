@@ -17,7 +17,7 @@ namespace SchemaValidator.Tests.ValueObjects.SpecComparable
             Table t2 = new Table("t1");
 
             // Act
-            CompareResult<Column> result = t1.Compare(t2);
+            CompareResult result = t1.Compare(t2);
 
             // Assert
             Assert.That(result, Is.Not.Null);
@@ -31,7 +31,7 @@ namespace SchemaValidator.Tests.ValueObjects.SpecComparable
             Table t2 = new Table("t1");
 
             // Act
-            CompareResult<Column> result = t1.Compare(t2);
+            CompareResult result = t1.Compare(t2);
 
             // Assert
             Assert.That(result, Is.Not.Null);
@@ -50,7 +50,7 @@ namespace SchemaValidator.Tests.ValueObjects.SpecComparable
             t2.WithColumn("irrelevant").OfType("varchar", 3);
 
             // Act 
-            CompareResult<Column> result = t1.Compare(t2);
+            CompareResult result = t1.Compare(t2);
 
             // Assert
             Assert.That(result.ConflictList.Count, Is.EqualTo(1));
@@ -68,7 +68,7 @@ namespace SchemaValidator.Tests.ValueObjects.SpecComparable
             Table t2 = new Table("t1");
 
             // Act 
-            CompareResult<Column> result = t1.Compare(t2);
+            CompareResult result = t1.Compare(t2);
 
             // Assert
             Assert.That(result.MissingList.Count, Is.EqualTo(1));
@@ -87,7 +87,7 @@ namespace SchemaValidator.Tests.ValueObjects.SpecComparable
             t2.WithColumn("c2");
 
             // Act
-            CompareResult<Column> result = t1.Compare(t2);
+            CompareResult result = t1.Compare(t2);
 
             // Assert 
             Assert.That(result.HaveValues, Is.False);

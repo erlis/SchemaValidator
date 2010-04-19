@@ -72,7 +72,7 @@ namespace SchemaValidator.Tests
 			Table expectedSecond = spec2.AddTable( "t2" );
 
 			// Act
-			CompareResult<Table> result = spec1.Compare( spec2 );
+			CompareResult result = spec1.Compare( spec2 );
 
 			// Assert
 			Assert.That( result.ConflictList.Count, Is.EqualTo( 1 ) );
@@ -91,7 +91,7 @@ namespace SchemaValidator.Tests
 			spec2.AddTable( "t1" );
 
 			// Act
-			CompareResult<Table> result = spec1.Compare( spec2 );
+			CompareResult result = spec1.Compare( spec2 );
 
 			// Assert
 			Assert.That( result.MissingList.Count, Is.EqualTo( 1 ) );
@@ -109,31 +109,30 @@ namespace SchemaValidator.Tests
 			spec2.AddTable( "t2" );
 
 			// Act
-			CompareResult<Table> result = spec1.Compare( spec2 );
+			CompareResult result = spec1.Compare( spec2 );
 
 			// Assert
 			Assert.That( result.HaveValues, Is.False );
 		}
 
 		[Test]
-        [Ignore]
 		public void Compare_should_return_table_conflicts_with_their_columns_conflicts() {
 			// Arrange
-//			SchemaSpecification spec1 = new SchemaSpecification();
-//			SchemaSpecification spec2 = new SchemaSpecification();
-//
-//			spec1.AddTable( "t1" ).WithColumn( "t1_c1" ).OfType( "int", 4 );
-//			spec1.AddTable( "t2" ).WithColumn( "T2_c1" ).GetTable();
-//
-//			spec2.AddTable( "t1" ).WithColumn( "t1_c1" ).OfType( "varchar", 4 );
-//			spec2.AddTable( "t2" );
-//
+			SchemaSpecification spec1 = new SchemaSpecification();
+			SchemaSpecification spec2 = new SchemaSpecification();
+
+			spec1.AddTable( "t1" ).WithColumn( "t1_c1" ).OfType( "int", 4 );
+			spec1.AddTable( "t2" ).WithColumn( "T2_c1" ).GetTable();
+
+			spec2.AddTable( "t1" ).WithColumn( "t1_c1" ).OfType( "varchar", 4 );
+			spec2.AddTable( "t2" );
+
 			// Act
-//			CompareResult<Table> result = spec1.Compare( spec2 );
-//
+			CompareResult result = spec1.Compare( spec2 );
+
 			// Assert
-//			Assert.That( result.ConflictList.Count, Is.EqualTo( 2 ) );
-//
+			Assert.That( result.ConflictList.Count, Is.EqualTo( 2 ) );
+
 //			var t1ColumnConflictList = result.ConflictList[ 0 ].Detail.ConflictList; 
 //			Assert.That( t1ColumnConflictList.Count, Is.EqualTo( 1 ) );
 //			Assert.That( t1ColumnConflictList[0].First, Is.TypeOf(Column)  );

@@ -12,7 +12,7 @@ namespace SchemaValidator.Tests.ValueObjects
         public void HaveValue_should_be_false_when_no_value_added()
         {
             // Arrange 
-            CompareResult<string> compareResult = new CompareResult<string>();
+            CompareResult compareResult = new CompareResult();
 
             // Assert
             Assert.That(compareResult.HaveValues, Is.False);
@@ -22,7 +22,7 @@ namespace SchemaValidator.Tests.ValueObjects
         public void HaveValue_should_should_be_true_when_a_conflict_column_added()
         {
             // Arrange
-            CompareResult<string> compareResult = new CompareResult<string>();
+            CompareResult compareResult = new CompareResult();
             compareResult.AddConflict(new Pair(new Table("irrelevant"), new Table ("irrelevant too")) );
 
             // Assert
@@ -33,8 +33,8 @@ namespace SchemaValidator.Tests.ValueObjects
         public void HaveValue_should_should_be_true_when_a_missing_column_added()
         {
             // Arrange
-            CompareResult<string> compareResult = new CompareResult<string>();
-            compareResult.AddMissing("");
+            CompareResult compareResult = new CompareResult();
+            compareResult.AddMissing(new Column("irrelevant"));
 
             // Assert
             Assert.That(compareResult.HaveValues, Is.True);

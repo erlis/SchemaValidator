@@ -36,14 +36,14 @@ namespace SchemaValidator
         }
 
 
-    	public CompareResult<Table> Compare( SchemaSpecification otherSpec ) {
-    		CompareResult<Table> result = new CompareResult<Table>();
+    	public CompareResult Compare( SchemaSpecification otherSpec ) {
+    		CompareResult result = new CompareResult();
     		foreach ( var eachTable in _tableList ) {
     			Table otherTable = otherSpec._tableList.Find( x => x.Name.EqualsIgnoreCase( eachTable.Name ) );
 				if ( otherTable == null )
 					result.AddMissing( eachTable );
 				else {
-					CompareResult<Column> compareResult = eachTable.Compare( otherTable );
+					CompareResult compareResult = eachTable.Compare( otherTable );
 					if (compareResult.HaveValues)
 						result.AddConflict( new Pair(eachTable, otherTable) );
 				}
