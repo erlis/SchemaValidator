@@ -116,15 +116,14 @@ namespace SchemaValidator.Tests.ValueObjects
         {
             // Arrange
             SchemaSpecification spec1 = new SchemaSpecification();
-            spec1.AddTable("t1").WithColumn("column1").OfType("int", 4)
-                                .WithColumn("irrelevant").OfType("varchar", 1 ).Nullable()
-                                .GetTable();
+        	spec1.AddTable( "t1" ).WithColumn( "column1" ).OfType( "int", 4 )
+        		                  .WithColumn( "irrelevant" ).OfType( "varchar", 1 ).Nullable();
+                                
 
             SchemaSpecification spec2 = new SchemaSpecification();
-            spec2.AddTable("t1").WithColumn("column1").OfType("varchar", 4)
-                                .WithColumn("irrelevant").OfType("varchar", 1 ).Nullable()
-                                .GetTable();
-
+        	spec2.AddTable( "t1" ).WithColumn( "column1" ).OfType( "varchar", 4 )
+                                  .WithColumn( "irrelevant" ).OfType( "varchar", 1 ).Nullable();
+                                
             CompareResult compareResult = spec1.Compare(spec2); 
 
             string expected = "Conflict Table(s)\n" +
