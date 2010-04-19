@@ -1,0 +1,5 @@
+﻿X Constructor should throw exception when database connection string is null
+X Constructor should throw exception when database connection string is empty
+X LoadSchemaSpecification method should throw exception when database connection string is wrong
+X LoadSchemaSpecification method should update TableCount property
+X RequireTable method in Specification class should throw exception when duplicated table
