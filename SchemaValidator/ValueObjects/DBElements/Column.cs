@@ -1,9 +1,9 @@
 ﻿using System;
 using SchemaValidator.Extensions;
 
-namespace SchemaValidator.ValueObjects.SpecComparable
+namespace SchemaValidator.ValueObjects.DBElements
 {
-    public class Column : ISpecComparable
+    public class Column : IDBElement
     {
         /// private fields
         private readonly Table _parentTable;

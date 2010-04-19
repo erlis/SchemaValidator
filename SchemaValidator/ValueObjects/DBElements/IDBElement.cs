@@ -1,6 +1,6 @@
-namespace SchemaValidator.ValueObjects.SpecComparable
+namespace SchemaValidator.ValueObjects.DBElements
 {
-    public interface ISpecComparable
+    public interface IDBElement
     {
         string Name { get; }
     }

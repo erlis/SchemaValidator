@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using SchemaValidator.Extensions;
 
-namespace SchemaValidator.ValueObjects.SpecComparable
+namespace SchemaValidator.ValueObjects.DBElements
 {
-    public class Table : ISpecComparable
+    public class Table : IDBElement
     {
 
         /// privates

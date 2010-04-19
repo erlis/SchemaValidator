@@ -1,5 +1,5 @@
 ﻿using System;
-using SchemaValidator.ValueObjects.SpecComparable;
+using SchemaValidator.ValueObjects.DBElements;
 
 namespace SchemaValidator.ValueObjects
 {
@@ -9,8 +9,8 @@ namespace SchemaValidator.ValueObjects
         private readonly Pair _pair;
 
         /// properties
-        public ISpecComparable First { get { return _pair.First; } }
-        public ISpecComparable Second { get { return _pair.Second; } }
+        public IDBElement First { get { return _pair.First; } }
+        public IDBElement Second { get { return _pair.Second; } }
         public CompareResult Detail { get; private set; }
 
 

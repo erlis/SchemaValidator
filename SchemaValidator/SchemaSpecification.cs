@@ -2,7 +2,7 @@
 using System;
 using SchemaValidator.Extensions;
 using SchemaValidator.ValueObjects;
-using SchemaValidator.ValueObjects.SpecComparable;
+using SchemaValidator.ValueObjects.DBElements;
 
 namespace SchemaValidator
 {

@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using SchemaValidator.ValueObjects.SpecComparable;
+using SchemaValidator.ValueObjects.DBElements;
 using SchemaValidator.ValueObjects;
 using System;
 

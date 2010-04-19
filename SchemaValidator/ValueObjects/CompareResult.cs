@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using SchemaValidator.ValueObjects.SpecComparable;
+using SchemaValidator.ValueObjects.DBElements;
 
 namespace SchemaValidator.ValueObjects
 {
@@ -26,8 +26,8 @@ namespace SchemaValidator.ValueObjects
             }
         }
 
-        private readonly List<ISpecComparable> _missingList;
-        public ReadOnlyCollection<ISpecComparable> MissingList
+        private readonly List<IDBElement> _missingList;
+        public ReadOnlyCollection<IDBElement> MissingList
         {
             get
             {
@@ -39,7 +39,7 @@ namespace SchemaValidator.ValueObjects
         public CompareResult()
         {
             _conflictList = new List<Pair>();
-            _missingList = new List<ISpecComparable>();
+            _missingList = new List<IDBElement>();
         }
 
         /// methods
@@ -48,7 +48,7 @@ namespace SchemaValidator.ValueObjects
             _conflictList.Add(pair);
         }
 
-        public void AddMissing(ISpecComparable element)
+        public void AddMissing(IDBElement element)
         {
             _missingList.Add(element);
         }

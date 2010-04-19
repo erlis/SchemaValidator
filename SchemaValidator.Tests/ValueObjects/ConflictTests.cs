@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using SchemaValidator.ValueObjects;
-using SchemaValidator.ValueObjects.SpecComparable;
+using SchemaValidator.ValueObjects.DBElements;
 
 // ReSharper disable InconsistentNaming
 namespace SchemaValidator.Tests.ValueObjects
