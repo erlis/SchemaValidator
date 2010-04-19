@@ -28,6 +28,7 @@ namespace SchemaValidator
         }
         
         private readonly List<Table> _tableList;
+        private SqlConnection _connection = null;
 
 
         // constructors
@@ -99,50 +100,15 @@ namespace SchemaValidator
         private DataSet LoadDBInfo()
         {
             DataSet _records = new DataSet();
-            SqlConnection _conn = null;
-            SqlCommand _cmd;
-            SqlDataAdapter _adapter;
 
             try
             {
                 // create connection
-                using (_conn = new SqlConnection(this._connectionString))
-                {
-                    // open connection
-                    _conn.Open();
-
-                    // execute sql to get the tables
-                    using (_cmd = new SqlCommand())
-                    {
-                        _cmd.CommandText = "SELECT " +
-                                                            "    so.name AS TableName, " +
-                                                            "    sc.name AS ColumnName, " +
-                                                            "    st.name AS DataType, " +
-                                                            "    sc.Length AS Length, " +
-                                                            "    sc.isnullable AS IsNullable " +
-                                                            "FROM    " +
-                                                            "    SysObjects so " +
-                                                            "       INNER JOIN SysColumns sc " +
-                                                            "           on so.id = sc.id " +
-                                                            "       INNER JOIN SysTypes st " +
-                                                            "           on st.xtype = sc.xtype " +
-                                                            "WHERE  " +
-                                                            "    so.Type = 'U' " +
-                                                            "ORDER BY  " +
-                                                            "    so.Name";
-
-                        _cmd.CommandType = CommandType.Text;
-                        _cmd.Connection = _conn;
-
-                        
-                        using (_adapter = new SqlDataAdapter())
-                        {
-                            _adapter.SelectCommand = _cmd;
-                            _adapter.Fill(_records, "dbtables");
-                        }
-                    }
-
-                }
+                CreateProviderConnection();
+                // open connection
+                OpenProviderConnection();
+                // execute sql to get the tables
+                _records = GetProviderInfoTables();
             }
             catch (Exception ex)
             {
@@ -150,10 +116,71 @@ namespace SchemaValidator
             }
             finally
             {
-                if (_conn != null && _conn.State == ConnectionState.Open) _conn.Close();
+                CloseProviderConnection();
             }
 
             return _records;
+        }
+
+        private void CloseProviderConnection()
+        {
+            if (_connection != null && _connection.State == ConnectionState.Open) _connection.Close();
+        }
+
+        private DataSet GetProviderInfoTables()
+        {
+            SqlCommand _cmd;
+            DataSet _records = new DataSet() ;
+
+            using (_cmd = new SqlCommand())
+            {
+                _cmd.CommandText = "SELECT " +
+                                                    "    so.name AS TableName, " +
+                                                    "    sc.name AS ColumnName, " +
+                                                    "    st.name AS DataType, " +
+                                                    "    sc.Length AS Length, " +
+                                                    "    sc.isnullable AS IsNullable " +
+                                                    "FROM    " +
+                                                    "    SysObjects so " +
+                                                    "       INNER JOIN SysColumns sc " +
+                                                    "           on so.id = sc.id " +
+                                                    "       INNER JOIN SysTypes st " +
+                                                    "           on st.xtype = sc.xtype " +
+                                                    "WHERE  " +
+                                                    "    so.Type = 'U' " +
+                                                    "ORDER BY  " +
+                                                    "    so.Name";
+
+                _cmd.CommandType = CommandType.Text;
+                _cmd.Connection = _connection;
+
+                _records = FillDataSetFromDataAdapter(_cmd);
+            }
+
+            return _records;
+        }
+
+        private static DataSet FillDataSetFromDataAdapter(SqlCommand _cmd)
+        {
+            SqlDataAdapter _adapter;
+            DataSet _records = new DataSet();
+
+            using (_adapter = new SqlDataAdapter())
+            {
+                _adapter.SelectCommand = _cmd;
+                _adapter.Fill(_records, "dbtables");
+            }
+            return _records;
+        }
+
+        private void OpenProviderConnection()
+        {
+            _connection.Open();
+        }
+
+        private SqlConnection CreateProviderConnection()
+        {
+            return _connection = new SqlConnection(this._connectionString);
         }
 
     }
