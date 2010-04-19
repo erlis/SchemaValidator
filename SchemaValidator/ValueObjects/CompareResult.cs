@@ -55,17 +55,42 @@ namespace SchemaValidator.ValueObjects
 
         public override string ToString()
         {
+            return ToStringIndent("");
+        }
+
+        private string ToStringIndent(string indent)
+        {
             if (!HaveValues) return "";
             string result = "";
 
-            if ( _missingList.Count > 0 )
+            if (_missingList.Count > 0)
             {
-                result = string.Format("Missing {0}(s)\n", _missingList[0].GetType().Name) +
-                         "----------------\n";
-                _missingList.ForEach( x => result += x.ToString() + "\n");
+                result += string.Format("{0}Missing {1}(s)\n{0}----------------\n", indent, _missingList[0].GetType().Name);
+                _missingList.ForEach(x => result += string.Format("{0}{1}\n", indent, x.ToString()));
 
             }
-            return result; 
+
+            if (_conflictList.Count > 0)
+            {
+                result += string.Format("{0}Conflict {1}(s)\n{0}----------------\n", indent, _conflictList[0].First.GetType().Name);
+                if (_conflictList[0].First.GetType() == typeof(Table))
+                {
+                    _conflictList.ForEach(x =>
+                                              {
+                                                  result += string.Format("{0}[{1}]\n",indent, x.First.Name);
+                                                  result += x.Detail.ToStringIndent(indent + "   "); 
+                                              });
+                }
+                else
+                {
+                    _conflictList.ForEach(x =>
+                                              {
+                                                  result += string.Format("{0}Expected: {1}\n", indent, x.First.ToString());
+                                                  result += string.Format("{0}But was:  {1}\n\n", indent, x.Second.ToString());
+                                              });
+                }
+            }
+            return result;
         }
     }
 }
