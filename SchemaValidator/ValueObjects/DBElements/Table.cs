@@ -49,7 +49,7 @@ namespace SchemaValidator.ValueObjects.DBElements
                 else
                     if (!eachColumn.Equals(otherColumn))
                     {
-                        result.AddConflict(new Pair(eachColumn, otherColumn) );
+                        result.AddConflict(new Conflict(new Pair(eachColumn, otherColumn)));
                     }
             }
             return result;

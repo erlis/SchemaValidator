@@ -23,7 +23,8 @@ namespace SchemaValidator.Tests.ValueObjects
         {
             // Arrange
             CompareResult compareResult = new CompareResult();
-            compareResult.AddConflict(new Pair(new Table("irrelevant"), new Table ("irrelevant too")) );
+            var pair = new Pair(new Table("irrelevant"), new Table("irrelevant too"));
+            compareResult.AddConflict(new Conflict(pair));
 
             // Assert
             Assert.That(compareResult.HaveValues, Is.True);

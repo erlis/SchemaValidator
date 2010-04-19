@@ -1,5 +1,4 @@
-﻿using System;
-using SchemaValidator.ValueObjects.DBElements;
+﻿using SchemaValidator.ValueObjects.DBElements;
 
 namespace SchemaValidator.ValueObjects
 {
