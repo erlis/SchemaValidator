@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using SchemaValidator.Specification;
 
 // ReSharper disable InconsistentNaming
 namespace SchemaValidator.Tests

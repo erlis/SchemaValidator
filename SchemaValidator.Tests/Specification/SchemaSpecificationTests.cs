@@ -1,10 +1,11 @@
 ﻿using System;
 using NUnit.Framework;
+using SchemaValidator.Specification;
 using SchemaValidator.ValueObjects;
 using SchemaValidator.ValueObjects.DBElements;
 
 // ReSharper disable InconsistentNaming
-namespace SchemaValidator.Tests
+namespace SchemaValidator.Tests.Specification
 {
     [TestFixture]
     public class SchemaSpecificationTests

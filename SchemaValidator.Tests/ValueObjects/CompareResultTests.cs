@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SchemaValidator.Specification;
 using SchemaValidator.ValueObjects;
 using SchemaValidator.ValueObjects.DBElements;
 

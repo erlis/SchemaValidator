@@ -4,7 +4,7 @@ using SchemaValidator.Extensions;
 using SchemaValidator.ValueObjects;
 using SchemaValidator.ValueObjects.DBElements;
 
-namespace SchemaValidator
+namespace SchemaValidator.Specification
 {
     public class SchemaSpecification
     {

@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Data.Linq;
+using SchemaValidator.Specification;
 using SchemaValidator.ValueObjects;
 using SchemaValidator.ValueObjects.DBElements;
 
