@@ -41,7 +41,8 @@ namespace SchemaValidator
             CompareResult result = new CompareResult();
             foreach (var eachTable in _tableList)
             {
-                Table otherTable = otherSpec._tableList.Find(x => x.Name.EqualsIgnoreCase(eachTable.Name));
+                Table table = eachTable;
+                Table otherTable = otherSpec._tableList.Find(x => x.Name.EqualsIgnoreCase(table.Name));
                 if (otherTable == null)
                     result.AddMissing(eachTable);
                 else
