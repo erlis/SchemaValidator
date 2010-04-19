@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{659E4B51-2D68-485E-8AB3-97E3432BCD95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -64,6 +64,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DatabaseSchemaTests-Todo.txt" />
     <Content Include="SchemaSpecificationTests-Todo.txt" />
     <Content Include="ValueObjects\ColumnTests-Todo.txt" />
     <Content Include="ValueObjects\TableTests-Todo.txt" />

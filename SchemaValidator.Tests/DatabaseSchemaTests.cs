@@ -34,17 +34,15 @@ namespace SchemaValidator.Tests
         }
 
         [Test]
+        [ExpectedException(ExpectedException = typeof(ArgumentException))]
         [Category("DB")]
-        public void SchemaSpecification_should_be_created_if_the_string_connection_is_OK()
+        public void LoadSchemaSpecification_should_throw_exception_when_connection_string_is_wrong()
         {
             // Arrange
-            DatabaseSchema db = new DatabaseSchema(@"Data Source=.\SQLEXPRESS;AttachDbFilename=""C:\SQL Server 2000 Sample Databases\NORTHWND.MDF"";Integrated Security=True;Connect Timeout=30;User Instance=True");
+            DatabaseSchema db = new DatabaseSchema(@"wrong database connection string");
 
             // Act
             SchemaSpecification scdb = db.LoadSchemaSpecification();
-
-            // Assert
-            Assert.That(scdb, Is.Not.Null);
         }
 
         [Test]

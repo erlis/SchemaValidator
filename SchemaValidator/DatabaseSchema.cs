@@ -13,17 +13,27 @@ namespace SchemaValidator
     public class DatabaseSchema : IDatabaseSchema
     {
 
-        // private fields
+        // private fields and properties
         private string _connectionString;
-        private List<Table> _tableList = new List<Table>();
+        public string ConnectionString
+        {
+            get { return _connectionString; }
+            private set
+            {
+                if (value == null) throw new ArgumentException("Connection String must be not null");
+                if (value == string.Empty) throw new ArgumentException("Connection String must be not empty");
+                _connectionString = value;
+            }
+        }
+        
+        private readonly List<Table> _tableList;
 
 
         // constructors
-        public DatabaseSchema(string connectionString)
+        public DatabaseSchema(string connectionstring)
         {
-            if (connectionString == null) throw new ArgumentException("Connection String must be not null");
-            if (connectionString == string.Empty) throw new ArgumentException("Connection String must be not empty");
-            _connectionString = connectionString;
+            ConnectionString = connectionstring;
+            _tableList = new List<Table>();
         }
 
 
@@ -34,7 +44,7 @@ namespace SchemaValidator
         // methods
         public SchemaSpecification LoadSchemaSpecification()
         {
-            SchemaSpecification _SchSpec = new SchemaSpecification();
+            SchemaSpecification _SchSpec = null;
             DataSet _records;
 
             // load database info
@@ -139,7 +149,7 @@ namespace SchemaValidator
             }
             finally
             {
-                if (_conn.State == ConnectionState.Open) _conn.Close();
+                if (_conn != null && _conn.State == ConnectionState.Open) _conn.Close();
             }
 
             return _records;
