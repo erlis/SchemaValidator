@@ -18,7 +18,7 @@ namespace SchemaValidator.Tests.Specification
                                         {
                                             new Table( "irrelevant")
                                         };
-            DBSpecification dbSpecification = new DBSpecification(tableList);
+            DbSpecification dbSpecification = new DbSpecification(tableList);
             ManualSpecification manualSpecification = new ManualSpecification();
             manualSpecification.AddTable("t1");
 
@@ -36,7 +36,7 @@ namespace SchemaValidator.Tests.Specification
                                         {
                                             new Table( "t1")
                                         };
-            DBSpecification dbSpecification = new DBSpecification(tableList);
+            DbSpecification dbSpecification = new DbSpecification(tableList);
             ManualSpecification manualSpecification = new ManualSpecification();
             manualSpecification.AddTable("t1").WithColumn("c1");
 

@@ -9,7 +9,7 @@ namespace SchemaValidator.Specification
         /// 
         /// </summary>
         /// <param name="dbSpecification"></param>
-        public void AssertIsSatisfiedBy(DBSpecification dbSpecification)
+        public void AssertIsSatisfiedBy(DbSpecification dbSpecification)
         {
             CompareResult result = Compare(dbSpecification); 
             if (result.HaveValues)
