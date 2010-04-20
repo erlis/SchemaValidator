@@ -48,7 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SpecificationException.cs" />
+    <Compile Include="Specification\SpecificationException.cs" />
     <Compile Include="Specification\DbSpecification.cs" />
     <Compile Include="Specification\ManualSpecification.cs" />
     <Compile Include="ValueObjects\DBElements\Column.cs" />

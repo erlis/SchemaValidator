@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SchemaValidator
+namespace SchemaValidator.Specification
 {
     public class SpecificationException : Exception
     {
