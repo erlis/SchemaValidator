@@ -24,7 +24,7 @@ namespace SchemaValidator.Tests.Specification
             DbSpecification dbSpecification = new DbSpecification(tableList);
 
             // Assert
-            Assert.That(dbSpecification.TableCount, Is.EqualTo(2));
+            Assert.That(dbSpecification.Tables.Count, Is.EqualTo(2));
         }
 
 

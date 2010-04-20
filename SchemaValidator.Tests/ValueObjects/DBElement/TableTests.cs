@@ -157,7 +157,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
                  .WithColumn("c3");
 
             // Assert
-            Assert.That(table.ColumnCount, Is.EqualTo(3));
+            Assert.That(table.Columns.Count, Is.EqualTo(3));
         }
 
         [Test]
@@ -171,7 +171,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
                  .WithColumn("c2");
 
             // Assert
-            Assert.That(table.ColumnCount, Is.EqualTo(2));
+            Assert.That(table.Columns.Count, Is.EqualTo(2));
         }
 
         [Test]

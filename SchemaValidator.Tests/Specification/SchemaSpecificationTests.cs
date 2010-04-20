@@ -38,7 +38,7 @@ namespace SchemaValidator.Tests.Specification
             _schemaSpec.AddTable("Table2");
 
             // Assert
-            Assert.That(_schemaSpec.TableCount, Is.EqualTo(2));
+            Assert.That(_schemaSpec.Tables.Count, Is.EqualTo(2));
         }
 
 

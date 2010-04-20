@@ -57,7 +57,7 @@ namespace SchemaValidator.Tests
             SchemaSpecification scdb = db.LoadSchemaSpecification();
 
             // Assert
-            Assert.That(Is.Equals(scdb.TableCount, 13));
+            Assert.That(Is.Equals(scdb.Tables.Count, 13));
         }
 
         [Test]

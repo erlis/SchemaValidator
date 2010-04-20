@@ -3,6 +3,7 @@ using System;
 using SchemaValidator.Extensions;
 using SchemaValidator.ValueObjects;
 using SchemaValidator.ValueObjects.DBElements;
+using System.Collections.ObjectModel;
 
 namespace SchemaValidator.Specification
 {
@@ -13,8 +14,7 @@ namespace SchemaValidator.Specification
         private readonly List<Table> _tableList;
 
         /// properties
-        public int TableCount { get { return _tableList.Count; } }
-
+        public ReadOnlyCollection<Table> Tables { get { return _tableList.AsReadOnly(); } }
 
         /// constructors
         public SchemaSpecification()

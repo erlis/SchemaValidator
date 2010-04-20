@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using SchemaValidator.Extensions;
 
 namespace SchemaValidator.ValueObjects.DBElements
@@ -22,8 +23,7 @@ namespace SchemaValidator.ValueObjects.DBElements
                 _name = value;
             }
         }
-
-        public int ColumnCount { get { return _columnList.Count; } }
+        public ReadOnlyCollection<Column> Columns { get { return _columnList.AsReadOnly(); } }
 
         /// constructor 
         public Table(string name)
