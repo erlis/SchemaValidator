@@ -30,6 +30,7 @@ namespace SchemaValidator
         
         private readonly List<Table> _tableList;
         private SqlConnection _connection = null;
+        private DataTable _providertables;
 
 
         // constructors
@@ -62,40 +63,54 @@ namespace SchemaValidator
         private SchemaSpecification CreateSchemaSpecification(DataSet ds)
         {
             SchemaSpecification _schspec = new SchemaSpecification();
-            DataTable tables = ds.Tables["dbtables"];
             Table t;
             Column cl;
 
+            // fill Provider Tables Info
+            _providertables = FillProviderTableInfo(ds);
+
             // query tables
-            var DistintTableQuery = (from table in tables.AsEnumerable()
+            var DistintTableQuery = (from table in _providertables.AsEnumerable()
                                      select new { TableName = table.Field<string>("TableName") }).Distinct();
             
-            // add tales and their fields
+            // add tables and their fields
             foreach (var tn in DistintTableQuery)
             {
                 // add table
                 t = _schspec.AddTable(tn.TableName);
-
-                // query columns
-                var FieldsQuery = (from column in tables.AsEnumerable()
-                                               where column.Field<string>("TableName") == tn.TableName
-                                               select new {   
-                                                                    ColumnName = column.Field<string>("ColumnName")
-                                                                    , DataType = column.Field<string>("DataType")
-                                                                    , Length = column.Field<Int16>("Length")
-                                                                    , IsNullable = column.Field<int>("IsNullable")
-                                               }).Distinct();
-
                 // add columns
-                foreach (var fn in FieldsQuery)
-                {
-                    cl = new Column(fn.ColumnName, t);
-                    cl.OfType(fn.DataType, fn.Length);
-                    if (Convert.ToBoolean(fn.IsNullable)) cl.Nullable();
-                }
+                AddColumnsToTable(t);
             }
-
             return _schspec;
+        }
+
+        private DataTable FillProviderTableInfo(DataSet ds)
+        {
+            return ds.Tables["dbtables"];
+        }
+
+        private void AddColumnsToTable(Table table)
+        {
+            Column cl;
+
+            // query columns
+            var FieldsQuery = (from column in _providertables.AsEnumerable()
+                               where column.Field<string>("TableName") == table.Name
+                               select new
+                               {
+                                   ColumnName = column.Field<string>("ColumnName")
+                                   , DataType = column.Field<string>("DataType")
+                                   , Length = column.Field<Int16>("Length")
+                                   , IsNullable = column.Field<int>("IsNullable")
+                               }).Distinct();
+
+            // add columns
+            foreach (var fn in FieldsQuery)
+            {
+                cl = new Column(fn.ColumnName, table);
+                cl.OfType(fn.DataType, fn.Length);
+                if (Convert.ToBoolean(fn.IsNullable)) cl.Nullable();
+            }
         }
 
         private DataSet LoadDBInfo()
