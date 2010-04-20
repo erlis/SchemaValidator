@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using SchemaValidator.ValueObjects.DBElements;
 namespace SchemaValidator.Specification
 {
-    public class DBSpecification : SchemaSpecification
+    public class DbSpecification : SchemaSpecification
     {
         /// constructor
-        public DBSpecification(List<Table> tableList)
+        public DbSpecification(List<Table> tableList)
         {
             tableList.ForEach( AddTable);
         }

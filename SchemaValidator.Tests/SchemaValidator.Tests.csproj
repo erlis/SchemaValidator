@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Specification\DBSpecificationTests.cs" />
+    <Compile Include="Specification\DbSpecificationTests.cs" />
     <Compile Include="Specification\ManualSpecificationTests.cs" />
     <Compile Include="ValueObjects\PairTests.cs" />
     <Compile Include="ValueObjects\DBElement\ColumnTests.cs" />
