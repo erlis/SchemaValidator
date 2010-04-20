@@ -1,13 +1,21 @@
-﻿using System;
+﻿using SchemaValidator.ValueObjects;
 
 namespace SchemaValidator.Specification
 {
     public class ManualSpecification : SchemaSpecification
     {
 
-        public void Validate(DBSpecification dbSpecification)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbSpecification"></param>
+        public void AssertIsSatisfiedBy(DbSpecification dbSpecification)
         {
-            throw new NotImplementedException();
+            CompareResult result = Compare(dbSpecification); 
+            if (result.HaveValues)
+            {
+                throw new SpecificationException( result.ToString() );
+            }
         }
     }
 }

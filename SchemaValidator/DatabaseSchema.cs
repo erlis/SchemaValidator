@@ -63,7 +63,7 @@ namespace SchemaValidator
         private SchemaSpecification CreateSchemaSpecification(DataSet ds)
         {
             SchemaSpecification _schspec = new SchemaSpecification();
-            Table t;
+            Table tb;
             Column cl;
 
             // fill Provider Tables Info
@@ -77,16 +77,16 @@ namespace SchemaValidator
             foreach (var tn in DistintTableQuery)
             {
                 // add table
-                t = _schspec.AddTable(tn.TableName);
+                tb = _schspec.AddTable(tn.TableName);
                 // add columns
-                AddColumnsToTable(t);
+                AddColumnsToTable(tb);
             }
             return _schspec;
         }
 
         private DataTable FillProviderTableInfo(DataSet ds)
         {
-            return ds.Tables["dbtables"];
+            return ds != null && ds.Tables.Contains("dbtables") ? ds.Tables["dbtables"] : null;
         }
 
         private void AddColumnsToTable(Table table)
@@ -97,8 +97,7 @@ namespace SchemaValidator
             var FieldsQuery = (from column in _providertables.AsEnumerable()
                                where column.Field<string>("TableName") == table.Name
                                select new
-                               {
-                                   ColumnName = column.Field<string>("ColumnName")
+                               {  ColumnName = column.Field<string>("ColumnName")
                                    , DataType = column.Field<string>("DataType")
                                    , Length = column.Field<Int16>("Length")
                                    , IsNullable = column.Field<int>("IsNullable")
