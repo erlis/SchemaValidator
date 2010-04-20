@@ -62,17 +62,28 @@ namespace SchemaValidator
 
         private SchemaSpecification CreateSchemaSpecification(DataSet ds)
         {
+            // fill Provider Tables Info
+            _providertables = FillProviderTableInfo(ds);
+
+            // add tables and their fields
+            return AddTablesAndTheirFieldsToSpecification();
+        }
+
+        private DataTable FillProviderTableInfo(DataSet ds)
+        {
+            return ds != null && ds.Tables.Contains("dbtables") ? ds.Tables["dbtables"] : null;
+        }
+
+        private SchemaSpecification AddTablesAndTheirFieldsToSpecification()
+        {
             SchemaSpecification _schspec = new SchemaSpecification();
             Table tb;
             Column cl;
 
-            // fill Provider Tables Info
-            _providertables = FillProviderTableInfo(ds);
-
             // query tables
             var DistintTableQuery = (from table in _providertables.AsEnumerable()
                                      select new { TableName = table.Field<string>("TableName") }).Distinct();
-            
+
             // add tables and their fields
             foreach (var tn in DistintTableQuery)
             {
@@ -81,12 +92,8 @@ namespace SchemaValidator
                 // add columns
                 AddColumnsToTable(tb);
             }
-            return _schspec;
-        }
 
-        private DataTable FillProviderTableInfo(DataSet ds)
-        {
-            return ds != null && ds.Tables.Contains("dbtables") ? ds.Tables["dbtables"] : null;
+            return _schspec; ;
         }
 
         private void AddColumnsToTable(Table table)
