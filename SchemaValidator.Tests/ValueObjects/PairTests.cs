@@ -25,6 +25,15 @@ namespace SchemaValidator.Tests.ValueObjects
         }
 
         [Test]
+        public void Remove_thisTest()
+        {
+            string s1 = "initial ";
+            string s = s1 += "erlis"; 
+
+            Assert.That( s1, Is.EqualTo("initial erlis"));
+        }
+
+        [Test]
         public void Constructor_should_allow_two_Tables()
         {
             // Arrange 

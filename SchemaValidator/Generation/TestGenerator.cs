@@ -1,5 +1,4 @@
-﻿using System;
-using SchemaValidator.Specification;
+﻿using SchemaValidator.Specification;
 using System.Collections.Generic;
 using SchemaValidator.ValueObjects.DBElements;
 
@@ -21,30 +20,51 @@ namespace SchemaValidator.Generation
             string result = "using NUnit.Framework;\n" +
                             "using System\n" +
                             "\n" +
-                            "namespace DatabaseTests { \n" +
-                            "    [TestFixture] public class PairTests {" +
-                            "    \n" +
-                            "    {0}" +
-                            "    }" +
-                            "} // namespace";
-            return string.Format(result, GetTests());
+                            "namespace DatabaseTests {{ \n\n" +
+                            "{0}[TestFixture]\n" +
+                            "{0}public class DbSchemaTests {{\n" +
+                            "{0}\n" +
+                            "{1}\n" +
+                            "{2}\n" +
+                            "{0}}}\n" +
+                            "}} // namespace\n";
+
+            string indent = "    ";
+            string setup = GenerateSetup(indent+ "    ");
+            string tests = GenerateTestMethods(indent+ "    ");
+            return string.Format(result, indent, setup, tests);
+        }
+
+        private string GenerateSetup(string indent)
+        {
+            List<string> setUp = new List<string> {
+                    "[SetUp]\n", 
+                    "public void SetUp() {{\n",
+                    "    // Arrange \n",
+                    "}\n\n",
+                };
+
+            string result = "";
+            setUp.ForEach( x => result += indent + x);
+            return result;
         }
 
 
-        private string GetTests()
+        private string GenerateTestMethods(string indent)
         {
             string result = "";
             foreach (var eachTable in _schemaSpecification.Tables)
             {
                 List<string> test = new List<string> {
-                    string.Format("[Test] public void {0}_is_valid() {\n", eachTable.Name),
+                                  "[Test]\n", 
+                    string.Format("public void {0}_is_valid() {{\n", eachTable.Name),
                                   "    // Arrange \n",
-                                  "    ManualSpecification manual = new ManualSpecification();",
-                    string.Format("    manual.RequireTable(\"{0}\"){1};", eachTable.Name, GetColumns(eachTable)),
-                    "}\n\n"
+                                  "    ManualSpecification manual = new ManualSpecification();\n",
+                    string.Format("    manual.RequireTable(\"{0}\"){1};\n", eachTable.Name, GetColumns(eachTable)),
+                                  "}\n\n",
                 };
 
-                test.ForEach( x => result += "    " + x);
+                test.ForEach(x => result += indent + x);
             }
 
             return result;
@@ -52,14 +72,14 @@ namespace SchemaValidator.Generation
 
         private string GetColumns(Table table)
         {
-            string result = ""; 
+            string result = "";
             foreach (var eachColumn in table.Columns)
             {
                 result += string.Format("\n          .WithColumn(\"{0}\").OfType(\"{1}\", {2})", eachColumn.Name, eachColumn.ColumnType, eachColumn.ColumnLength);
                 if (eachColumn.IsNullable)
-                    result += ".Nulleable()"; 
+                    result += ".Nulleable()";
             }
-            return result; 
+            return result;
         }
     }
 }

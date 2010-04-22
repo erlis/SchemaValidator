@@ -74,7 +74,8 @@ namespace SchemaValidator.ValueObjects.DBElements
             if (_columnList.Exists(x => columnName.EqualsIgnoreCase(x.Name)))
                 throw new ApplicationException(string.Format("Column {0} already in the specification of table {1}", columnName, Name));
 
-            Column column = new Column(columnName, this);
+            Column column = new Column(columnName);
+            column.ParentTable = this; 
             _columnList.Add(column);
             return column;
         }

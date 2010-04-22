@@ -200,7 +200,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void WithColumn_should_return_class_Column()
         {
             // Arrange
-            Column initial = new Column("c1", new Table("irrelevant"));
+            Column initial = new Column("c1");
 
             // Act 
             Column actual = initial.WithColumn("c2");
