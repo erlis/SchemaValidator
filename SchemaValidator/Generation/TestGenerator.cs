@@ -22,6 +22,7 @@ namespace SchemaValidator.Generation
             return "using NUnit.Framework;\n" +
                    "using SchemaValidator;\n" +
                    "using SchemaValidator.DbProviders;\n" +
+                   "using System.Configuration;\n" +                   
                    "\n" +
                    "namespace DatabaseTests { \n\n" +
                    "    [TestFixture]\n" +
@@ -41,7 +42,7 @@ namespace SchemaValidator.Generation
                     "[TestFixtureSetUp]\n", 
                     "public void SetUp() {\n",
                     "    // Arrange \n",
-                    "    var dbProvider = new SqlSrvProvider(\"" + _connectionString + "\");\n",
+                    "    var dbProvider = new SqlSrvProvider(ConfigurationManager.ConnectionStrings[ \"value\" ].ConnectionString);\n",
                     "    _dbSpecification = dbProvider.LoadDbSpecification();\n",                    
                     "}\n",
                 };
@@ -59,7 +60,7 @@ namespace SchemaValidator.Generation
             {
                 List<string> test = new List<string> {
                                   "[Test]\n", 
-                    string.Format("public void {0}_is_valid() {{\n", eachTable.Name),
+                    string.Format("public void {0}() {{\n", eachTable.Name),
                                   "    // Arrange \n",
                                   "    ManualSpecification manual = new ManualSpecification();\n",
                     string.Format("    manual.RequireTable(\"{0}\"){1};\n", eachTable.Name, GetColumns(indent + "        ", eachTable)),

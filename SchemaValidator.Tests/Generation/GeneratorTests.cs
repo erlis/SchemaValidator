@@ -10,6 +10,7 @@ namespace SchemaValidator.Tests.Generation
     {
 
         [Test]
+        [Explicit]
         public void Test_Generation()
         {
             TestGenerator generator = new TestGenerator("Data Source=mfstest;Initial Catalog=Rel5Test;User ID=momentis;Password=HGDHSWGWYIBWGQDIJSGXDHZSGSRHXA;");
