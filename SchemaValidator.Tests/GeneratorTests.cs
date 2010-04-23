@@ -15,7 +15,7 @@ namespace SchemaValidator.Tests
         public void Test_Generation()
         {
             TestGenerator generator = new TestGenerator("Data Source=mfstest;Initial Catalog=fosmaster;User ID=momentis;Password=HGDHSWGWYIBWGQDIJSGXDHZSGSRHXA;");
-            System.Console.Out.Write( generator.GenerateTest() );
+            Console.Out.Write( generator.GenerateTest() );
         }
     }
 }

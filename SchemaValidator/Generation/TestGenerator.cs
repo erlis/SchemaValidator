@@ -23,6 +23,7 @@ namespace SchemaValidator.Generation
                             "namespace DatabaseTests {{ \n\n" +
                             "{0}[TestFixture]\n" +
                             "{0}public class DbSchemaTests {{\n" +
+                            "{0}{0}private DbProvider dbProvider" +                            
                             "{0}\n" +
                             "{1}\n" +
                             "{2}\n" +
@@ -41,7 +42,7 @@ namespace SchemaValidator.Generation
                     "[SetUp]\n", 
                     "public void SetUp() {{\n",
                     "    // Arrange \n",
-                    "}\n\n",
+                    "}\n",
                 };
 
             string result = "";
@@ -60,7 +61,7 @@ namespace SchemaValidator.Generation
                     string.Format("public void {0}_is_valid() {{\n", eachTable.Name),
                                   "    // Arrange \n",
                                   "    ManualSpecification manual = new ManualSpecification();\n",
-                    string.Format("    manual.RequireTable(\"{0}\"){1};\n", eachTable.Name, GetColumns(eachTable)),
+                    string.Format("    manual.RequireTable(\"{0}\"){1};\n", eachTable.Name, GetColumns(indent + "        ", eachTable)),
                                   "}\n\n",
                 };
 
@@ -70,14 +71,13 @@ namespace SchemaValidator.Generation
             return result;
         }
 
-        private string GetColumns(Table table)
+        private string GetColumns(string indent, Table table)
         {
             string result = "";
             foreach (var eachColumn in table.Columns)
             {
-                result += string.Format("\n          .WithColumn(\"{0}\").OfType(\"{1}\", {2})", eachColumn.Name, eachColumn.ColumnType, eachColumn.ColumnLength);
-                if (eachColumn.IsNullable)
-                    result += ".Nulleable()";
+                result += string.Format("\n{0}.WithColumn(\"{1}\").OfType(\"{2}\", {3})", indent, eachColumn.Name, eachColumn.ColumnType, eachColumn.ColumnLength);
+                if (eachColumn.IsNullable) result += ".Nulleable()";
             }
             return result;
         }

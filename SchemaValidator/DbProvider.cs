@@ -27,7 +27,7 @@ namespace SchemaValidator
                 _connectionString = value;
             }
         }
-        
+
         private readonly List<Table> _tableList;
         private SqlConnection _connection = null;
         private DataTable _providertables;
@@ -44,23 +44,18 @@ namespace SchemaValidator
         // properties
         public int TableCount { get { return _tableList.Count; } }
 
-        
-        // methods
-        public SchemaSpecification LoadSchemaSpecification()
-        {
-            SchemaSpecification _SchSpec = null;
-            DataSet _records;
 
+        // methods
+        public DbSpecification LoadSchemaSpecification()
+        {
             // load database info
-            _records = this.LoadDBInfo();
+            DataSet records = LoadDBInfo();
 
             // create schema specification
-            _SchSpec = CreateSchemaSpecification(_records);
-
-            return _SchSpec;
+            return CreateSchemaSpecification(records);
         }
 
-        private SchemaSpecification CreateSchemaSpecification(DataSet ds)
+        private DbSpecification CreateSchemaSpecification(DataSet ds)
         {
             // fill Provider Tables Info
             _providertables = FillProviderTableInfo(ds);
@@ -74,10 +69,9 @@ namespace SchemaValidator
             return ds != null && ds.Tables.Contains("dbtables") ? ds.Tables["dbtables"] : null;
         }
 
-        private SchemaSpecification AddTablesAndTheirFieldsToSpecification()
+        private DbSpecification AddTablesAndTheirFieldsToSpecification()
         {
-            SchemaSpecification _schspec = new SchemaSpecification();
-            Table tb;
+            List<Table> tables = new List<Table>();
             Column cl;
 
             // query tables
@@ -88,12 +82,15 @@ namespace SchemaValidator
             foreach (var tn in DistintTableQuery)
             {
                 // add table
-                tb = _schspec.AddTable(tn.TableName);
+                Table tb = new Table(tn.TableName);
+
                 // add columns
                 AddColumnsToTable(tb);
+
+                tables.Add(tb);
             }
 
-            return _schspec; ;
+            return new DbSpecification(tables);
         }
 
         private void AddColumnsToTable(Table table)
@@ -104,17 +101,21 @@ namespace SchemaValidator
             var FieldsQuery = (from column in _providertables.AsEnumerable()
                                where column.Field<string>("TableName") == table.Name
                                select new
-                               {  ColumnName = column.Field<string>("ColumnName")
-                                   , DataType = column.Field<string>("DataType")
-                                   , Length = column.Field<Int16>("Length")
-                                   , IsNullable = column.Field<int>("IsNullable")
+                               {
+                                   ColumnName = column.Field<string>("ColumnName")
+                                   ,
+                                   DataType = column.Field<string>("DataType")
+                                   ,
+                                   Length = column.Field<Int16>("Length")
+                                   ,
+                                   IsNullable = column.Field<int>("IsNullable")
                                }).Distinct();
 
             // add columns
             foreach (var fn in FieldsQuery)
             {
                 cl = Column.CreateWithTable(fn.ColumnName, table);
-                cl.OfType(fn.DataType, fn.Length); 
+                cl.OfType(fn.DataType, fn.Length);
                 if (Convert.ToBoolean(fn.IsNullable)) cl.Nullable();
             }
         }
@@ -134,7 +135,7 @@ namespace SchemaValidator
             }
             catch (Exception ex)
             {
-                throw(ex);
+                throw (ex);
             }
             finally
             {
@@ -152,7 +153,7 @@ namespace SchemaValidator
         private DataSet GetProviderInfoTables()
         {
             SqlCommand _cmd;
-            DataSet _records = new DataSet() ;
+            DataSet _records = new DataSet();
 
             using (_cmd = new SqlCommand())
             {
