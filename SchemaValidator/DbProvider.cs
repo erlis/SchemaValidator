@@ -167,7 +167,7 @@ namespace SchemaValidator
                                                     "       INNER JOIN SysColumns sc " +
                                                     "           ON so.id = sc.id " +
                                                     "       INNER JOIN SysTypes st " +
-                                                    "           ON st.xtype = sc.xtype AND st.xusertype = sc.xusertype" +
+                                                    "           ON st.xtype = sc.xtype AND st.xusertype = sc.xusertype " +
                                                     "WHERE  " +
                                                     "    so.Type = 'U' " +
                                                     "ORDER BY  " +
