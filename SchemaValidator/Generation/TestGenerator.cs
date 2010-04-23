@@ -1,4 +1,5 @@
-﻿using SchemaValidator.Specification;
+﻿using SchemaValidator.DbProviders;
+using SchemaValidator.Specification;
 using System.Collections.Generic;
 using SchemaValidator.ValueObjects.DBElements;
 
@@ -20,7 +21,7 @@ namespace SchemaValidator.Generation
         public string GenerateTest()
         {
             return "using NUnit.Framework;\n" +
-                   "using System\n" +
+                   "using System;\n" +
                    "\n" +
                    "namespace DatabaseTests { \n\n" +
                    "    [TestFixture]\n" +

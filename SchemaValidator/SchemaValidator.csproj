@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{6DC1405A-1DAE-4CC5-BFF7-56EEAC467000}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -49,14 +49,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generation\TestGenerator.cs" />
-    <Compile Include="Specification\SpecificationException.cs" />
-    <Compile Include="Specification\DbSpecification.cs" />
-    <Compile Include="Specification\ManualSpecification.cs" />
+    <Compile Include="SpecificationException.cs" />
+    <Compile Include="DbSpecification.cs" />
+    <Compile Include="ManualSpecification.cs" />
     <Compile Include="ValueObjects\DBElements\Column.cs" />
-    <Compile Include="SqlSrvProvider.cs" />
+    <Compile Include="DbProviders\SqlSrvProvider.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="IDbProvider.cs" />
-    <Compile Include="Specification\SchemaSpecification.cs" />
+    <Compile Include="DbProviders\IDbProvider.cs" />
+    <Compile Include="SchemaSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueObjects\Conflict.cs" />
     <Compile Include="ValueObjects\Pair.cs" />

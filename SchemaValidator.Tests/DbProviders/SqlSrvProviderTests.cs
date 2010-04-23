@@ -1,9 +1,10 @@
 ﻿using NUnit.Framework;
 using System;
+using SchemaValidator.DbProviders;
 using SchemaValidator.Specification;
 
 // ReSharper disable InconsistentNaming
-namespace SchemaValidator.Tests
+namespace SchemaValidator.Tests.DbProviders
 {
     [TestFixture]
     public class SqlSrvProviderTests
