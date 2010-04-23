@@ -26,16 +26,5 @@ namespace SchemaValidator.Tests
             Assert.That(dbSpecification.Tables.Count, Is.EqualTo(2));
         }
 
-
-        [Test]
-        [ExpectedException(ExpectedException = typeof(InvalidOperationException))]
-        public void AddTable_should_throw_exception()
-        {
-            // Arrange
-            SchemaSpecification spec = new DbSpecification(new List<Table>());
-
-            // Act
-            spec.AddTable("a table");
-        }
     }
 }

@@ -60,20 +60,5 @@ namespace SchemaValidator.Tests.DbProviders
             Assert.That(Is.Equals(scdb.Tables.Count, 13));
         }
 
-        [Test]
-        [ExpectedException(ExpectedException = typeof(InvalidOperationException))]
-        [Category("DB")]
-        public void RequireTable_should_throw_exception_when_duplicated_table()
-        {
-            // Arrange
-            SqlSrvProvider db = new SqlSrvProvider(@"Data Source=.\SQLEXPRESS;AttachDbFilename=""C:\SQL Server 2000 Sample Databases\NORTHWND.MDF"";Integrated Security=True;Connect Timeout=30;User Instance=True");
-
-            // create schema specification 
-            DbSpecification scdb = db.LoadDbSpecification();
-
-            // duplicated table
-            scdb.AddTable("region");
-        }
-
     }
 }

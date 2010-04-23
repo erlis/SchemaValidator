@@ -20,7 +20,8 @@ namespace SchemaValidator.Generation
         public string GenerateTest()
         {
             return "using NUnit.Framework;\n" +
-                   "using System;\n" +
+                   "using SchemaValidator;\n" +
+                   "using SchemaValidator.DbProviders;\n" +
                    "\n" +
                    "namespace DatabaseTests { \n\n" +
                    "    [TestFixture]\n" +
@@ -40,8 +41,8 @@ namespace SchemaValidator.Generation
                     "[TestFixtureSetUp]\n", 
                     "public void SetUp() {\n",
                     "    // Arrange \n",
-                    "    var dbProvider = new DbProvider(\"" + _connectionString + "\");\n",
-                    "    _dbSpecification = dbProvider.LoadSchemaSpecification();\n",                    
+                    "    var dbProvider = new SqlSrvProvider(\"" + _connectionString + "\");\n",
+                    "    _dbSpecification = dbProvider.LoadDbSpecification();\n",                    
                     "}\n",
                 };
 
@@ -80,7 +81,7 @@ namespace SchemaValidator.Generation
             foreach (var eachColumn in table.Columns)
             {
                 result += string.Format("\n{0}.WithColumn(\"{1}\").OfType(\"{2}\", {3})", indent, eachColumn.Name, eachColumn.ColumnType, eachColumn.ColumnLength);
-                if (eachColumn.IsNullable) result += ".Nulleable()";
+                if (eachColumn.IsNullable) result += ".Nullable()";
             }
             return result;
         }

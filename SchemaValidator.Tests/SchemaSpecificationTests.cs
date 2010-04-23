@@ -7,14 +7,27 @@ using SchemaValidator.ValueObjects.DBElements;
 namespace SchemaValidator.Tests
 {
     [TestFixture]
-    public class SchemaSpecificationTests
+    public class SchemaSpecWrapperTests
     {
-        private SchemaSpecification _schemaSpec;
+        private class SchemaSpecWrapper : SchemaSpecification
+        {
+            public new Table AddTable( string name )
+            {
+                return base.AddTable(name); 
+            }
+
+            public new CompareResult Compare ( SchemaSpecification specification )
+            {
+                return base.Compare(specification); 
+            }
+        }
+
+        private SchemaSpecWrapper _schemaSpec;
 
         [SetUp]
         public void SetUp()
         {
-            _schemaSpec = new SchemaSpecification();
+            _schemaSpec = new SchemaSpecWrapper();
         }
 
 
@@ -64,11 +77,11 @@ namespace SchemaValidator.Tests
         public void Compare_should_detect_different_tables()
         {
             // Arrange
-            SchemaSpecification spec1 = new SchemaSpecification();
+            SchemaSpecWrapper spec1 = new SchemaSpecWrapper();
             spec1.AddTable("t1");
             Table expectedFirst = spec1.AddTable("t2").WithColumn("c1").GetTable();
 
-            SchemaSpecification spec2 = new SchemaSpecification();
+            SchemaSpecWrapper spec2 = new SchemaSpecWrapper();
             spec2.AddTable("t1");
             Table expectedSecond = spec2.AddTable("t2");
 
@@ -85,11 +98,11 @@ namespace SchemaValidator.Tests
         public void Compare_should_detect_missing_tables()
         {
             // Arrange
-            SchemaSpecification spec1 = new SchemaSpecification();
+            SchemaSpecWrapper spec1 = new SchemaSpecWrapper();
             spec1.AddTable("t1");
             Table expected = spec1.AddTable("t2");
 
-            SchemaSpecification spec2 = new SchemaSpecification();
+            SchemaSpecWrapper spec2 = new SchemaSpecWrapper();
             spec2.AddTable("t1");
 
             // Act
@@ -104,10 +117,10 @@ namespace SchemaValidator.Tests
         public void Compare_should_ignore_extra_tables_in_the_other_specification()
         {
             // Arrange
-            SchemaSpecification spec1 = new SchemaSpecification();
+            SchemaSpecWrapper spec1 = new SchemaSpecWrapper();
             spec1.AddTable("t1");
 
-            SchemaSpecification spec2 = new SchemaSpecification();
+            SchemaSpecWrapper spec2 = new SchemaSpecWrapper();
             spec2.AddTable("t1");
             spec2.AddTable("t2");
 
@@ -122,8 +135,8 @@ namespace SchemaValidator.Tests
         public void Compare_should_return_table_conflicts_with_their_columns_conflicts()
         {
             // Arrange
-            SchemaSpecification spec1 = new SchemaSpecification();
-            SchemaSpecification spec2 = new SchemaSpecification();
+            SchemaSpecWrapper spec1 = new SchemaSpecWrapper();
+            SchemaSpecWrapper spec2 = new SchemaSpecWrapper();
 
             spec1.AddTable("t1").WithColumn("t1_c1").OfType("int", 4);
             spec1.AddTable("t2").WithColumn("T2_c1").GetTable();

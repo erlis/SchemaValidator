@@ -45,10 +45,10 @@ namespace SchemaValidator.Tests.ValueObjects
         public void ToString_should_return_string_representation_for_missing_tables()
         {
             // Arrange
-            SchemaSpecification spec1 = new SchemaSpecification();
-            spec1.AddTable("TableName").WithColumn("Id").OfType("int", 4)
-                                       .WithColumn("Desc").OfType("varchar", 100).Nullable()
-                                       .GetTable();
+            ManualSpecification spec1 = new ManualSpecification();
+            spec1.RequireTable("TableName").WithColumn("Id").OfType("int", 4)
+                                           .WithColumn("Desc").OfType("varchar", 100).Nullable()
+                                           .GetTable();
             SchemaSpecification spec2 = new SchemaSpecification();
 
             CompareResult compareResult = spec1.Compare(spec2); 
@@ -114,14 +114,14 @@ namespace SchemaValidator.Tests.ValueObjects
         public void ToString_should_return_string_representation_for_conflict_tables()
         {
             // Arrange
-            SchemaSpecification spec1 = new SchemaSpecification();
-        	spec1.AddTable( "t1" ).WithColumn( "column1" ).OfType( "int", 4 )
-        		                  .WithColumn( "irrelevant" ).OfType( "varchar", 1 ).Nullable();
+            ManualSpecification spec1 = new ManualSpecification();
+        	spec1.RequireTable( "t1" ).WithColumn( "column1" ).OfType( "int", 4 )
+        		                      .WithColumn( "irrelevant" ).OfType( "varchar", 1 ).Nullable();
                                 
 
-            SchemaSpecification spec2 = new SchemaSpecification();
-        	spec2.AddTable( "t1" ).WithColumn( "column1" ).OfType( "varchar", 4 )
-                                  .WithColumn( "irrelevant" ).OfType( "varchar", 1 ).Nullable();
+            ManualSpecification spec2 = new ManualSpecification();
+        	spec2.RequireTable( "t1" ).WithColumn( "column1" ).OfType( "varchar", 4 )
+                                      .WithColumn( "irrelevant" ).OfType( "varchar", 1 ).Nullable();
                                 
             CompareResult compareResult = spec1.Compare(spec2); 
 
