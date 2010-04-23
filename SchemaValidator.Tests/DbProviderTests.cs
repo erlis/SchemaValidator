@@ -6,14 +6,14 @@ using SchemaValidator.Specification;
 namespace SchemaValidator.Tests
 {
     [TestFixture]
-    public class DatabaseSchemaTests
+    public class DbProviderTests
     {
         [Test]
         [Category("DB")]
         public void Constructor_should_accept_a_string_parameter()
         {
             // Act
-            DatabaseSchema db = new DatabaseSchema(@"Data Source=.\SQLEXPRESS;AttachDbFilename=""C:\SQL Server 2000 Sample Databases\NORTHWND.MDF"";Integrated Security=True;Connect Timeout=30;User Instance=True");
+            DbProvider db = new DbProvider(@"Data Source=.\SQLEXPRESS;AttachDbFilename=""C:\SQL Server 2000 Sample Databases\NORTHWND.MDF"";Integrated Security=True;Connect Timeout=30;User Instance=True");
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace SchemaValidator.Tests
         public void Constructor_should_fail_when_string_parameter_is_null()
         {
             // Act
-            DatabaseSchema db = new DatabaseSchema(null);
+            DbProvider db = new DbProvider(null);
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace SchemaValidator.Tests
         public void Constructor_should_fail_when_string_parameter_is_empty()
         {
             // Act
-            DatabaseSchema db = new DatabaseSchema(string.Empty);
+            DbProvider db = new DbProvider(string.Empty);
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace SchemaValidator.Tests
         public void LoadSchemaSpecification_should_throw_exception_when_connection_string_is_wrong()
         {
             // Arrange
-            DatabaseSchema db = new DatabaseSchema(@"wrong database connection string");
+            DbProvider db = new DbProvider(@"wrong database connection string");
 
             // Act
             SchemaSpecification scdb = db.LoadSchemaSpecification();
@@ -51,7 +51,7 @@ namespace SchemaValidator.Tests
         public void LoadSchemaSpecification_should_update_TableCount_property()
         {
             // Arrange
-            DatabaseSchema db = new DatabaseSchema(@"Data Source=.\SQLEXPRESS;AttachDbFilename=""C:\SQL Server 2000 Sample Databases\NORTHWND.MDF"";Integrated Security=True;Connect Timeout=30;User Instance=True");
+            DbProvider db = new DbProvider(@"Data Source=.\SQLEXPRESS;AttachDbFilename=""C:\SQL Server 2000 Sample Databases\NORTHWND.MDF"";Integrated Security=True;Connect Timeout=30;User Instance=True");
 
             // create schema specification 
             SchemaSpecification scdb = db.LoadSchemaSpecification();
@@ -66,7 +66,7 @@ namespace SchemaValidator.Tests
         public void RequireTable_should_throw_exception_when_duplicated_table()
         {
             // Arrange
-            DatabaseSchema db = new DatabaseSchema(@"Data Source=.\SQLEXPRESS;AttachDbFilename=""C:\SQL Server 2000 Sample Databases\NORTHWND.MDF"";Integrated Security=True;Connect Timeout=30;User Instance=True");
+            DbProvider db = new DbProvider(@"Data Source=.\SQLEXPRESS;AttachDbFilename=""C:\SQL Server 2000 Sample Databases\NORTHWND.MDF"";Integrated Security=True;Connect Timeout=30;User Instance=True");
 
             // create schema specification 
             SchemaSpecification scdb = db.LoadSchemaSpecification();

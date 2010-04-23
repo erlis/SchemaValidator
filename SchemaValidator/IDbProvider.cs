@@ -5,7 +5,7 @@ using SchemaValidator.Specification;
 
 namespace SchemaValidator
 {
-    interface IDatabaseSchema
+    interface IDbProvider
     {
         SchemaSpecification LoadSchemaSpecification();
     }

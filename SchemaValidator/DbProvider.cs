@@ -12,7 +12,7 @@ using SchemaValidator.ValueObjects.DBElements;
 namespace SchemaValidator
 {
 
-    public class DatabaseSchema : IDatabaseSchema
+    public class DbProvider : IDbProvider
     {
 
         // private fields and properties
@@ -34,7 +34,7 @@ namespace SchemaValidator
 
 
         // constructors
-        public DatabaseSchema(string connectionstring)
+        public DbProvider(string connectionstring)
         {
             ConnectionString = connectionstring;
             _tableList = new List<Table>();

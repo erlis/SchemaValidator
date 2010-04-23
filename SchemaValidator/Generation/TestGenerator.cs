@@ -12,7 +12,7 @@ namespace SchemaValidator.Generation
 
         public TestGenerator(string connectionString)
         {
-            DatabaseSchema dbSchema = new DatabaseSchema(connectionString);
+            DbProvider dbSchema = new DbProvider(connectionString);
             _schemaSpecification = dbSchema.LoadSchemaSpecification();
         }
 
