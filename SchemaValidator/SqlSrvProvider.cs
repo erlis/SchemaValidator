@@ -12,7 +12,7 @@ using SchemaValidator.ValueObjects.DBElements;
 namespace SchemaValidator
 {
 
-    public class DbProvider : IDbProvider
+    public class SqlSrvProvider : IDbProvider
     {
 
         // private fields and properties
@@ -34,7 +34,7 @@ namespace SchemaValidator
 
 
         // constructors
-        public DbProvider(string connectionstring)
+        public SqlSrvProvider(string connectionstring)
         {
             ConnectionString = connectionstring;
             _tableList = new List<Table>();
@@ -46,16 +46,16 @@ namespace SchemaValidator
 
 
         // methods
-        public DbSpecification LoadSchemaSpecification()
+        public DbSpecification LoadDbSpecification()
         {
             // load database info
             DataSet records = LoadDBInfo();
 
             // create schema specification
-            return CreateSchemaSpecification(records);
+            return CreateDbSpecification(records);
         }
 
-        private DbSpecification CreateSchemaSpecification(DataSet ds)
+        private DbSpecification CreateDbSpecification(DataSet ds)
         {
             // fill Provider Tables Info
             _providertables = FillProviderTableInfo(ds);
@@ -72,7 +72,6 @@ namespace SchemaValidator
         private DbSpecification AddTablesAndTheirFieldsToSpecification()
         {
             List<Table> tables = new List<Table>();
-            Column cl;
 
             // query tables
             var DistintTableQuery = (from table in _providertables.AsEnumerable()
@@ -86,7 +85,6 @@ namespace SchemaValidator
 
                 // add columns
                 AddColumnsToTable(tb);
-
                 tables.Add(tb);
             }
 

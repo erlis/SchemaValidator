@@ -6,7 +6,7 @@ using SchemaValidator.Specification;
 namespace SchemaValidator.Tests
 {
     [TestFixture]
-    public class DbProviderTests
+    public class SqlSrvProviderTests
     {
         [Test]
         [Category("DB")]

@@ -53,7 +53,7 @@
     <Compile Include="Specification\DbSpecification.cs" />
     <Compile Include="Specification\ManualSpecification.cs" />
     <Compile Include="ValueObjects\DBElements\Column.cs" />
-    <Compile Include="DbProvider.cs" />
+    <Compile Include="SqlSrvProvider.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IDbProvider.cs" />
     <Compile Include="Specification\SchemaSpecification.cs" />

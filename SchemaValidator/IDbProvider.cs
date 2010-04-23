@@ -7,6 +7,6 @@ namespace SchemaValidator
 {
     interface IDbProvider
     {
-        DbSpecification LoadSchemaSpecification();
+        DbSpecification LoadDbSpecification();
     }
 }
