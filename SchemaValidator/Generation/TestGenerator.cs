@@ -1,5 +1,4 @@
 ﻿using SchemaValidator.DbProviders;
-using SchemaValidator.Specification;
 using System.Collections.Generic;
 using SchemaValidator.ValueObjects.DBElements;
 

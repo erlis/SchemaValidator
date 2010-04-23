@@ -1,6 +1,6 @@
 ﻿using SchemaValidator.ValueObjects;
 
-namespace SchemaValidator.Specification
+namespace SchemaValidator
 {
     public class ManualSpecification : SchemaSpecification
     {

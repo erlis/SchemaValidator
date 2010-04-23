@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using SchemaValidator.ValueObjects.DBElements;
-namespace SchemaValidator.Specification
+
+namespace SchemaValidator
 {
     public class DbSpecification : SchemaSpecification
     {

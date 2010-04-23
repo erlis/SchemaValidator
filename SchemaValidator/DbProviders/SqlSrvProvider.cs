@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using SchemaValidator.Specification;
 using SchemaValidator.ValueObjects.DBElements;
 
 namespace SchemaValidator.DbProviders
