@@ -13,8 +13,8 @@ namespace SchemaValidator.Tests.ValueObjects
         public void Constructor_should_allow_two_columns()
         {
             // Arrange 
-            Column column1 = new Column("column1");
-            Column column2 = new Column("column2");
+            Column column1 = Column.Create("column1");
+            Column column2 = Column.Create("column2");
 
             // Act 
             Pair pair = new Pair(column1, column2);
@@ -22,6 +22,15 @@ namespace SchemaValidator.Tests.ValueObjects
             // Assert
             Assert.That( pair.First, Is.SameAs( column1));
             Assert.That(pair.Second, Is.SameAs(column2));
+        }
+
+        [Test]
+        public void Remove_thisTest()
+        {
+            string s1 = "initial ";
+            string s = s1 += "erlis"; 
+
+            Assert.That( s1, Is.EqualTo("initial erlis"));
         }
 
         [Test]
@@ -45,7 +54,7 @@ namespace SchemaValidator.Tests.ValueObjects
         {
             // Arrange
             Table table = new Table("table");
-            Column column = new Column("column");
+            Column column = Column.Create("column");
 
             // Act
             Pair pair = new Pair(table, column);

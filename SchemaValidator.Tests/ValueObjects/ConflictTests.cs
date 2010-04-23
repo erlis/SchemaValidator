@@ -13,7 +13,7 @@ namespace SchemaValidator.Tests.ValueObjects
         public void Constructor_should_receive_a_Column_Pair()
         {
             // Arrange
-            Pair pair = new Pair(new Column("column1"), new Column("column2") );
+            Pair pair = new Pair(Column.Create("column1"), Column.Create("column2"));
 
             // Act
             Conflict conflict = new Conflict(pair);
@@ -41,7 +41,7 @@ namespace SchemaValidator.Tests.ValueObjects
         public void Constructor_should_receive_a_CompareResult()
         {
             // Arrange
-            Pair pair = new Pair(new Column("irrelevant"), new Column("irrelevant"));
+            Pair pair = new Pair(Column.Create("irrelevant"), Column.Create("irrelevant"));
             CompareResult compareResult = new CompareResult ();
 
             // Act

@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeneratorTests.cs" />
     <Compile Include="Specification\DbSpecificationTests.cs" />
     <Compile Include="Specification\ManualSpecificationTests.cs" />
     <Compile Include="ValueObjects\PairTests.cs" />

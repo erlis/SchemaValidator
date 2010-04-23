@@ -7,7 +7,7 @@ namespace SchemaValidator.ValueObjects.DBElements
     public class Column : IDBElement
     {
         /// private fields
-        private readonly Table _parentTable;
+        private Table _parentTable;
 
         /// properties
         private string _name;
@@ -24,16 +24,29 @@ namespace SchemaValidator.ValueObjects.DBElements
         public int ColumnLength { get; private set; }
         public bool IsNullable { get; set; }
 
-
         /// constructors
-        public Column(string name, Table parentTable)
+        private Column(string name)
         {
-            _parentTable = parentTable;
+            _parentTable = null;
             IsNullable = false;
             Name = name;
         }
 
-        public Column(string name) : this(name, null) { }
+        public static Column Create( string columnName )
+        {
+            return new Column(columnName);
+        }
+
+        public static Column CreateWithTable(string columnName, Table table)
+        {
+            Column result = Create(columnName); 
+            if ( table != null )
+            {
+                result._parentTable = table;
+                table.AddColumn( result );
+            }
+            return result; 
+        }
 
 
         /// methods
