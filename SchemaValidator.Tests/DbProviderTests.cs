@@ -13,7 +13,7 @@ namespace SchemaValidator.Tests
         public void Constructor_should_accept_a_string_parameter()
         {
             // Act
-            DbProvider db = new DbProvider(@"Data Source=.\SQLEXPRESS;AttachDbFilename=""C:\SQL Server 2000 Sample Databases\NORTHWND.MDF"";Integrated Security=True;Connect Timeout=30;User Instance=True");
+            SqlSrvProvider db = new SqlSrvProvider(@"Data Source=.\SQLEXPRESS;AttachDbFilename=""C:\SQL Server 2000 Sample Databases\NORTHWND.MDF"";Integrated Security=True;Connect Timeout=30;User Instance=True");
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace SchemaValidator.Tests
         public void Constructor_should_fail_when_string_parameter_is_null()
         {
             // Act
-            DbProvider db = new DbProvider(null);
+            SqlSrvProvider db = new SqlSrvProvider(null);
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace SchemaValidator.Tests
         public void Constructor_should_fail_when_string_parameter_is_empty()
         {
             // Act
-            DbProvider db = new DbProvider(string.Empty);
+            SqlSrvProvider db = new SqlSrvProvider(string.Empty);
         }
 
         [Test]
@@ -40,10 +40,10 @@ namespace SchemaValidator.Tests
         public void LoadSchemaSpecification_should_throw_exception_when_connection_string_is_wrong()
         {
             // Arrange
-            DbProvider db = new DbProvider(@"wrong database connection string");
+            SqlSrvProvider db = new SqlSrvProvider(@"wrong database connection string");
 
             // Act
-            SchemaSpecification scdb = db.LoadSchemaSpecification();
+            SchemaSpecification scdb = db.LoadDbSpecification();
         }
 
         [Test]
@@ -51,25 +51,25 @@ namespace SchemaValidator.Tests
         public void LoadSchemaSpecification_should_update_TableCount_property()
         {
             // Arrange
-            DbProvider db = new DbProvider(@"Data Source=.\SQLEXPRESS;AttachDbFilename=""C:\SQL Server 2000 Sample Databases\NORTHWND.MDF"";Integrated Security=True;Connect Timeout=30;User Instance=True");
+            SqlSrvProvider db = new SqlSrvProvider(@"Data Source=.\SQLEXPRESS;AttachDbFilename=""C:\SQL Server 2000 Sample Databases\NORTHWND.MDF"";Integrated Security=True;Connect Timeout=30;User Instance=True");
 
             // create schema specification 
-            SchemaSpecification scdb = db.LoadSchemaSpecification();
+            SchemaSpecification scdb = db.LoadDbSpecification();
 
             // Assert
             Assert.That(Is.Equals(scdb.Tables.Count, 13));
         }
 
         [Test]
-        [ExpectedException(ExpectedException = typeof(ApplicationException))]
+        [ExpectedException(ExpectedException = typeof(InvalidOperationException))]
         [Category("DB")]
         public void RequireTable_should_throw_exception_when_duplicated_table()
         {
             // Arrange
-            DbProvider db = new DbProvider(@"Data Source=.\SQLEXPRESS;AttachDbFilename=""C:\SQL Server 2000 Sample Databases\NORTHWND.MDF"";Integrated Security=True;Connect Timeout=30;User Instance=True");
+            SqlSrvProvider db = new SqlSrvProvider(@"Data Source=.\SQLEXPRESS;AttachDbFilename=""C:\SQL Server 2000 Sample Databases\NORTHWND.MDF"";Integrated Security=True;Connect Timeout=30;User Instance=True");
 
             // create schema specification 
-            SchemaSpecification scdb = db.LoadSchemaSpecification();
+            DbSpecification scdb = db.LoadDbSpecification();
 
             // duplicated table
             scdb.AddTable("region");

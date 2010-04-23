@@ -11,8 +11,8 @@ namespace SchemaValidator.Generation
 
         public TestGenerator(string connectionString)
         {
-            DbProvider dbSchema = new DbProvider(connectionString);
-            _schemaSpecification = dbSchema.LoadSchemaSpecification();
+            SqlSrvProvider dbSchema = new SqlSrvProvider(connectionString);
+            _schemaSpecification = dbSchema.LoadDbSpecification();
         }
 
         public string GenerateTest()
