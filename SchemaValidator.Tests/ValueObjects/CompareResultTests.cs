@@ -36,7 +36,7 @@ namespace SchemaValidator.Tests.ValueObjects
         {
             // Arrange
             CompareResult compareResult = new CompareResult();
-            compareResult.AddMissing(new Column("irrelevant"));
+            compareResult.AddMissing(Column.Create("irrelevant"));
 
             // Assert
             Assert.That(compareResult.HaveValues, Is.True);

@@ -32,6 +32,14 @@ namespace SchemaValidator.ValueObjects.DBElements
             _columnList = new List<Column>();
         }
 
+        public void AddColumn( Column column )
+        {
+            // guard clause: Duplicated column not allowed, It could overwrite an specification by mistake
+            if (_columnList.Exists(x => column.Name.EqualsIgnoreCase(x.Name)))
+                throw new ApplicationException(string.Format("Column {0} already in the specification of table {1}", column.Name, Name));
+
+            _columnList.Add( column );
+        }
 
         /// methods
         public CompareResult Compare(Table otherTable)
@@ -70,14 +78,7 @@ namespace SchemaValidator.ValueObjects.DBElements
 
         public Column WithColumn(string columnName)
         {
-            // guard clause: Duplicated column not allowed, It could overwrite an specification by mistake
-            if (_columnList.Exists(x => columnName.EqualsIgnoreCase(x.Name)))
-                throw new ApplicationException(string.Format("Column {0} already in the specification of table {1}", columnName, Name));
-
-            Column column = new Column(columnName);
-            column.ParentTable = this; 
-            _columnList.Add(column);
-            return column;
+            return Column.CreateWithTable(columnName, this);
         }
     }
 }

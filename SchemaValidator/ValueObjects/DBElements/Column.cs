@@ -7,7 +7,7 @@ namespace SchemaValidator.ValueObjects.DBElements
     public class Column : IDBElement
     {
         /// private fields
-        internal Table ParentTable { get; set; }
+        private Table _parentTable;
 
         /// properties
         private string _name;
@@ -24,15 +24,30 @@ namespace SchemaValidator.ValueObjects.DBElements
         public int ColumnLength { get; private set; }
         public bool IsNullable { get; set; }
 
-
         /// constructors
-        //todo: refactoring this, there is no way to create a column, this constructor must be private.
-        public Column(string name)
+        private Column(string name)
         {
-            ParentTable = null; 
+            _parentTable = null;
             IsNullable = false;
             Name = name;
         }
+
+        public static Column Create( string columnName )
+        {
+            return new Column(columnName);
+        }
+
+        public static Column CreateWithTable(string columnName, Table table)
+        {
+            Column result = Create(columnName); 
+            if ( table != null )
+            {
+                result._parentTable = table;
+                table.AddColumn( result );
+            }
+            return result; 
+        }
+
 
         /// methods
         public override bool Equals(object obj)
@@ -65,7 +80,7 @@ namespace SchemaValidator.ValueObjects.DBElements
         }
 
 		public Table GetTable() {
-			return ParentTable; 
+			return _parentTable; 
 		}
 
         public Column Nullable()
@@ -88,7 +103,7 @@ namespace SchemaValidator.ValueObjects.DBElements
 
         public Column WithColumn(string columnName)
         {
-            return ParentTable.WithColumn(columnName);
+            return _parentTable.WithColumn(columnName);
         }
     }
 }

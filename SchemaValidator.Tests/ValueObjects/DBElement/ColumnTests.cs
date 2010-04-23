@@ -10,19 +10,31 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
     {
         [Test]
         [ExpectedException(ExpectedException = typeof(ArgumentException))]
-        public void Constructor_should_fail_when_columnName_null()
+        public void Create_should_fail_when_columnName_null()
         {
             // Assert
-            new Column(null);
+            Column.Create(null);
         }
 
+        [Test]
+        public void CreateWithTable_should_return_column_added_to_given_table()
+        {
+            // Arrange
+            Table table = new Table("t1");
+
+            // Act 
+            Column column = Column.CreateWithTable("c1", table);
+
+            // Assert
+            Assert.That( table.Columns.Contains( column ));
+        }
 
         [Test]
         public void Equals_should_be_case_insensitive()
         {
             // Arrange
-            Column column1 = new Column("C1").OfType("Varchar", 0);
-            Column column2 = new Column("c1").OfType("varChar", 0);
+            Column column1 = Column.Create("C1").OfType("Varchar", 0);
+            Column column2 = Column.Create("c1").OfType("varChar", 0);
 
             // Assert
             Assert.That(column1.GetHashCode(), Is.EqualTo(column2.GetHashCode()));
@@ -34,8 +46,8 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void Equals_should_be_false_when_only_columnName_different()
         {
             // Arrange
-            Column column1 = new Column("c1").OfType("int", 0).Nullable();
-            Column column2 = new Column("c2").OfType("int", 0).Nullable();
+            Column column1 = Column.Create("c1").OfType("int", 0).Nullable();
+            Column column2 = Column.Create("c2").OfType("int", 0).Nullable();
 
             // Assert
             Assert.That(column1.GetHashCode(), Is.Not.EqualTo(column2.GetHashCode()));
@@ -47,8 +59,8 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void Equals_should_be_false_when_only_typeLength_different()
         {
             // Arrange
-            Column column1 = new Column("c1").OfType("int", 0).Nullable();
-            Column column2 = new Column("c1").OfType("int", 1).Nullable();
+            Column column1 = Column.Create("c1").OfType("int", 0).Nullable();
+            Column column2 = Column.Create("c1").OfType("int", 1).Nullable();
 
             // Assert
             Assert.That(column1.GetHashCode(), Is.Not.EqualTo(column2.GetHashCode()));
@@ -59,8 +71,8 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void Equals_should_be_false_when_only_typeName_different()
         {
             // Arrange
-            Column column1 = new Column("c1").OfType("varchar", 0).Nullable();
-            Column column2 = new Column("c1").OfType("int", 0).Nullable();
+            Column column1 = Column.Create("c1").OfType("varchar", 0).Nullable();
+            Column column2 = Column.Create("c1").OfType("int", 0).Nullable();
 
             // Assert
             Assert.That(column1.GetHashCode(), Is.Not.EqualTo(column2.GetHashCode()));
@@ -71,8 +83,8 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void Equals_should_be_false_when_only_IsNullable_different()
         {
             // Arrange
-            Column column1 = new Column("c1").OfType("int", 0).Nullable();
-            Column column2 = new Column("c1").OfType("int", 0);
+            Column column1 = Column.Create("c1").OfType("int", 0).Nullable();
+            Column column2 = Column.Create("c1").OfType("int", 0);
 
             // Asert
             Assert.That(column1.GetHashCode(), Is.Not.EqualTo(column2.GetHashCode()));
@@ -83,8 +95,8 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void Equals_should_be_true_for_two_different_instances_when_all_fields_equals()
         {
             // Arrange
-            Column column1 = new Column("c1").OfType("varchar", 0).Nullable();
-            Column column2 = new Column("c1").OfType("varchar", 0).Nullable();
+            Column column1 = Column.Create("c1").OfType("varchar", 0).Nullable();
+            Column column2 = Column.Create("c1").OfType("varchar", 0).Nullable();
 
             // Assert
             Assert.That(column1.GetHashCode(), Is.EqualTo(column2.GetHashCode()));
@@ -95,7 +107,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void IsNullable_should_be_false_by_default()
         {
             // Arrange
-            Column column = new Column("c1");
+            Column column = Column.Create("c1");
 
             // Assert
             Assert.That(column.IsNullable, Is.False);
@@ -105,7 +117,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void Nullable_should_return_the_self_instance()
         {
             // Arrange 
-            Column expected = new Column("c1");
+            Column expected = Column.Create("c1");
 
             // Act
             Column actual = expected.Nullable();
@@ -118,7 +130,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void Nullable_should_set_IsNullable_for_the_current_instance()
         {
             // Arrange
-            Column column = new Column("c1");
+            Column column = Column.Create("c1");
             Assert.That(column.IsNullable, Is.False);
 
             // Act
@@ -132,7 +144,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void OfType_should_return_the_self_instance()
         {
             // Arrange 
-            Column expected = new Column("c1");
+            Column expected = Column.Create("c1");
 
             // Act
             Column actual = expected.OfType("varchar", 0);
@@ -145,7 +157,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void OfType_should_set_ColumnLength_for_the_current_instance()
         {
             // Arrange 
-            Column column = new Column("c1");
+            Column column = Column.Create("c1");
 
             // Act
             column.OfType("int", 4);
@@ -158,7 +170,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void OfType_should_set_ColumnType_for_the_current_instance()
         {
             // Arrange 
-            Column column = new Column("c1");
+            Column column = Column.Create("c1");
 
             // Act
             column.OfType("int", 0);
@@ -171,7 +183,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void ToString_should_return_string_representation_when_nulleable()
         {
             // Arrange
-            Column column = new Column("c1").OfType("int", 4).Nullable();
+            Column column = Column.Create("c1").OfType("int", 4).Nullable();
             string expected = "c1 : int(4) NULLABLE";
 
             // Act
@@ -186,7 +198,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void ToString_should_return_string_representation_when_not_nulleable()
         {
             // Arrange
-            Column column = new Column("c1").OfType("int", 4);
+            Column column = Column.Create("c1").OfType("int", 4);
             string expected = "c1 : int(4)";
 
             // Act
@@ -200,7 +212,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         public void WithColumn_should_return_class_Column()
         {
             // Arrange
-            Column initial = new Column("c1");
+            Column initial = Column.CreateWithTable("c1", new Table("irrelevant"));
 
             // Act 
             Column actual = initial.WithColumn("c2");

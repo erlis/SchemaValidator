@@ -113,7 +113,8 @@ namespace SchemaValidator
             // add columns
             foreach (var fn in FieldsQuery)
             {
-                cl = table.WithColumn( fn.ColumnName ).OfType(fn.DataType, fn.Length);
+                cl = Column.CreateWithTable(fn.ColumnName, table);
+                cl.OfType(fn.DataType, fn.Length); 
                 if (Convert.ToBoolean(fn.IsNullable)) cl.Nullable();
             }
         }
