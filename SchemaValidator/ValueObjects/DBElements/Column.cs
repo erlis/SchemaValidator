@@ -26,6 +26,7 @@ namespace SchemaValidator.ValueObjects.DBElements
 
 
         /// constructors
+        //todo: refactoring this, there is no way to create a column, this constructor must be private.
         public Column(string name)
         {
             ParentTable = null; 
