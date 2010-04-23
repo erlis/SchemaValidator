@@ -19,7 +19,7 @@ namespace SchemaValidator.Tests
                                         };
             DbSpecification dbSpecification = new DbSpecification(tableList);
             ManualSpecification manualSpecification = new ManualSpecification();
-            manualSpecification.AddTable("t1");
+            manualSpecification.RequireTable("t1");
 
 
             // Act
@@ -37,7 +37,7 @@ namespace SchemaValidator.Tests
                                         };
             DbSpecification dbSpecification = new DbSpecification(tableList);
             ManualSpecification manualSpecification = new ManualSpecification();
-            manualSpecification.AddTable("t1").WithColumn("c1");
+            manualSpecification.RequireTable("t1").WithColumn("c1");
 
 
             // Act

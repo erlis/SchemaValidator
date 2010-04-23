@@ -33,7 +33,7 @@ namespace SchemaValidator
             _tableList.Add( table );
         }
 
-        public virtual Table AddTable(string tableName)
+        protected Table AddTable(string tableName)
         {
             Table table = new Table(tableName);
             AddTable(table);

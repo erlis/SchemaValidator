@@ -1,14 +1,11 @@
 ﻿using SchemaValidator.ValueObjects;
+using SchemaValidator.ValueObjects.DBElements;
 
 namespace SchemaValidator
 {
     public class ManualSpecification : SchemaSpecification
     {
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="dbSpecification"></param>
         public void AssertIsSatisfiedBy(DbSpecification dbSpecification)
         {
             CompareResult result = Compare(dbSpecification); 
@@ -17,5 +14,11 @@ namespace SchemaValidator
                 throw new SpecificationException( result.ToString() );
             }
         }
+
+        public Table RequireTable( string tableName )
+        {
+            return AddTable(tableName); 
+        }
+
     }
 }

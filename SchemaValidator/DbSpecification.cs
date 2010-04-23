@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SchemaValidator.ValueObjects.DBElements;
 
 namespace SchemaValidator
@@ -12,10 +11,5 @@ namespace SchemaValidator
             tableList.ForEach( AddTable);
         }
 
-        /// methods
-        public override Table AddTable(string tableName)
-        {
-            throw new InvalidOperationException("DB Specification cannot use AddTable");
-        }
     }
 }
