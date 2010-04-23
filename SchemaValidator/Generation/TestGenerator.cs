@@ -8,45 +8,45 @@ namespace SchemaValidator.Generation
     {
         // private 
         private SchemaSpecification _schemaSpecification;
+        private string _connectionString; 
 
         public TestGenerator(string connectionString)
         {
+            _connectionString = connectionString; 
             DbProvider dbSchema = new DbProvider(connectionString);
             _schemaSpecification = dbSchema.LoadSchemaSpecification();
         }
 
         public string GenerateTest()
         {
-            string result = "using NUnit.Framework;\n" +
-                            "using System\n" +
-                            "\n" +
-                            "namespace DatabaseTests {{ \n\n" +
-                            "{0}[TestFixture]\n" +
-                            "{0}public class DbSchemaTests {{\n" +
-                            "{0}{0}private DbProvider dbProvider" +                            
-                            "{0}\n" +
-                            "{1}\n" +
-                            "{2}\n" +
-                            "{0}}}\n" +
-                            "}} // namespace\n";
-
-            string indent = "    ";
-            string setup = GenerateSetup(indent+ "    ");
-            string tests = GenerateTestMethods(indent+ "    ");
-            return string.Format(result, indent, setup, tests);
+            return "using NUnit.Framework;\n" +
+                   "using System\n" +
+                   "\n" +
+                   "namespace DatabaseTests { \n\n" +
+                   "    [TestFixture]\n" +
+                   "    public class DbSchemaTests {\n" +
+                   "        private DbSpecification _dbSpecification;\n" +
+                   "\n" +
+                   GenerateSetup("        ") + "\n" +
+                   "\n" +
+                   GenerateTestMethods("        ") + "\n" +
+                   "    }\n" +
+                   "} // namespace\n";
         }
 
         private string GenerateSetup(string indent)
         {
             List<string> setUp = new List<string> {
-                    "[SetUp]\n", 
-                    "public void SetUp() {{\n",
+                    "[TestFixtureSetUp]\n", 
+                    "public void SetUp() {\n",
                     "    // Arrange \n",
+                    "    var dbProvider = new DbProvider(\"" + _connectionString + "\");\n",
+                    "    _dbSpecification = dbProvider.LoadSchemaSpecification();\n",                    
                     "}\n",
                 };
 
             string result = "";
-            setUp.ForEach( x => result += indent + x);
+            setUp.ForEach(x => result += indent + x);
             return result;
         }
 
@@ -62,6 +62,9 @@ namespace SchemaValidator.Generation
                                   "    // Arrange \n",
                                   "    ManualSpecification manual = new ManualSpecification();\n",
                     string.Format("    manual.RequireTable(\"{0}\"){1};\n", eachTable.Name, GetColumns(indent + "        ", eachTable)),
+                                  "\n",
+                                  "    // Act \n",
+                                  "    manual.AssertIsSatisfiedBy(_dbSpecification);\n",                                   
                                   "}\n\n",
                 };
 
