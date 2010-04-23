@@ -1,16 +1,16 @@
 SELECT 
-    so.name as TableName,
-    sc.name as ColumnName,
-    st.name as DataType,
-    sc.Length as Length,
+    so.name AS TableName,
+    sc.name AS ColumnName,
+    st.name AS DataType,
+    sc.Length AS Length,
     sc.isnullable AS IsNullable
 FROM   
     SysObjects so
-    inner join SysColumns sc
-        on so.id = sc.id
-    inner join SysTypes st
-        on st.xtype = sc.xtype
-where 
+    INNER JOIN SysColumns sc
+        ON so.id = sc.id
+    INNER JOIN SysTypes st
+        ON st.xtype = sc.xtype AND st.xusertype = sc.xusertype
+WHERE 
     so.Type = 'U'
-order by 
+ORDER BY 
     so.Name
