@@ -54,7 +54,7 @@
     <Compile Include="Specification\ManualSpecificationTests.cs" />
     <Compile Include="ValueObjects\PairTests.cs" />
     <Compile Include="ValueObjects\DBElement\ColumnTests.cs" />
-    <Compile Include="DbProviderTests.cs" />
+    <Compile Include="SqlSrvProviderTests.cs" />
     <Compile Include="Specification\SchemaSpecificationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueObjects\ConflictTests.cs" />
