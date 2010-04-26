@@ -1,3 +1,4 @@
+/* SQL Server */
 SELECT 
     so.name AS TableName,
     sc.name AS ColumnName,
@@ -14,3 +15,18 @@ WHERE
     so.Type = 'U'
 ORDER BY 
     so.Name
+
+-- Oracle
+SELECT
+  sc.TABLE_NAME AS TableName,  
+  sc.column_name AS ColumnName,
+  sc.data_type AS DataType,
+  to_char(sc.data_length) AS Length,
+  to_char(sc.nullable) AS IsNullable
+FROM  
+  sys.all_tables so
+  INNER JOIN sys.all_tab_columns sc ON so.table_name = sc.table_name
+WHERE  
+  so.OWNER = 'ICRFSLDR'
+ORDER BY 
+  sc.TABLE_NAME

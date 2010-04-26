@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbProviders\OracleProviderTests.cs" />
     <Compile Include="Generation\GeneratorTests.cs" />
     <Compile Include="DbSpecificationTests.cs" />
     <Compile Include="ManualSpecificationTests.cs" />
