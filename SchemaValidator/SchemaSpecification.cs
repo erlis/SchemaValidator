@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using SchemaValidator.Extensions;
-using SchemaValidator.ValueObjects;
+using SchemaValidator.ValueObjects.Conflict;
 using SchemaValidator.ValueObjects.DBElements;
 using System.Collections.ObjectModel;
 
@@ -10,20 +10,15 @@ namespace SchemaValidator
     public class SchemaSpecification
     {
 
-        /// private fields
         private readonly List<Table> _tableList;
 
-        /// properties
         public ReadOnlyCollection<Table> Tables { get { return _tableList.AsReadOnly(); } }
 
-        /// constructors
         public SchemaSpecification()
         {
             _tableList = new List<Table>();
         }
 
-
-        /// methods
         protected void AddTable(Table table)
         {
             // guard clause: Duplicated table not allowed, It could overwrite an specification by mistake
@@ -55,7 +50,7 @@ namespace SchemaValidator
                     CompareResult compareResult = eachTable.Compare(otherTable);
                     if (compareResult.HaveValues)
                     {
-                        var conflict = new Conflict(new Pair(eachTable, otherTable), compareResult);
+                        var conflict = new SpecificationConflict(new Pair<Table>(eachTable, otherTable), compareResult);
                         result.AddConflict(conflict);
                     }
                 }

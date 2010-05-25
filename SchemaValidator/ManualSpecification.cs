@@ -1,4 +1,5 @@
 ﻿using SchemaValidator.ValueObjects;
+using SchemaValidator.ValueObjects.Conflict;
 using SchemaValidator.ValueObjects.DBElements;
 
 namespace SchemaValidator

@@ -2,13 +2,13 @@
 using System.Collections.ObjectModel;
 using SchemaValidator.ValueObjects.DBElements;
 
-namespace SchemaValidator.ValueObjects
+namespace SchemaValidator.ValueObjects.Conflict
 {
     public class CompareResult
     {
         /// properties
-        private readonly List<Conflict> _conflictList;
-        public ReadOnlyCollection<Conflict> ConflictList
+        private readonly List<IConflict> _conflictList;
+        public ReadOnlyCollection<IConflict> ConflictList
         {
             get
             {
@@ -38,12 +38,12 @@ namespace SchemaValidator.ValueObjects
         /// constructor
         public CompareResult()
         {
-            _conflictList = new List<Conflict>();
+            _conflictList = new List<IConflict>();
             _missingList = new List<IDBElement>();
         }
 
         /// methods
-        public void AddConflict(Conflict conflict)
+        public void AddConflict(IConflict conflict)
         {
             _conflictList.Add(conflict);
         }

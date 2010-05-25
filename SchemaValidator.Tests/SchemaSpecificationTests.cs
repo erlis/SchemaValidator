@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using SchemaValidator.ValueObjects;
+using SchemaValidator.ValueObjects.Conflict;
 using SchemaValidator.ValueObjects.DBElements;
 
 // ReSharper disable InconsistentNaming
@@ -149,7 +150,7 @@ namespace SchemaValidator.Tests
 
             // Assert
             Assert.That(result.ConflictList.Count, Is.EqualTo(2));
-            Conflict firstConflict = result.ConflictList[0];
+            var firstConflict = result.ConflictList[0];
             Assert.That(firstConflict.Detail, Is.Not.Null);
 
             var t1ColumnConflictList = firstConflict.Detail.ConflictList;
@@ -160,7 +161,7 @@ namespace SchemaValidator.Tests
             Assert.That(((Column)t1ColumnConflictList[0].Second).ColumnType, Is.EqualTo("varchar"));
 
             // Asserting missing column 
-            Conflict secondConflict = result.ConflictList[1];
+            var secondConflict = result.ConflictList[1];
             Assert.That(secondConflict.Detail, Is.Not.Null);
             var t2ColumnMissingList = secondConflict.Detail.MissingList;
             Assert.That(t2ColumnMissingList.Count, Is.EqualTo(1));

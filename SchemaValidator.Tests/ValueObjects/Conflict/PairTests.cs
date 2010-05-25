@@ -1,10 +1,9 @@
 ﻿using NUnit.Framework;
+using SchemaValidator.ValueObjects.Conflict;
 using SchemaValidator.ValueObjects.DBElements;
-using SchemaValidator.ValueObjects;
-using System;
 
 // ReSharper disable InconsistentNaming
-namespace SchemaValidator.Tests.ValueObjects
+namespace SchemaValidator.Tests.ValueObjects.Conflict
 {
     [TestFixture]
     public class PairTests
@@ -17,20 +16,11 @@ namespace SchemaValidator.Tests.ValueObjects
             Column column2 = Column.Create("column2");
 
             // Act 
-            Pair pair = new Pair(column1, column2);
+            var pair = new Pair<Column>(column1, column2);
 
             // Assert
-            Assert.That( pair.First, Is.SameAs( column1));
+            Assert.That(pair.First, Is.SameAs(column1));
             Assert.That(pair.Second, Is.SameAs(column2));
-        }
-
-        [Test]
-        public void Remove_thisTest()
-        {
-            string s1 = "initial ";
-            string s = s1 += "erlis"; 
-
-            Assert.That( s1, Is.EqualTo("initial erlis"));
         }
 
         [Test]
@@ -41,23 +31,12 @@ namespace SchemaValidator.Tests.ValueObjects
             Table table2 = new Table("table2");
 
             // Act 
-            Pair pair = new Pair(table1, table2);
+            var pair = new Pair<Table>(table1, table2);
 
             // Assert
             Assert.That(pair.First, Is.SameAs(table1));
             Assert.That(pair.Second, Is.SameAs(table2));
         }
 
-        [Test]
-        [ExpectedException(ExpectedException = typeof(ArgumentException))]
-        public void Constructor_should_throw_exception_when_different_types()
-        {
-            // Arrange
-            Table table = new Table("table");
-            Column column = Column.Create("column");
-
-            // Act
-            Pair pair = new Pair(table, column);
-        }
     }
 }

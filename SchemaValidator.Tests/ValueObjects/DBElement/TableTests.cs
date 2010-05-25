@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using SchemaValidator.ValueObjects;
+using SchemaValidator.ValueObjects.Conflict;
 using SchemaValidator.ValueObjects.DBElements;
 
 // ReSharper disable InconsistentNaming
@@ -158,20 +159,6 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
 
             // Assert
             Assert.That(table.Columns.Count, Is.EqualTo(3));
-        }
-
-        [Test]
-        public void WithColumn_should_remember_previous_values()
-        {
-            // Arrange
-            Table table = new Table("table1");
-
-            // Act
-            table.WithColumn("c1")
-                 .WithColumn("c2");
-
-            // Assert
-            Assert.That(table.Columns.Count, Is.EqualTo(2));
         }
 
         [Test]

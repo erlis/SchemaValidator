@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using SchemaValidator.Extensions;
+using SchemaValidator.ValueObjects.Conflict;
 
 namespace SchemaValidator.ValueObjects.DBElements
 {
     public class Table : IDBElement
     {
 
-        /// privates
         private readonly List<Column> _columnList;
 
-
-        /// properties
         private string _name;
         public string Name
         {
@@ -23,9 +21,9 @@ namespace SchemaValidator.ValueObjects.DBElements
                 _name = value;
             }
         }
+
         public ReadOnlyCollection<Column> Columns { get { return _columnList.AsReadOnly(); } }
 
-        /// constructor 
         public Table(string name)
         {
             Name = name;
@@ -41,7 +39,6 @@ namespace SchemaValidator.ValueObjects.DBElements
             _columnList.Add( column );
         }
 
-        /// methods
         public CompareResult Compare(Table otherTable)
         {
             // guard clause: Different names are not comparables
@@ -57,7 +54,8 @@ namespace SchemaValidator.ValueObjects.DBElements
                 else
                     if (!eachColumn.Equals(otherColumn))
                     {
-                        result.AddConflict(new Conflict(new Pair(eachColumn, otherColumn)));
+                        var conflict = new TableConflict(new Pair<Column>(eachColumn, otherColumn));
+                        result.AddConflict(conflict);
                     }
             }
             return result;

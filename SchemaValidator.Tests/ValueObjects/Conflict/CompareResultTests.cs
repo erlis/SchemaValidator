@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
-using SchemaValidator.ValueObjects;
+using SchemaValidator.ValueObjects.Conflict;
 using SchemaValidator.ValueObjects.DBElements;
 
 // ReSharper disable InconsistentNaming
-namespace SchemaValidator.Tests.ValueObjects
+namespace SchemaValidator.Tests.ValueObjects.Conflict
 {
     [TestFixture]
     public class CompareResultTests
@@ -23,8 +23,8 @@ namespace SchemaValidator.Tests.ValueObjects
         {
             // Arrange
             CompareResult compareResult = new CompareResult();
-            var pair = new Pair(new Table("irrelevant"), new Table("irrelevant too"));
-            compareResult.AddConflict(new Conflict(pair));
+            var pair = new Pair<Table>(new Table("irrelevant"), new Table("irrelevant too"));
+            compareResult.AddConflict(new SpecificationConflict(pair)); //todo: good candidate for mock
 
             // Assert
             Assert.That(compareResult.HaveValues, Is.True);

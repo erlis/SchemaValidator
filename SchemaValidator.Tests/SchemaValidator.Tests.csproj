@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{659E4B51-2D68-485E-8AB3-97E3432BCD95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -54,14 +54,16 @@
     <Compile Include="Generation\GeneratorTests.cs" />
     <Compile Include="DbSpecificationTests.cs" />
     <Compile Include="ManualSpecificationTests.cs" />
-    <Compile Include="ValueObjects\PairTests.cs" />
+    <Compile Include="test.cs" />
+    <Compile Include="ValueObjects\Conflict\TableConflictTests.cs" />
+    <Compile Include="ValueObjects\Conflict\PairTests.cs" />
     <Compile Include="ValueObjects\DBElement\ColumnTests.cs" />
     <Compile Include="DbProviders\SqlSrvProviderTests.cs" />
     <Compile Include="SchemaSpecificationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValueObjects\ConflictTests.cs" />
+    <Compile Include="ValueObjects\Conflict\SpecificationConflictTests.cs" />
     <Compile Include="ValueObjects\DBElement\TableTests.cs" />
-    <Compile Include="ValueObjects\CompareResultTests.cs" />
+    <Compile Include="ValueObjects\Conflict\CompareResultTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SchemaValidator\SchemaValidator.csproj">
