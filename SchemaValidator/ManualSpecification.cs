@@ -1,5 +1,4 @@
-﻿using SchemaValidator.ValueObjects;
-using SchemaValidator.ValueObjects.Conflict;
+﻿using SchemaValidator.ValueObjects.Conflict;
 using SchemaValidator.ValueObjects.DBElements;
 
 namespace SchemaValidator
@@ -12,7 +11,7 @@ namespace SchemaValidator
             CompareResult result = Compare(dbSpecification); 
             if (result.HaveValues)
             {
-                throw new SpecificationException( result.ToString() );
+                throw new SpecificationException( "\n" + result );
             }
         }
 
