@@ -54,6 +54,10 @@
     <Compile Include="Generation\GeneratorTests.cs" />
     <Compile Include="DbSpecificationTests.cs" />
     <Compile Include="ManualSpecificationTests.cs" />
+    <Compile Include="ResharperDemo\MoveCode\MoveCode.cs" />
+    <Compile Include="ResharperDemo\VisualInformation\CodeStandard.cs" />
+    <Compile Include="ResharperDemo\VisualInformation\DeadCode.cs" />
+    <Compile Include="ResharperDemo\VisualInformation\ResharperTeachesYou.cs" />
     <Compile Include="test.cs" />
     <Compile Include="ValueObjects\Conflict\TableConflictTests.cs" />
     <Compile Include="ValueObjects\Conflict\PairTests.cs" />
