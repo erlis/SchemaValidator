@@ -25,7 +25,7 @@ namespace SchemaValidator
             if (_tableList.Exists(x => table.Name.EqualsIgnoreCase(x.Name)))
                 throw new ApplicationException(string.Format("Table {0} already in specification", table.Name));
 
-            _tableList.Add( table );
+            _tableList.Add(table);
         }
 
         protected Table AddTable(string tableName)
@@ -41,8 +41,7 @@ namespace SchemaValidator
             CompareResult result = new CompareResult();
             foreach (var eachTable in _tableList)
             {
-                Table table = eachTable;
-                Table otherTable = otherSpec._tableList.Find(x => x.Name.EqualsIgnoreCase(table.Name));
+                Table otherTable = otherSpec.FindTableByName(eachTable.Name);
                 if (otherTable == null)
                     result.AddMissing(eachTable);
                 else
@@ -56,6 +55,11 @@ namespace SchemaValidator
                 }
             }
             return result;
+        }
+
+        private Table FindTableByName(string tableName)
+        {
+            return _tableList.Find(x => x.Name.EqualsIgnoreCase(tableName));
         }
     }
 }

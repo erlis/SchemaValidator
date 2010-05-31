@@ -61,12 +61,6 @@ namespace SchemaValidator.ValueObjects.DBElements
             return result;
         }
 
-        private Column FindColumnByName(string columnName)
-        {
-            Column result = _columnList.Find(x => x.Name.EqualsIgnoreCase(columnName));
-            return result;
-        }
-
         public override string ToString()
         {
             string result = string.Format("[{0}]\n", Name);
@@ -77,6 +71,11 @@ namespace SchemaValidator.ValueObjects.DBElements
         public Column WithColumn(string columnName)
         {
             return Column.CreateWithTable(columnName, this);
+        }
+
+        private Column FindColumnByName(string columnName)
+        {
+            return _columnList.Find(x => x.Name.EqualsIgnoreCase(columnName));
         }
     }
 }
