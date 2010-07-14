@@ -9,10 +9,10 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
     public class PairTests
     {
         [TestFixture]
-        public class WhenCreatingThePair
+        public class When_creating
         {
             [Test]
-            public void GivenTwoElementsOfTheSameType_ThenConstructorSucceed()
+            public void Given_two_elements_of_the_same_type_then_constructor_succeed()
             {
                 // Arrange 
                 Column column1 = Column.Create("column1");
@@ -27,7 +27,7 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
             }
 
             [Test]
-            public void GivenTwoElementsOfDifferentType_ThenConstructorFails()
+            public void Given_two_elements_of_different_type_then_constructor_fails()
             {
                 Assert.Pass( "Impossible to create a pair with two different elements due to implementation." );
             }

@@ -8,10 +8,10 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
     public class TableConflictTests
     {
         [TestFixture]
-        public class WhenCreatingATableConflict
+        public class When_creating
         {
             [Test]
-            public void GivenAColumnPair_ThenFirstAndSecondAreDelegatesOfPair()
+            public void Given_a_columnPair_then_First_and_Second_delegates_on_them()
             {
                 // Arrange
                 var pair = new Pair<Column>(

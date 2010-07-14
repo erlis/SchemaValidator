@@ -9,10 +9,10 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
     {
 
         [TestFixture]
-        public class WhenCreatingAnSpecificationConflict
+        public class When_creating
         {
             [Test]
-            public void GivenATablePairAndACompareResult_ThenFirstAndSecondAndDetailAreDelegatesOfThem()
+            public void Given_a_tablePair_and_a_CompareResult_then_First_Second_and_Detail_delegates_on_them()
             {
                 // Arrange
                 var pair = new Pair<Table>(new Table("irrelevant"), new Table("irrelevant"));
