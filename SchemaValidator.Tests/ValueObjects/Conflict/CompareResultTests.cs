@@ -11,7 +11,6 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
         [TestFixture]
         public class Should_have_some_value
         {
-
             [Test]
             public void When_a_conflict_column_added()
             {
@@ -34,7 +33,6 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
                 // Assert
                 Assert.That(compareResult.HaveValues, Is.True);
             }
-
         }
 
         [TestFixture]
@@ -51,7 +49,8 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
             }
         }
 
-
+        //TODO: el metodo ToString() esta haciendo mucho. Este metodo va en otra clase que se encarga de 
+        // imprimir un CompareResult. 
         [Test]
         public void ToString_should_return_string_representation_for_missing_tables()
         {
