@@ -48,8 +48,8 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
             ManualSpecification spec1 = new ManualSpecification();
             spec1.RequireTable("TableName").WithColumn("Id").OfType("int", 4)
                                            .WithColumn("Desc").OfType("varchar", 100).Nullable()
-                                           .GetTable();
-            SchemaSpecification spec2 = new SchemaSpecification();
+                                           .Done();
+            ManualSpecification spec2 = new ManualSpecification();
 
             CompareResult compareResult = spec1.Compare(spec2); 
 
@@ -72,7 +72,7 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
             // Arrange
             Table t1 = new Table("t1").WithColumn("Id").OfType("int", 4)
                                       .WithColumn("Desc").OfType("varchar", 100).Nullable()
-                                      .GetTable();
+                                      .Done();
             Table t2 = new Table("t1");
 
             CompareResult compareResult = t1.Compare(t2); 
@@ -93,8 +93,8 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
         public void ToString_should_return_string_representation_for_conflict_columns()
         {
             // Arrange
-            Table t1 = new Table("t1").WithColumn("column1").OfType("int", 4).GetTable();
-            Table t2 = new Table("t1").WithColumn("column1").OfType("varchar", 4).GetTable();
+            Table t1 = new Table("t1").WithColumn("column1").OfType("int", 4).Done();
+            Table t2 = new Table("t1").WithColumn("column1").OfType("varchar", 4).Done();
 
             CompareResult compareResult = t1.Compare(t2); 
 

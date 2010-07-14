@@ -1,6 +1,5 @@
 ﻿using System;
 using NUnit.Framework;
-using SchemaValidator.ValueObjects;
 using SchemaValidator.ValueObjects.Conflict;
 using SchemaValidator.ValueObjects.DBElements;
 
@@ -80,7 +79,7 @@ namespace SchemaValidator.Tests
             // Arrange
             SchemaSpecWrapper spec1 = new SchemaSpecWrapper();
             spec1.AddTable("t1");
-            Table expectedFirst = spec1.AddTable("t2").WithColumn("c1").GetTable();
+            Table expectedFirst = spec1.AddTable("t2").WithColumn("c1").Done();
 
             SchemaSpecWrapper spec2 = new SchemaSpecWrapper();
             spec2.AddTable("t1");
@@ -140,7 +139,7 @@ namespace SchemaValidator.Tests
             SchemaSpecWrapper spec2 = new SchemaSpecWrapper();
 
             spec1.AddTable("t1").WithColumn("t1_c1").OfType("int", 4);
-            spec1.AddTable("t2").WithColumn("T2_c1").GetTable();
+            spec1.AddTable("t2").WithColumn("T2_c1").Done();
 
             spec2.AddTable("t1").WithColumn("t1_c1").OfType("varchar", 4);
             spec2.AddTable("t2");

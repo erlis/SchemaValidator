@@ -41,7 +41,7 @@ namespace SchemaValidator.ValueObjects.DBElements
 
         public CompareResult Compare(Table otherTable)
         {
-            // guard clause: Different names are not comparables
+            // guard clause: Different table names are not comparables
             if (!Name.EqualsIgnoreCase(otherTable.Name))
                 throw new InvalidOperationException("Tables are not comparables. In order to compare two tables they must have the same name.");
 

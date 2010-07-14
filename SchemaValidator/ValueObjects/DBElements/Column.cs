@@ -79,7 +79,7 @@ namespace SchemaValidator.ValueObjects.DBElements
             }
         }
 
-		public Table GetTable() {
+		public Table Done() {
 			return _parentTable; 
 		}
 

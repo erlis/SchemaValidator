@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using System;
-using SchemaValidator.ValueObjects;
 using SchemaValidator.ValueObjects.Conflict;
 using SchemaValidator.ValueObjects.DBElements;
 
@@ -121,7 +120,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
             Table table = new Table("Person").WithColumn("Id").OfType("int", 4)
                                              .WithColumn("Name").OfType("varchar", 255).Nullable()
                                              .WithColumn("Salary").OfType("double", 2)
-                                             .GetTable();
+                                             .Done();
             string expected = "[Person]\n" +
                               "   Id : int(4)\n" +
                               "   Name : varchar(255) NULLABLE\n" +

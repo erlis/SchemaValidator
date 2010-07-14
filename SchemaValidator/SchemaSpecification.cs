@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace SchemaValidator
 {
-    public class SchemaSpecification
+    public abstract class SchemaSpecification
     {
 
         private readonly List<Table> _tableList;
