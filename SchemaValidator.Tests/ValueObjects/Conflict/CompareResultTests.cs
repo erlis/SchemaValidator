@@ -11,8 +11,7 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
         [TestFixture]
         public class Should_have_some_value
         {
-            [Test]
-            public void When_a_conflict_column_added()
+            [Test] public void When_a_conflict_column_added()
             {
                 // Arrange
                 CompareResult compareResult = new CompareResult();
@@ -23,8 +22,7 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
                 Assert.That(compareResult.HaveValues, Is.True);
             }
 
-            [Test]
-            public void When_a_missing_column_added()
+            [Test] public void When_a_missing_column_added()
             {
                 // Arrange
                 CompareResult compareResult = new CompareResult();
@@ -38,8 +36,7 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
         [TestFixture]
         public class Should_not_have_any_value
         {
-            [Test]
-            public void When_no_value_added()
+            [Test] public void When_no_value_added()
             {
                 // Arrange 
                 CompareResult compareResult = new CompareResult();
