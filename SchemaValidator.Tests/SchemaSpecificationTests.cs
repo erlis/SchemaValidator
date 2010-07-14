@@ -9,7 +9,8 @@ namespace SchemaValidator.Tests
     [TestFixture]
     public class SchemaSpecWrapperTests
     {
-        private class SchemaSpecWrapper : SchemaSpecification
+
+        private class TestingSchemaSpecification : SchemaSpecification
         {
             public new Table AddTable( string name )
             {
@@ -22,12 +23,13 @@ namespace SchemaValidator.Tests
             }
         }
 
-        private SchemaSpecWrapper _schemaSpec;
+
+        private TestingSchemaSpecification _testingSchemaSpec;
 
         [SetUp]
         public void SetUp()
         {
-            _schemaSpec = new SchemaSpecWrapper();
+            _testingSchemaSpec = new TestingSchemaSpecification();
         }
 
 
@@ -35,7 +37,7 @@ namespace SchemaValidator.Tests
         public void AddTable_should_return_clase_Table()
         {
             // Act
-            Table result = _schemaSpec.AddTable("TableName");
+            Table result = _testingSchemaSpec.AddTable("TableName");
 
             // Assert
             Assert.That(result.Name, Is.EqualTo("TableName"));
@@ -46,11 +48,11 @@ namespace SchemaValidator.Tests
         public void AddTable_should_remember_previous_values()
         {
             // Act
-            _schemaSpec.AddTable("Table1");
-            _schemaSpec.AddTable("Table2");
+            _testingSchemaSpec.AddTable("Table1");
+            _testingSchemaSpec.AddTable("Table2");
 
             // Assert
-            Assert.That(_schemaSpec.Tables.Count, Is.EqualTo(2));
+            Assert.That(_testingSchemaSpec.Tables.Count, Is.EqualTo(2));
         }
 
 
@@ -59,8 +61,8 @@ namespace SchemaValidator.Tests
         public void AddTable_should_throw_exception_when_duplicated()
         {
             // Act 
-            _schemaSpec.AddTable("Table1");
-            _schemaSpec.AddTable("Table1");
+            _testingSchemaSpec.AddTable("Table1");
+            _testingSchemaSpec.AddTable("Table1");
         }
 
 
@@ -69,19 +71,19 @@ namespace SchemaValidator.Tests
         public void AddTable_should_be_case_insensitive()
         {
             // Act
-            _schemaSpec.AddTable("TabLe1");
-            _schemaSpec.AddTable("taBle1");
+            _testingSchemaSpec.AddTable("TabLe1");
+            _testingSchemaSpec.AddTable("taBle1");
         }
 
         [Test]
         public void Compare_should_detect_different_tables()
         {
             // Arrange
-            SchemaSpecWrapper spec1 = new SchemaSpecWrapper();
+            TestingSchemaSpecification spec1 = new TestingSchemaSpecification();
             spec1.AddTable("t1");
             Table expectedFirst = spec1.AddTable("t2").WithColumn("c1").Done();
 
-            SchemaSpecWrapper spec2 = new SchemaSpecWrapper();
+            TestingSchemaSpecification spec2 = new TestingSchemaSpecification();
             spec2.AddTable("t1");
             Table expectedSecond = spec2.AddTable("t2");
 
@@ -98,11 +100,11 @@ namespace SchemaValidator.Tests
         public void Compare_should_detect_missing_tables()
         {
             // Arrange
-            SchemaSpecWrapper spec1 = new SchemaSpecWrapper();
+            TestingSchemaSpecification spec1 = new TestingSchemaSpecification();
             spec1.AddTable("t1");
             Table expected = spec1.AddTable("t2");
 
-            SchemaSpecWrapper spec2 = new SchemaSpecWrapper();
+            TestingSchemaSpecification spec2 = new TestingSchemaSpecification();
             spec2.AddTable("t1");
 
             // Act
@@ -117,10 +119,10 @@ namespace SchemaValidator.Tests
         public void Compare_should_ignore_extra_tables_in_the_other_specification()
         {
             // Arrange
-            SchemaSpecWrapper spec1 = new SchemaSpecWrapper();
+            TestingSchemaSpecification spec1 = new TestingSchemaSpecification();
             spec1.AddTable("t1");
 
-            SchemaSpecWrapper spec2 = new SchemaSpecWrapper();
+            TestingSchemaSpecification spec2 = new TestingSchemaSpecification();
             spec2.AddTable("t1");
             spec2.AddTable("t2");
 
@@ -135,8 +137,8 @@ namespace SchemaValidator.Tests
         public void Compare_should_return_table_conflicts_with_their_columns_conflicts()
         {
             // Arrange
-            SchemaSpecWrapper spec1 = new SchemaSpecWrapper();
-            SchemaSpecWrapper spec2 = new SchemaSpecWrapper();
+            TestingSchemaSpecification spec1 = new TestingSchemaSpecification();
+            TestingSchemaSpecification spec2 = new TestingSchemaSpecification();
 
             spec1.AddTable("t1").WithColumn("t1_c1").OfType("int", 4);
             spec1.AddTable("t2").WithColumn("T2_c1").Done();

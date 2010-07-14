@@ -11,8 +11,7 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
         [TestFixture]
         public class When_creating
         {
-            [Test]
-            public void Given_two_elements_of_the_same_type_then_constructor_succeed()
+            [Test] public void Given_two_elements_of_the_same_type_then_constructor_succeed()
             {
                 // Arrange 
                 Column column1 = Column.Create("column1");
@@ -26,8 +25,7 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
                 Assert.That(pair.Second, Is.SameAs(column2));
             }
 
-            [Test]
-            public void Given_two_elements_of_different_type_then_constructor_fails()
+            [Test] public void Given_two_elements_of_different_type_then_constructor_fails()
             {
                 Assert.Pass( "Impossible to create a pair with two different elements due to implementation." );
             }

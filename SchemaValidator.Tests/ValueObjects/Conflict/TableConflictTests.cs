@@ -10,8 +10,7 @@ namespace SchemaValidator.Tests.ValueObjects.Conflict
         [TestFixture]
         public class When_creating
         {
-            [Test]
-            public void Given_a_columnPair_then_First_and_Second_delegates_on_them()
+            [Test] public void Given_a_columnPair_then_First_and_Second_delegates_on_them()
             {
                 // Arrange
                 var pair = new Pair<Column>(
