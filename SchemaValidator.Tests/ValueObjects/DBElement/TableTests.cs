@@ -142,15 +142,14 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
                 Assert.That(column.Name, Is.EqualTo("Column1"));
             }
 
-            [ExpectedException(ExpectedException = typeof(ApplicationException))]
             [Test] public void When_twice_the_same_column_name_then_WithColumn_should_throw_ApplicationException()
             {
                 // Arrange
                 Table table = new Table("table1");
 
                 // Act
-                table.WithColumn("c1")
-                     .WithColumn("c1");
+            	Assert.Throws<ApplicationException>( () => table.WithColumn( "c1" )
+            	                                     	        .WithColumn( "c1" ) );
             }
 
             [ExpectedException(ExpectedException = typeof(ApplicationException))]
