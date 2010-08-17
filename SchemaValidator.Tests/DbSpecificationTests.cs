@@ -1,29 +1,35 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
-using System;
 using SchemaValidator.ValueObjects.DBElements;
 
 // ReSharper disable InconsistentNaming
 namespace SchemaValidator.Tests
 {
-    [TestFixture]
+
     public class DbSpecificationTests
     {
-        [Test]
-        public void Constructor_should_initialize_by_receiving_table_list()
+
+        [TestFixture]
+        public class When_creating
         {
-            // Arrange
-            List<Table> tableList = new List<Table>
+
+            [Test]
+            public void Instance_is_initialized_Given_a_table_list()
+            {
+                // Arrange
+                List<Table> tableList = new List<Table>
                                         {
                                             new Table("t1"),
                                             new Table("t2"),
                                         };
 
-            // Act
-            DbSpecification dbSpecification = new DbSpecification(tableList);
+                // Act
+                DbSpecification dbSpecification = new DbSpecification(tableList);
 
-            // Assert
-            Assert.That(dbSpecification.Tables.Count, Is.EqualTo(2));
+                // Assert
+                Assert.That(dbSpecification.Tables.Count, Is.EqualTo(2));
+            }
+
         }
 
     }
