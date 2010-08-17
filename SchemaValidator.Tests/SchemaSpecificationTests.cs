@@ -7,7 +7,7 @@ using SchemaValidator.ValueObjects.DBElements;
 namespace SchemaValidator.Tests
 {
     [TestFixture]
-    public class SchemaSpecWrapperTests
+    public class SchemaSpecificationTests
     {
 
         private class TestingSchemaSpecification : SchemaSpecification
@@ -57,22 +57,24 @@ namespace SchemaValidator.Tests
 
 
         [Test]
-        [ExpectedException(ExpectedException = typeof(ApplicationException))]
         public void AddTable_should_throw_exception_when_duplicated()
         {
             // Act 
             _testingSchemaSpec.AddTable("Table1");
-            _testingSchemaSpec.AddTable("Table1");
+
+            // Assert
+            Assert.Throws<ApplicationException>(() => _testingSchemaSpec.AddTable("Table1"));
         }
 
 
         [Test]
-        [ExpectedException(ExpectedException = typeof(ApplicationException))]
         public void AddTable_should_be_case_insensitive()
         {
             // Act
             _testingSchemaSpec.AddTable("TabLe1");
-            _testingSchemaSpec.AddTable("taBle1");
+
+            // Assert 
+            Assert.Throws<ApplicationException>(() => _testingSchemaSpec.AddTable("taBle1"));
         }
 
         [Test]

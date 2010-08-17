@@ -6,10 +6,10 @@ using SchemaValidator.DbProviders;
 namespace SchemaValidator.Tests.DbProviders
 {
     [TestFixture]
+    [Category("DB")]
     public class SqlSrvProviderTests
     {
         [Test]
-        [Category("DB")]
         public void Constructor_should_accept_a_string_parameter()
         {
             // Act
@@ -17,37 +17,30 @@ namespace SchemaValidator.Tests.DbProviders
         }
 
         [Test]
-        [ExpectedException(ExpectedException = typeof(ArgumentException))]
-        [Category("DB")]
         public void Constructor_should_fail_when_string_parameter_is_null()
         {
-            // Act
-            SqlSrvProvider db = new SqlSrvProvider(null);
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() => new SqlSrvProvider(null));
         }
 
         [Test]
-        [ExpectedException(ExpectedException = typeof(ArgumentException))]
-        [Category("DB")]
         public void Constructor_should_fail_when_string_parameter_is_empty()
         {
-            // Act
-            SqlSrvProvider db = new SqlSrvProvider(string.Empty);
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() => new SqlSrvProvider(string.Empty));
         }
 
         [Test]
-        [ExpectedException(ExpectedException = typeof(ArgumentException))]
-        [Category("DB")]
         public void LoadSchemaSpecification_should_throw_exception_when_connection_string_is_wrong()
         {
             // Arrange
             SqlSrvProvider db = new SqlSrvProvider(@"wrong database connection string");
 
-            // Act
-            SchemaSpecification scdb = db.LoadDbSpecification();
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() => db.LoadDbSpecification());
         }
 
         [Test]
-        [Category("DB")]
         public void LoadSchemaSpecification_should_update_TableCount_property()
         {
             // Arrange

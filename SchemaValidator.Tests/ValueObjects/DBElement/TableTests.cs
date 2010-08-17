@@ -11,11 +11,10 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         [TestFixture]
         public class When_creating
         {
-            [ExpectedException(ExpectedException = typeof(ArgumentException))]
             [Test] public void Given_null_as_table_name_then_should_fail()
             {
                 // Assert
-                new Table(null);
+                Assert.Throws<ArgumentException>(() => new Table(null));
             }
         }
 
@@ -35,15 +34,14 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
                 Assert.That(result, Is.Not.Null);
             }
 
-            [ExpectedException(ExpectedException = typeof(InvalidOperationException))]
             [Test] public void Given_a_table_with_different_name_then_should_throw_InvalidOperationException()
             {
                 // Arrange
                 Table t1 = new Table("t1");
                 Table t2 = new Table("t2");
 
-                // Act
-                t1.Compare(t2);
+                // Act & Assert
+                Assert.Throws<InvalidOperationException>(() => t1.Compare(t2));
             }
 
             [Test] public void Then_table_names_are_case_insensitive()
@@ -152,15 +150,14 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
             	                                     	        .WithColumn( "c1" ) );
             }
 
-            [ExpectedException(ExpectedException = typeof(ApplicationException))]
             [Test] public void When_twice_the_same_column_name_with_different_case_then_WithColumn_should_throw_ApplicationException()
             {
                 // Arrange
                 Table table = new Table("table1");
 
-                // Act
-                table.WithColumn("c1")
-                     .WithColumn("C1");
+                // Act & Assert
+                Assert.Throws<ApplicationException>(() => table.WithColumn("c1")
+                                                              .WithColumn("C1"));
             }
 
             [Test] public void Then_Done_will_end_the_fluent_sequence_for_columns()

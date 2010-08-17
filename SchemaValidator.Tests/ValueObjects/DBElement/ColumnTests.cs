@@ -10,11 +10,10 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
         [TestFixture]
         public class When_creating
         {
-            [ExpectedException(ExpectedException = typeof(ArgumentException))]
             [Test] public void Given_no_columnName_then_constructor_should_fail()
             {
-                // Assert
-                Column.Create(null);
+                // Assert & Act
+                Assert.Throws<ArgumentException>(() => Column.Create(null));
             }
 
             [Test] public void Given_a_table_then_the_created_column_should_be_added_to_that_table()
@@ -128,7 +127,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
                 Assert.That(actual, Is.SameAs(expected));
             }
 
-            [Test] public void Then_IsNullable_should_be_to_true()
+            [Test] public void Then_IsNullable_should_be_true()
             {
                 // Arrange
                 Column column = Column.Create("c1");
@@ -211,17 +210,13 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
                 Assert.That(table.Columns.Contains(actual));
             }
 
-            [ExpectedException(ExpectedException = typeof(NullReferenceException))]
             [Test] public void Then_WithColumn_fails_when_no_table_associated()
             {
                 // Arrange
                 Column initial = Column.Create("c1");
 
-                // Act 
-                Column actual = initial.WithColumn("c2");
-
-                // Assert
-                Assert.That(actual.Name, Is.EqualTo("c2"));
+                // Act & Assert
+                Assert.Throws<NullReferenceException>(() => initial.WithColumn("c2"));
             }
         }
 

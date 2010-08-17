@@ -6,10 +6,10 @@ using SchemaValidator.DbProviders;
 namespace SchemaValidator.Tests.DbProviders
 {
     [TestFixture]
+    [Category("DB")]
     public class OracleProviderTests
     {
         [Test]
-        [Category("DB")]
         public void Constructor_should_accept_a_string_parameter()
         {
             // Act
@@ -17,56 +17,49 @@ namespace SchemaValidator.Tests.DbProviders
         }
 
         [Test]
-        [ExpectedException(ExpectedException = typeof(ArgumentException))]
-        [Category("DB")]
         public void Constructor_should_fail_when_connection_string_parameter_is_null()
         {
-            // Act
-            OracleProvider db = new OracleProvider(null, "ICRFSLDV");
+            // Act & Assert
+            Assert.Throws<ArgumentException>( () => new OracleProvider(null, "ICRFSLDV"));
         }
 
         [Test]
-        [ExpectedException(ExpectedException = typeof(ArgumentException))]
-        [Category("DB")]
         public void Constructor_should_fail_when_connection_string_parameter_is_empty()
         {
-            // Act
-            OracleProvider db = new OracleProvider(string.Empty, "ICRFSLDV");
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() => new OracleProvider(string.Empty, "ICRFSLDV"));
         }
 
         [Test]
-        [ExpectedException(ExpectedException = typeof(ArgumentException))]
-        [Category("DB")]
         public void Constructor_should_fail_when_owner_parameter_is_null()
         {
-            // Act
-            OracleProvider db = new OracleProvider(@"DATA SOURCE=DWQA;PERSIST SECURITY INFO=True;USER ID=ICRFSLDV;PASSWORD=icrfsldv;Pooling=FALSE", null);
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() => new OracleProvider(
+                                                       @"DATA SOURCE=DWQA;PERSIST SECURITY INFO=True;USER ID=ICRFSLDV;PASSWORD=icrfsldv;Pooling=FALSE",
+                                                       null));
         }
 
         [Test]
-        [ExpectedException(ExpectedException = typeof(ArgumentException))]
-        [Category("DB")]
         public void Constructor_should_fail_when_owner_parameter_is_empty()
         {
-            // Act
-            OracleProvider db = new OracleProvider(@"DATA SOURCE=DWQA;PERSIST SECURITY INFO=True;USER ID=ICRFSLDV;PASSWORD=icrfsldv;Pooling=FALSE", string.Empty);
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() => new OracleProvider(
+                                                       @"DATA SOURCE=DWQA;PERSIST SECURITY INFO=True;USER ID=ICRFSLDV;PASSWORD=icrfsldv;Pooling=FALSE",
+                                                       string.Empty));
         }
 
 
         [Test]
-        [ExpectedException(ExpectedException = typeof(ArgumentException))]
-        [Category("DB")]
         public void LoadSchemaSpecification_should_throw_exception_when_connection_string_is_wrong()
         {
             // Arrange
             OracleProvider db = new OracleProvider(@"wrong database connection string", "ICRFSLDV");
 
-            // Act
-            SchemaSpecification scdb = db.LoadDbSpecification();
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() => db.LoadDbSpecification());
         }
 
         [Test]
-        [Category("DB")]
         public void LoadSchemaSpecification_should_update_TableCount_property()
         {
             // Arrange
