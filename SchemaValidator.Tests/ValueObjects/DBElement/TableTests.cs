@@ -34,30 +34,7 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
                 Assert.That(result, Is.Not.Null);
             }
 
-            [Test] public void Given_a_table_with_different_name_then_should_throw_InvalidOperationException()
-            {
-                // Arrange
-                Table t1 = new Table("t1");
-                Table t2 = new Table("t2");
-
-                // Act & Assert
-                Assert.Throws<InvalidOperationException>(() => t1.Compare(t2));
-            }
-
-            [Test] public void Then_table_names_are_case_insensitive()
-            {
-                // Arrange
-                Table t1 = new Table("T1");
-                Table t2 = new Table("t1");
-
-                // Act
-                CompareResult result = t1.Compare(t2);
-
-                // Assert
-                Assert.That(result, Is.Not.Null);
-            }
-
-            [Test] public void Given_a_table_with_different_columnType_then_conflict_should_be_detected()
+            [Test] public void Given_two_tables_with_different_columnType_then_conflict_should_be_detected()
             {
                 // Arrange
                 Table t1 = new Table("t1");
@@ -75,6 +52,16 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
                 Assert.That(result.ConflictList.Count, Is.EqualTo(1));
                 Assert.That(result.ConflictList[0].First, Is.SameAs(expectedFirst));
                 Assert.That(result.ConflictList[0].Second, Is.SameAs(expectedSecond));
+            }
+
+            [Test] public void Given_two_tables_with_different_names_then_should_throw_InvalidOperationException()
+            {
+                // Arrange
+                Table t1 = new Table("t1");
+                Table t2 = new Table("t2");
+
+                // Act & Assert
+                Assert.Throws<InvalidOperationException>(() => t1.Compare(t2));
             }
 
             [Test] public void Given_a_table_with_a_missing_column_then_the_missing_column_should_be_detected()
@@ -109,6 +96,20 @@ namespace SchemaValidator.Tests.ValueObjects.DBElement
                 // Assert 
                 Assert.That(result.HaveValues, Is.False);
             }
+
+            [Test] public void Then_table_names_should_be_case_insensitive()
+            {
+                // Arrange
+                Table t1 = new Table("T1");
+                Table t2 = new Table("t1");
+
+                // Act
+                CompareResult result = t1.Compare(t2);
+
+                // Assert
+                Assert.That(result, Is.Not.Null);
+            }
+
         }
 
         [TestFixture]
