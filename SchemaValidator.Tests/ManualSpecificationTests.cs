@@ -9,7 +9,6 @@ namespace SchemaValidator.Tests
     public class ManualSpecificationTests
     {
         [Test]
-        [ExpectedException(ExpectedException = typeof(SpecificationException))]
         public void AssertIsSatisfiedBy_should_throw_exception_when_missing_tables()
         {
             // Arrange
@@ -22,12 +21,11 @@ namespace SchemaValidator.Tests
             manualSpecification.RequireTable("t1");
 
 
-            // Act
-            manualSpecification.AssertIsSatisfiedBy(dbSpecification); 
+            // Assert
+            Assert.Throws<SpecificationException>(() => manualSpecification.AssertIsSatisfiedBy(dbSpecification));
         }
 
         [Test]
-        [ExpectedException(ExpectedException = typeof(SpecificationException))]
         public void AssertIsSatisfiedBy_should_throw_exception_when_conflict_tables()
         {
             // Arrange
@@ -40,8 +38,8 @@ namespace SchemaValidator.Tests
             manualSpecification.RequireTable("t1").WithColumn("c1");
 
 
-            // Act
-            manualSpecification.AssertIsSatisfiedBy(dbSpecification);
+            // Assert
+            Assert.Throws<SpecificationException>(() => manualSpecification.AssertIsSatisfiedBy(dbSpecification));
         }
     }
 }
